@@ -14,16 +14,15 @@ public class Department {
     @Column(name = "name", nullable = false, length = 255)
     private String name;
 
-    
-    public Department() {
-	}
+    // Constructors
+    public Department() {}
 
-	public Department(Integer idDepartment, String name) {
-		this.idDepartment = idDepartment;
-		this.name = name;
-	}
+    public Department(String name) {
+        this.name = name;
+    }
 
-	public Integer getIdDepartment() {
+    // Getters and Setters
+    public Integer getIdDepartment() {
         return idDepartment;
     }
 

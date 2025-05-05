@@ -7,23 +7,21 @@ import jakarta.persistence.*;
 public class Majority {
 
     @Id
-    @Column(name = "id_majority", length = 10, nullable = false)
+    @Column(name = "id_majority", length = 20)
     private String idMajority;
 
-    @Column(name = "name", length = 255, nullable = false)
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
 
-    // Constructor mặc định
-    public Majority() {
-    }
+    // Constructors
+    public Majority() {}
 
-    // Constructor đầy đủ
     public Majority(String idMajority, String name) {
         this.idMajority = idMajority;
         this.name = name;
     }
 
-    // Getters và Setters
+    // Getters and Setters
     public String getIdMajority() {
         return idMajority;
     }

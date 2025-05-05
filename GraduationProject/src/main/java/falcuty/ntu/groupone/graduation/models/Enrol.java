@@ -7,60 +7,60 @@ import jakarta.persistence.*;
 public class Enrol {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_enrol")
     private Integer idEnrol;
 
-    @Column(name = "id_student", length = 10, nullable = false)
-    private String idStudent;
+    @ManyToOne
+    @JoinColumn(name = "id_student", nullable = false)
+    private Student student;
 
-    @Column(name = "id_research_topic", nullable = false)
-    private Integer idResearchTopic;
+    @ManyToOne
+    @JoinColumn(name = "id_research_topic", nullable = false)
+    private ResearchTopic researchTopic;
 
     @Column(name = "state_enrol", nullable = false)
     private Integer stateEnrol;
 
-	public Enrol(Integer idEnrol, String idStudent, Integer idResearchTopic, Integer stateEnrol) {
-		this.idEnrol = idEnrol;
-		this.idStudent = idStudent;
-		this.idResearchTopic = idResearchTopic;
-		this.stateEnrol = stateEnrol;
-	}
+    // Constructors
+    public Enrol() {}
 
-	public Enrol() {
-	}
+    public Enrol(Student student, ResearchTopic researchTopic, Integer stateEnrol) {
+        this.student = student;
+        this.researchTopic = researchTopic;
+        this.stateEnrol = stateEnrol;
+    }
 
-	public Integer getIdEnrol() {
-		return idEnrol;
-	}
+    // Getters and Setters
+    public Integer getIdEnrol() {
+        return idEnrol;
+    }
 
-	public void setIdEnrol(Integer idEnrol) {
-		this.idEnrol = idEnrol;
-	}
+    public void setIdEnrol(Integer idEnrol) {
+        this.idEnrol = idEnrol;
+    }
 
-	public String getIdStudent() {
-		return idStudent;
-	}
+    public Student getStudent() {
+        return student;
+    }
 
-	public void setIdStudent(String idStudent) {
-		this.idStudent = idStudent;
-	}
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
-	public Integer getIdResearchTopic() {
-		return idResearchTopic;
-	}
+    public ResearchTopic getResearchTopic() {
+        return researchTopic;
+    }
 
-	public void setIdResearchTopic(Integer idResearchTopic) {
-		this.idResearchTopic = idResearchTopic;
-	}
+    public void setResearchTopic(ResearchTopic researchTopic) {
+        this.researchTopic = researchTopic;
+    }
 
-	public Integer getStateEnrol() {
-		return stateEnrol;
-	}
+    public Integer getStateEnrol() {
+        return stateEnrol;
+    }
 
-	public void setStateEnrol(Integer stateEnrol) {
-		this.stateEnrol = stateEnrol;
-	}
-    
-    
+    public void setStateEnrol(Integer stateEnrol) {
+        this.stateEnrol = stateEnrol;
+    }
 }
-
