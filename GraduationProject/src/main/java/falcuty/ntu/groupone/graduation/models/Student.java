@@ -7,51 +7,62 @@ import jakarta.persistence.*;
 public class Student {
 
     @Id
-    @Column(name = "id_student", length = 10)
-    private String idStudent;
+    @Column(name = "id_student")
+    private String id;
 
-    @Column(name = "id_class", length = 50)
-    private String idClass;
+    @ManyToOne
+    @JoinColumn(name = "id_class", nullable = false)
+    private MyClass myClass;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email")
-    private String email;  // Có thể null
-
-    @Column(name = "phone_number", length = 20)
-    private String phoneNumber;  // Có thể null
-
     @Column(name = "cv", columnDefinition = "LONGTEXT")
-    private String cv;  // Có thể null
+    private String cv;
 
-    public Student() {
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @Column(name = "phone_number", nullable = false)
+    private String phoneNumber;
+
+    @Column(name = "password", nullable = false)
+    private String password;
+
+    @Column(name = "avg_grade", nullable = false)
+    private Double avgGrade;
+
+    // Constructors
+    public Student() {}
+
+    public Student(String id, MyClass myClass, String name, String cv, String email, String phoneNumber,
+			String password, Double avgGrade) {
+		super();
+		this.id = id;
+		this.myClass = myClass;
+		this.name = name;
+		this.cv = cv;
+		this.email = email;
+		this.phoneNumber = phoneNumber;
+		this.password = password;
+		this.avgGrade = avgGrade;
+	}
+
+	// Getters and Setters
+    public String getId() {
+        return id;
     }
 
-    public Student(String idStudent, String idClass, String name, String email, String phoneNumber, String cv) {
-        this.idStudent = idStudent;
-        this.idClass = idClass;
-        this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.cv = cv;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    // Getters and Setters
-    public String getIdStudent() {
-        return idStudent;
+    public MyClass getClassEntity() {
+        return myClass;
     }
 
-    public void setIdStudent(String idStudent) {
-        this.idStudent = idStudent;
-    }
-
-    public String getIdClass() {
-        return idClass;
-    }
-
-    public void setIdClass(String idClass) {
-        this.idClass = idClass;
+    public void setClassEntity(MyClass myClass) {
+        this.myClass = myClass;
     }
 
     public String getName() {
@@ -60,6 +71,14 @@ public class Student {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCv() {
+        return cv;
+    }
+
+    public void setCv(String cv) {
+        this.cv = cv;
     }
 
     public String getEmail() {
@@ -78,11 +97,19 @@ public class Student {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getCv() {
-        return cv;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCv(String cv) {
-        this.cv = cv;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Double getAvgGrade() {
+        return avgGrade;
+    }
+
+    public void setAvgGrade(Double avgGrade) {
+        this.avgGrade = avgGrade;
     }
 }

@@ -6,56 +6,59 @@ import jakarta.persistence.*;
 @Table(name = "research_topic")
 public class ResearchTopic {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_research_topic")
-    private int idResearchTopic;
-
-    @Column(name = "teacher_created")
-    private int teacherCreated;
-
-    @Column(name = "teacher_accepted")
-    private Integer teacherAccepted;
+    private Integer idResearchTopic;
 
     @ManyToOne
-    @JoinColumn(name = "id_type", referencedColumnName = "id_type")
+    @JoinColumn(name = "teacher_created", nullable = false)
+    private Supervisor teacherCreated;
+
+    @ManyToOne
+    @JoinColumn(name = "teacher_accepted", nullable = false)
+    private Supervisor teacherAccepted;
+
+    @ManyToOne
+    @JoinColumn(name = "id_type", nullable = false)
     private ProjectType projectType;
 
-    @Column(name = "id_course")
-    private int idCourse;
+    @ManyToOne
+    @JoinColumn(name = "id_course", nullable = false)
+    private Course course;
 
-    @Column(name = "topic")
+    @Column(name = "topic", nullable = false)
     private String topic;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "detail", columnDefinition = "TEXT")
+    @Column(name = "detail", columnDefinition = "LONGTEXT", nullable = false)
     private String detail;
 
-    @Column(name = "max_join")
-    private int maxJoin;
+    @Column(name = "max_join", nullable = false)
+    private Integer maxJoin;
 
-    @Column(name = "state")
-    private int state;
+    @Column(name = "state", nullable = false)
+    private Integer state;
 
     @Column(name = "grade")
     private Double grade;
 
-    @Column(name = "review", columnDefinition = "TEXT")
+    @Column(name = "review")
     private String review;
-
+   
     public ResearchTopic() {
     }
 
-    public ResearchTopic(int idResearchTopic, int teacherCreated, Integer teacherAccepted,
-                         ProjectType projectType, int idCourse, String topic, String description,
+    public ResearchTopic(int idResearchTopic, Supervisor teacherCreated, Supervisor teacherAccepted,
+                         ProjectType projectType, Course course, String topic, String description,
                          String detail, int maxJoin, int state, Double grade, String review) {
         this.idResearchTopic = idResearchTopic;
         this.teacherCreated = teacherCreated;
         this.teacherAccepted = teacherAccepted;
         this.projectType = projectType;
-        this.idCourse = idCourse;
+        this.course = course;
         this.topic = topic;
         this.description = description;
         this.detail = detail;
@@ -75,19 +78,19 @@ public class ResearchTopic {
         this.idResearchTopic = idResearchTopic;
     }
 
-    public int getTeacherCreated() {
+    public Supervisor getTeacherCreated() {
         return teacherCreated;
     }
 
-    public void setTeacherCreated(int teacherCreated) {
+    public void setTeacherCreated(Supervisor teacherCreated) {
         this.teacherCreated = teacherCreated;
     }
 
-    public Integer getTeacherAccepted() {
+    public Supervisor getTeacherAccepted() {
         return teacherAccepted;
     }
 
-    public void setTeacherAccepted(Integer teacherAccepted) {
+    public void setTeacherAccepted(Supervisor teacherAccepted) {
         this.teacherAccepted = teacherAccepted;
     }
 
@@ -99,12 +102,12 @@ public class ResearchTopic {
         this.projectType = projectType;
     }
 
-    public int getIdCourse() {
-        return idCourse;
+    public Course getIdCourse() {
+        return course;
     }
 
-    public void setIdCourse(int idCourse) {
-        this.idCourse = idCourse;
+    public void setIdCourse(Course idCourse) {
+        this.course = idCourse;
     }
 
     public String getTopic() {

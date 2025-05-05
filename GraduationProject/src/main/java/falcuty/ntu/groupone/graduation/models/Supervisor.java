@@ -9,56 +9,51 @@ public class Supervisor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_supervisor")
-    private int idSupervisor;
+    private Integer id;
 
-    @Column(name = "id_department")
-    private int idDepartment;
+    @ManyToOne
+    @JoinColumn(name = "id_department", nullable = false)
+    private Department department;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "position")
-    private int position;
+    @Column(name = "position", nullable = false)
+    private Integer position;
 
     @Column(name = "cv", columnDefinition = "LONGTEXT")
     private String cv;
 
-    @Column(name = "max_research")
-    private int maxResearch;
+    @Column(name = "max_research", nullable = false)
+    private Integer maxResearch;
 
-    @Column(name = "max_topic")
-    private int maxTopic;
+    @Column(name = "max_topic", nullable = false)
+    private Integer maxTopic;
 
-    public Supervisor() {
-    }
+    @Column(name = "password", nullable = false)
+    private String password;
 
-    public Supervisor(int idSupervisor, int idDepartment, String name, int position,
-                      String cv, int maxResearch, int maxTopic) {
-        this.idSupervisor = idSupervisor;
-        this.idDepartment = idDepartment;
-        this.name = name;
-        this.position = position;
-        this.cv = cv;
-        this.maxResearch = maxResearch;
-        this.maxTopic = maxTopic;
-    }
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    // Constructors
+    public Supervisor() {}
 
     // Getters and Setters
-
-    public int getIdSupervisor() {
-        return idSupervisor;
+    public Integer getId() {
+        return id;
     }
 
-    public void setIdSupervisor(int idSupervisor) {
-        this.idSupervisor = idSupervisor;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public int getIdDepartment() {
-        return idDepartment;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setIdDepartment(int idDepartment) {
-        this.idDepartment = idDepartment;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public String getName() {
@@ -69,11 +64,11 @@ public class Supervisor {
         this.name = name;
     }
 
-    public int getPosition() {
+    public Integer getPosition() {
         return position;
     }
 
-    public void setPosition(int position) {
+    public void setPosition(Integer position) {
         this.position = position;
     }
 
@@ -85,20 +80,36 @@ public class Supervisor {
         this.cv = cv;
     }
 
-    public int getMaxResearch() {
+    public Integer getMaxResearch() {
         return maxResearch;
     }
 
-    public void setMaxResearch(int maxResearch) {
+    public void setMaxResearch(Integer maxResearch) {
         this.maxResearch = maxResearch;
     }
 
-    public int getMaxTopic() {
+    public Integer getMaxTopic() {
         return maxTopic;
     }
 
-    public void setMaxTopic(int maxTopic) {
+    public void setMaxTopic(Integer maxTopic) {
         this.maxTopic = maxTopic;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
 
