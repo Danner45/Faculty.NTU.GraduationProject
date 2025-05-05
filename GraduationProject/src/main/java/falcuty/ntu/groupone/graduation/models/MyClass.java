@@ -22,6 +22,14 @@ public class MyClass {
 	public MyClass() {
 	}
 
+	public MyClass(String idClass, Integer idCourse, String idMajority, String name) {
+		this.idClass = idClass;
+		this.idCourse = idCourse;
+		this.idMajority = idMajority;
+		this.name = name;
+	}
+
+
 	public String getIdClass() {
 		return idClass;
 	}
