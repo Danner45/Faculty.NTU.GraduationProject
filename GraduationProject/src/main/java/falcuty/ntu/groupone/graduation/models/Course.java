@@ -17,38 +17,37 @@ public class Course {
     @Column(name = "graduation_year", nullable = false)
     private Integer graduationYear;
 
-	public Course() {
-	}
+    // Constructors
+    public Course() {}
 
-	public Course(Integer idCourse, Integer entryYear, Integer graduationYear) {
-		this.idCourse = idCourse;
-		this.entryYear = entryYear;
-		this.graduationYear = graduationYear;
-	}
+    public Course(Integer entryYear, Integer graduationYear) {
+        this.entryYear = entryYear;
+        this.graduationYear = graduationYear;
+    }
 
-	public Integer getIdCourse() {
-		return idCourse;
-	}
+    // Getters and Setters
+    public Integer getIdCourse() {
+        return idCourse;
+    }
 
-	public void setIdCourse(Integer idCourse) {
-		this.idCourse = idCourse;
-	}
+    public void setIdCourse(Integer idCourse) {
+        this.idCourse = idCourse;
+    }
 
-	public Integer getEntryYear() {
-		return entryYear;
-	}
+    public Integer getEntryYear() {
+        return entryYear;
+    }
 
-	public void setEntryYear(Integer entryYear) {
-		this.entryYear = entryYear;
-	}
+    public void setEntryYear(Integer entryYear) {
+        this.entryYear = entryYear;
+    }
 
-	public Integer getGraduationYear() {
-		return graduationYear;
-	}
+    public Integer getGraduationYear() {
+        return graduationYear;
+    }
 
-	public void setGraduationYear(Integer graduationYear) {
-		this.graduationYear = graduationYear;
-	}
-    
-    
+    public void setGraduationYear(Integer graduationYear) {
+        this.graduationYear = graduationYear;
+    }
 }
+

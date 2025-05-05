@@ -3,64 +3,64 @@ package falcuty.ntu.groupone.graduation.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "`class`")
+@Table(name = "class")
 public class MyClass {
 
     @Id
-    @Column(name = "id_class", length = 50, nullable = false)
+    @Column(name = "id_class", length = 255)
     private String idClass;
 
-    @Column(name = "id_course", nullable = false)
-    private Integer idCourse;
+    @ManyToOne
+    @JoinColumn(name = "id_course", nullable = false)
+    private Course course;
 
-    @Column(name = "id_majority", length = 10, nullable = false)
-    private String idMajority;
+    @ManyToOne
+    @JoinColumn(name = "id_majority", nullable = false)
+    private Majority majority;
 
-    @Column(name = "name", length = 255, nullable = false)
+    @Column(name = "name", nullable = false, length = 255)
     private String name;
 
-	public MyClass() {
-	}
+    // Constructors
+    public MyClass() {}
 
-	public MyClass(String idClass, Integer idCourse, String idMajority, String name) {
-		this.idClass = idClass;
-		this.idCourse = idCourse;
-		this.idMajority = idMajority;
-		this.name = name;
-	}
+    public MyClass(String idClass, Course course, Majority majority, String name) {
+        this.idClass = idClass;
+        this.course = course;
+        this.majority = majority;
+        this.name = name;
+    }
 
+    // Getters and Setters
+    public String getIdClass() {
+        return idClass;
+    }
 
-	public String getIdClass() {
-		return idClass;
-	}
+    public void setIdClass(String idClass) {
+        this.idClass = idClass;
+    }
 
-	public void setIdClass(String idClass) {
-		this.idClass = idClass;
-	}
+    public Course getCourse() {
+        return course;
+    }
 
-	public Integer getIdCourse() {
-		return idCourse;
-	}
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
-	public void setIdCourse(Integer idCourse) {
-		this.idCourse = idCourse;
-	}
+    public Majority getMajority() {
+        return majority;
+    }
 
-	public String getIdMajority() {
-		return idMajority;
-	}
+    public void setMajority(Majority majority) {
+        this.majority = majority;
+    }
 
-	public void setIdMajority(String idMajority) {
-		this.idMajority = idMajority;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-    
+    public void setName(String name) {
+        this.name = name;
+    }
 }
