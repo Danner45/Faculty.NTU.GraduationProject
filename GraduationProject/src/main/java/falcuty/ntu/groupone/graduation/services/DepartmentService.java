@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import falcuty.ntu.groupone.graduation.models.Department;
-import falcuty.ntu.groupone.graduation.repositories.DepartmentRepository;
+import falcuty.ntu.groupone.graduation.repositories.IDepartmentRepository;
 
 @Service
 public class DepartmentService {
 	@Autowired
-	DepartmentRepository myDepartmentRepository;
+	IDepartmentRepository myDepartmentRepository;
 	public List<Department> allSP()
 		{
 			return myDepartmentRepository.findAll();

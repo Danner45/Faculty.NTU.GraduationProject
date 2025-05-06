@@ -16,11 +16,12 @@ public class DepartmentController {
 	@Autowired
 	DepartmentService departmentService;
 	
-	@GetMapping("department/all")
+	@GetMapping("/departments")
 	public String getAll(ModelMap m) {
 		List<Department> dsDepartments = new ArrayList<Department>();
 		dsDepartments = departmentService.allSP();
-		m.addAttribute("dsDepartment", dsDepartments);
+		m.addAttribute("departments", dsDepartments);
 		return "index";
 	}
+	
 }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>DemoBanHang</title>
+	<title>Danh sách Phòng ban</title>
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="/style.css" rel="stylesheet">
@@ -14,34 +14,33 @@
 				<div class="blur shadow p-3 d-flex font_decor text-light justify-content-end">
 				</div>
 				<div class="rounded p-5 blur shadow_custom mt-5 mx-3">
-					<div class="main-content">
-	            		<table class="table-hover table-responsive w-100 text-white fs-5">
-						  <thead>
-						    <tr>
-						      <th scope="col" class="py-2">Id</th>
-						      <th scope="col">TenSP</th>
-						      <th scope="col">GiaSP</th>
-						      <th scope="col">MoTa</th>
-						    </tr>
-						  </thead>
-						  <tbody class="table-group-divider">
-						    <tr th:each="dssp : ${dssp}"  style="border-bottom:1px solid rgba(255, 255, 255, 0.5)">
-			                    <td th:text="${dssp.id}" class="py-2"></td>
-			                    <td th:text="${dssp.tenSP}"></td>
-			                    <td th:text="${dssp.giaSP}"></td>
-			                    <td th:text="${dssp.moTa}"></td>
-			                    <td class="d-flex gap-2 mt-1">|<a th:href="@{/post/view/{id}(id=*{dssp.id})}">Xem</a>|<a>Sửa</a>|<a th:href="@{/post/delete/{id}(id=*{dssp.id})}">Xóa</a>|</td>
-			                </tr>
-						  </tbody>
-						</table>
-	            	</div>
+					<h2 class="text-white mb-4">Danh sách phòng ban</h2>
+					<table class="table-hover table-responsive w-100 text-white fs-5">
+					  <thead>
+					    <tr>
+					      <th scope="col" class="py-2">ID</th>
+					      <th scope="col">Tên phòng ban</th>
+					      <th scope="col">Thao tác</th>
+					    </tr>
+					  </thead>
+					  <tbody class="table-group-divider">
+					    <tr th:each="dept : ${departments}" style="border-bottom:1px solid rgba(255, 255, 255, 0.5)">
+		                    <td th:text="${dept.idDepartment}" class="py-2"></td>
+		                    <td th:text="${dept.name}"></td>
+		                    <td class="d-flex gap-2 mt-1">
+		                    	| <a th:href="@{/department/view/{id}(id=${dept.idDepartment})}">Xem</a> |
+		                    	<a th:href="@{/department/edit/{id}(id=${dept.idDepartment})}">Sửa</a> |
+		                    	<a th:href="@{/department/delete/{id}(id=${dept.idDepartment})}">Xóa</a> |
+		                    </td>
+		                </tr>
+					  </tbody>
+					</table>
 	            	<div>
-	            		<a href="/addNew"><button type="button" class="btn bg-light shadow mt-3">Thêm mới</button></a>
+	            		<a href="/department/add"><button type="button" class="btn bg-light shadow mt-3">Thêm mới</button></a>
 	            	</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
