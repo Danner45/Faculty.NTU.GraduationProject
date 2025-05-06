@@ -25,13 +25,18 @@ public class SupervisorService implements ISupervisorService{
 	}
 
 	@Override
-	public Supervisor saveSupervisor(Supervisor supervisor) {
-		
-		return null;
-	}
+    public Supervisor saveSupervisor(Integer id, Supervisor updatedSupervisor) {
+        return supervisorRespository.findById(id)
+            .map(existing -> {
+                existing.setCv(updatedSupervisor.getCv());
+                existing.setImgUrl(updatedSupervisor.getImgUrl());
+                return supervisorRespository.save(existing);
+            })
+            .orElseThrow(() -> new RuntimeException("Supervisor not found with ID: " + id));
+    }
 
 	@Override
-	public Optional<Supervisor> findSupervisorById(int id) {
+	public Optional<Supervisor> findSupervisorById(Integer id) {
 		return supervisorRespository.findById(id);
 	}
 

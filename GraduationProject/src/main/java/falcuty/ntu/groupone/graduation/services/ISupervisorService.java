@@ -7,6 +7,6 @@ import falcuty.ntu.groupone.graduation.models.Supervisor;
 
 public interface ISupervisorService {
 	public List<Supervisor> getAllSupervisors();
-	public Supervisor saveSupervisor(Supervisor supervisor);
-	public Optional<Supervisor> findSupervisorById(int id);
+	public Supervisor saveSupervisor(Integer id,Supervisor supervisor);
+	public Optional<Supervisor> findSupervisorById(Integer id);
 }

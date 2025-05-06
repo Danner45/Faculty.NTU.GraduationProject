@@ -1,10 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <title>Thông tin Giảng viên hướng dẫn</title>
+    <meta charset="UTF-8">
 </head>
 <body>
-a
+    <h1>Thông tin Giảng viên</h1>
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>ID</th>
+            <td th:text="${supervisor.id}">1</td>
+        </tr>
+        <tr>
+            <th>Tên</th>
+            <td th:text="${supervisor.name}"></td>
+        </tr>
+        <tr>
+            <th>Bộ môn</th>
+            <td th:text="${supervisor.department.name}"></td>
+        </tr>
+        <tr>
+            <th>Chức vụ</th>
+            <td th:text="${supervisor.position}"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td th:text="${supervisor.email}"></td>
+        </tr>
+        <tr>
+            <th>Mật khẩu</th>
+            <td th:text="${supervisor.password}"></td>
+        </tr>
+        <tr>
+            <th>CV</th>
+            <td th:text="${supervisor.cv}"></td>
+        </tr>
+        <tr>
+            <th>Số lượng nghiên cứu tối đa</th>
+            <td th:text="${supervisor.maxResearch}"></td>
+        </tr>
+        <tr>
+            <th>Số lượng đề tài tối đa</th>
+            <td th:text="${supervisor.maxTopic}"></td>
+        </tr>
+    </table>
+    <img th:src="@{${supervisor.imgUrl}}" alt="Ảnh đại diện" width="150" height="150" />
+    <a th:href="@{'/supervisors/edit/' + ${supervisor.id}}">
+    	<button>Chỉnh sửa</button>
+	</a>
 </body>
 </html>

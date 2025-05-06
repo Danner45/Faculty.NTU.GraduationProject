@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Chỉnh sửa thông tin Giảng viên</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1>Chỉnh sửa Giảng viên</h1>
+
+    <form th:action="@{'/supervisors/update/' + ${supervisor.id}}" th:object="${supervisor}" method="post" enctype="multipart/form-data">
+        <label>Tên:</label>
+        <input type="text" th:field="*{name}" required /><br/>
+
+
+        <label>CV:</label>
+        <textarea th:field="*{cv}" rows="4" cols="50"></textarea><br/>
+
+        <label>Ảnh đại diện:</label><br/>
+    <img id="previewImage"
+         th:src="@{${supervisor.imgUrl}}"
+         alt="Ảnh đại diện"
+         width="150"
+         height="150" /><br/>
+
+    <!-- Input chọn file -->
+    <input type="file" name="imageFile" accept="image/*" onchange="previewSelectedImage(event)" /><br/>
+    	
+
+        <!-- Nếu muốn chỉnh cả department thì thêm dropdown tại đây -->
+
+        <button type="submit">Lưu thay đổi</button>
+    </form>
+    
+    <script>
+function previewSelectedImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById("previewImage");
+            preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+</script>
+</body>
+</html>
