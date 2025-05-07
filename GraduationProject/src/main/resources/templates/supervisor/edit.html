@@ -19,6 +19,7 @@
     ],
     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | image',
     images_upload_url: '/upload-image',
+    automatic_uploads: true,
     mergetags_list: [
       { value: 'First.Name', title: 'First Name' },
       { value: 'Email', title: 'Email' },
@@ -50,8 +51,9 @@
         <label>Tên:</label>
         <input type="text" th:field="*{name}" required /><br/>
 
-
-        <label for="cv">CV:</label><br>
+    <textarea id="cv" name="cv" rows="10" th:field="*{cv}"></textarea><br><br>>
+    <!-- Ảnh hiển thị -->
+    <label>Ảnh đại diện:</label><br/>
     <textarea id="cv" name="cv" rows="10" th:field="*{cv}"></textarea><br><br>
 
         <label>Ảnh đại diện:</label><br/>
@@ -61,7 +63,7 @@
          alt="Ảnh đại diện"
          width="150"
          height="150" /><br/>
-
+    
     <!-- Ảnh mới -->
     <input type="file" name="imageFile" accept="image/*" onchange="previewSelectedImage(event)" /><br/>
 
