@@ -66,7 +66,6 @@ public class SupervisorController {
 	        updatedSupervisor.setImgUrl("/image/" + filename);
 	    } else {
 	        // Nếu không chọn ảnh mới → dùng ảnh cũ
-	    	
 	        updatedSupervisor.setImgUrl(existingImgUrl);
 	    }
 
