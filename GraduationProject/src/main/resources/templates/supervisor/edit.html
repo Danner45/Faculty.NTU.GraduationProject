@@ -3,6 +3,45 @@
 <head>
     <title>Chỉnh sửa thông tin Giảng viên</title>
     <meta charset="UTF-8">
+    <!-- Place the first <script> tag in your HTML's <head> -->
+
+
+<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+<script>
+  tinymce.init({
+    selector: 'textarea',
+    plugins: [
+      // Core editing features
+      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+      // Your account includes a free trial of TinyMCE premium features
+      // Try the most popular premium features until May 20, 2025:
+      'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+    ],
+    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | image',
+    images_upload_url: '/upload-image',
+    mergetags_list: [
+      { value: 'First.Name', title: 'First Name' },
+      { value: 'Email', title: 'Email' },
+    ],
+    automatic_uploads: true,
+    images_upload_handler: function (blobInfo, success, failure) {
+      const formData = new FormData();
+      formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+      fetch('/upload-image', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(result => {
+        success(result.location); // URL trả về sẽ được nhúng vào nội dung
+      })
+      .catch(() => {
+        failure('Upload failed');
+      });
+    }
+  });
+</script>
 </head>
 <body>
     <h1>Chỉnh sửa Giảng viên</h1>
@@ -12,8 +51,8 @@
         <input type="text" th:field="*{name}" required /><br/>
 
 
-        <label>CV:</label>
-        <textarea th:field="*{cv}" rows="4" cols="50"></textarea><br/>
+        <label for="cv">CV:</label><br>
+    <textarea id="cv" name="cv" rows="10" th:field="*{cv}"></textarea><br><br>
 
         <label>Ảnh đại diện:</label><br/>
     <img id="previewImage"
@@ -23,7 +62,7 @@
          height="150" /><br/>
 
     <!-- Input chọn file -->
-    <input type="file" name="imageFile" accept="image/*" onchange="previewSelectedImage(event)" /><br/>
+    	<input type="hidden" name="imgUrl" th:value="${supervisor.imgUrl}" />
     	
 
         <!-- Nếu muốn chỉnh cả department thì thêm dropdown tại đây -->
@@ -32,7 +71,7 @@
     </form>
     
     <script>
-function previewSelectedImage(event) {
+	function previewSelectedImage(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();

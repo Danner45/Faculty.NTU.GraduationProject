@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ch.qos.logback.core.model.Model;
@@ -49,21 +51,39 @@ public class SupervisorController {
 	}
 	
 	@PostMapping("/update/{id}")
-	public String updateSupervisor(@PathVariable("id") int id,
-	                               @ModelAttribute("supervisor") Supervisor updatedSupervisor,
-	                               @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
-	    if (!imageFile.isEmpty()) {
-	        // Lưu ảnh vào thư mục static/image/
-	        String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
+	public String updateSupervisor(@PathVariable Integer id,
+	                               @ModelAttribute Supervisor updatedSupervisor,
+	                               @RequestParam(value="imageFile", required = false) MultipartFile imageFile,
+	                               @RequestParam("imgUrl") String existingImgUrl) throws IOException {
+	    
+		if (imageFile != null && !imageFile.isEmpty()) {
+	        // Upload ảnh mới
+	        String filename = StringUtils.cleanPath(imageFile.getOriginalFilename());
 	        String uploadDir = new ClassPathResource("static/image/").getFile().getAbsolutePath();
-	        Path path = Paths.get(uploadDir, fileName);
+	        Path path = Paths.get(uploadDir, filename);
 	        Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-	        // Gán đường dẫn ảnh cho supervisor
-	        updatedSupervisor.setImgUrl("/image/" + fileName);
+	        updatedSupervisor.setImgUrl("/image/" + filename);
+	    } else {
+	        // Giữ lại ảnh cũ
+	        updatedSupervisor.setImgUrl(existingImgUrl);
 	    }
 
-	    supervisorService.saveSupervisor(id,updatedSupervisor);
+	    supervisorService.saveSupervisor(id, updatedSupervisor);
 	    return "redirect:/supervisors/detail/" + id;
+	}
+
+	
+	@PostMapping("/upload-image")
+	@ResponseBody
+	public Map<String, String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
+	    String filename = StringUtils.cleanPath(file.getOriginalFilename());
+	    String uploadDir = new ClassPathResource("static/image/uploads/").getFile().getAbsolutePath();
+	    Path path = Paths.get(uploadDir, filename);
+	    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+	    // Trả về URL ảnh để TinyMCE chèn vào nội dung
+	    String fileUrl = "/image/uploads/" + filename;
+	    return Map.of("location", fileUrl);
 	}
 }
