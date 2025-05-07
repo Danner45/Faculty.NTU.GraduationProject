@@ -7,15 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import falcuty.ntu.groupone.graduation.models.Supervisor;
-import falcuty.ntu.groupone.graduation.respositories.ISupervisorRespository;
+import falcuty.ntu.groupone.graduation.repositories.ISupervisorRepository;
 
 @Service
 public class SupervisorService implements ISupervisorService{
 
 	@Autowired
-	private ISupervisorRespository supervisorRespository;
+	private ISupervisorRepository supervisorRespository;
 	
-	public SupervisorService(ISupervisorRespository supervisorRespository) {
+	public SupervisorService(ISupervisorRepository supervisorRespository) {
 		this.supervisorRespository = supervisorRespository;
 	}
 
