@@ -53,20 +53,17 @@
 
     <textarea id="cv" name="cv" rows="10" th:field="*{cv}"></textarea><br><br>>
     <!-- Ảnh hiển thị -->
-    <label>Ảnh đại diện:</label><br/>
-    <textarea id="cv" name="cv" rows="10" th:field="*{cv}"></textarea><br><br>
-
-        <label>Ảnh đại diện:</label><br/>
     <img id="previewImage"
          th:src="@{${supervisor.imgUrl}}"
          alt="Ảnh đại diện"
          width="150"
          height="150" /><br/>
+    
+    <!-- Ảnh mới -->
+    <input type="file" name="imageFile" accept="image/*" onchange="previewSelectedImage(event)" /><br/>
 
-    <!-- Input chọn file -->
-    	
-
-        <!-- Nếu muốn chỉnh cả department thì thêm dropdown tại đây -->
+    <!-- ⚠️ Giữ lại ảnh cũ nếu không chọn ảnh mới -->
+    <input type="hidden" name="imgUrl" th:value="${supervisor.imgUrl}" />
 
         <button type="submit">Lưu thay đổi</button>
     </form>
