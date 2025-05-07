@@ -35,8 +35,11 @@ public class Supervisor {
 
     @Column(name = "email", nullable = false)
     private String email;
+    
+    @Column(name = "img_url", nullable = false)
+    private String imgUrl;
 
-    // Constructors
+	// Constructors
     public Supervisor() {}
 
     // Getters and Setters
@@ -111,5 +114,13 @@ public class Supervisor {
     public void setEmail(String email) {
         this.email = email;
     }
+    
+    public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 }
 
