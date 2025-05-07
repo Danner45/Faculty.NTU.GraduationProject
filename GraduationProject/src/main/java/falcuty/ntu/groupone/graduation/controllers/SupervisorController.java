@@ -53,19 +53,20 @@ public class SupervisorController {
 	@PostMapping("/update/{id}")
 	public String updateSupervisor(@PathVariable Integer id,
 	                               @ModelAttribute Supervisor updatedSupervisor,
-	                               @RequestParam(value="imageFile", required = false) MultipartFile imageFile,
-	                               @RequestParam("imgUrl") String existingImgUrl) throws IOException {
-	    
-		if (imageFile != null && !imageFile.isEmpty()) {
-	        // Upload ảnh mới
+	                               @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+	                               @RequestParam(value = "imgUrl", required = false) String existingImgUrl) throws IOException {
+
+	    // Nếu có ảnh mới → upload và gán lại đường dẫn
+	    if (imageFile != null && !imageFile.isEmpty()) {
 	        String filename = StringUtils.cleanPath(imageFile.getOriginalFilename());
 	        String uploadDir = new ClassPathResource("static/image/").getFile().getAbsolutePath();
+	        Files.createDirectories(Paths.get(uploadDir)); // Đảm bảo thư mục tồn tại
 	        Path path = Paths.get(uploadDir, filename);
 	        Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
 	        updatedSupervisor.setImgUrl("/image/" + filename);
 	    } else {
-	        // Giữ lại ảnh cũ
+	        // Nếu không chọn ảnh mới → dùng ảnh cũ
+	    	
 	        updatedSupervisor.setImgUrl(existingImgUrl);
 	    }
 

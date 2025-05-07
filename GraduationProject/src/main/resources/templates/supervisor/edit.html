@@ -19,6 +19,7 @@
     ],
     toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | image',
     images_upload_url: '/upload-image',
+    automatic_uploads: true,
     mergetags_list: [
       { value: 'First.Name', title: 'First Name' },
       { value: 'Email', title: 'Email' },
@@ -52,9 +53,9 @@
 
 
         <label for="cv">CV:</label><br>
-    <textarea id="cv" name="cv" rows="10" th:field="*{cv}"></textarea><br><br>
-
-        <label>Ảnh đại diện:</label><br/>
+    <textarea id="cv" name="cv" rows="10" th:field="*{cv}"></textarea><br><br>>
+    <!-- Ảnh hiển thị -->
+    <label>Ảnh đại diện:</label><br/>
     <img id="previewImage"
          th:src="@{${supervisor.imgUrl}}"
          alt="Ảnh đại diện"
@@ -62,7 +63,7 @@
          height="150" /><br/>
 
     <!-- Input chọn file -->
-    	<input type="hidden" name="imgUrl" th:value="${supervisor.imgUrl}" />
+    <input type="file" name="imageFile" accept="image/*" onchange="previewSelectedImage(event)" /><br/>
     	
 
         <!-- Nếu muốn chỉnh cả department thì thêm dropdown tại đây -->
