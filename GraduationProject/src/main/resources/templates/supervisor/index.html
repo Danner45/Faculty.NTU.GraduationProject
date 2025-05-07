@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Chi tiết Giảng viên</title>
+  <style>
+    .info-box {
+      max-width: 700px;
+      margin: auto;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      font-family: sans-serif;
+    }
+    .info-box img {
+      width: 150px;
+      height: 150px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+    .info-box h2 {
+      margin-top: 0;
+    }
+    .label {
+      font-weight: bold;
+    }
+    .cv-content {
+      background-color: #f9f9f9;
+      padding: 15px;
+      margin-top: 20px;
+      border: 1px dashed #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<div class="info-box">
+  <img th:src="@{${supervisor.imgUrl}}" alt="Ảnh đại diện"/>
+
+  <h2 th:text="${supervisor.name}">Nguyễn Văn A</h2>
+
+  <p><span class="label">Email:</span> <span th:text="${supervisor.email}">email@example.com</span></p>
+  <p><span class="label">Chức vụ:</span> <span th:text="${supervisor.position}">1</span></p>
+  <p><span class="label">Khoa:</span> <span th:text="${supervisor.department.name}">Công nghệ phần mềm</span></p>
+  <p><span class="label">Số đề tài hướng dẫn tối đa:</span> <span th:text="${supervisor.maxTopic}">3</span></p>
+  <p><span class="label">Số đề tài nghiên cứu tối đa:</span> <span th:text="${supervisor.maxResearch}">5</span></p>
+
+  <h3>CV</h3>
+  <!-- Sử dụng th:utext để hiển thị nội dung HTML từ TinyMCE -->
+  <div class="cv-content" th:utext="${supervisor.cv}">
+    Nội dung CV hiển thị ở đây...
+  </div>
+
+  <br/>
+  <a th:href="@{'/supervisors/edit/' + ${supervisor.id}}">
+    <button>Chỉnh sửa</button>
+  </a>
+</div>
+
+</body>
+</html>
