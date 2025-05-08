@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -48,9 +49,13 @@ public class SecurityConfig {
                    .build();
     }
 
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder(); // Đảm bảo bạn mã hóa mật khẩu trước khi lưu
+//    }
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Đảm bảo bạn mã hóa mật khẩu trước khi lưu
+        return NoOpPasswordEncoder.getInstance(); // Dành cho TEST, KHÔNG DÙNG khi deploy thật
     }
 
 }
