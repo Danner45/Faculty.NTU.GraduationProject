@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Trang chủ</title>
+</head>
+<body>
+    <h1>Chào mừng bạn đến hệ thống</h1>
+    <p>Email đăng nhập: <b th:text="${userEmail}"></b></p>
+
+    <p>
+        <a href="/student/dashboard">Trang sinh viên</a> |
+        <a href="/supervisor/dashboard">Trang giảng viên</a> |
+        <a href="/logout">Đăng xuất</a>
+    </p>
+</body>
+</html>
