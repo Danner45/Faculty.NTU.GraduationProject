@@ -8,7 +8,7 @@
   <link th:href="@{/style.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:replace="layout::header(${supervisor.name})" class="nav_custom"></div>
+	<div th:replace="layout::header(${supervisor.name})"></div>
 <div class="info-box">
   <img th:src="@{${supervisor.imgUrl}}" alt="Ảnh đại diện"/>
 
