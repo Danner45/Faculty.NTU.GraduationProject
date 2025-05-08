@@ -39,7 +39,7 @@ public class SupervisorController {
 	public String getDetail(@PathVariable Integer id,ModelMap model) {
 		Supervisor supervisor = supervisorService.findSupervisorById(id).orElseThrow(() -> new RuntimeException("Supervisor not found with ID: " + id));;
 		model.addAttribute(supervisor);
-		return "supervisor/index";
+		return "supervisor/detail";
 	}
 	
 	@GetMapping("/edit/{id}")

@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+.intro{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.intro .intro_text h2{
+	color: #AF2C2C;	
+	font-family: Geologica;
+	font-size: 48px;
+	font-style: normal;
+	font-weight: 800;
+	line-height: 150%;
+}
+
+.intro .intro_img{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.intro_img .school_img{	
+	width: 390px;           
+  	height: 390px;
+  	background-image: url('/image/system/background.png');
+  	background-position: 0px -100px;
+  	background-size: 220%;
+  	overflow: hidden;
+  	border-radius: 50%;
+  	position: relative;
+}
+
+.intro_img .school_img:after{
+	content: "";
+	width: 390px;
+	height: 390px;
+	border: 1px solid var(--sub-text-color);
+	position: absolute;
+	
+}

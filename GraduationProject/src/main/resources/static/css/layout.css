@@ -84,10 +84,11 @@ a{
 	max-width: 100%;
 	background-color: var(--white-color);
 	padding: 1.5rem 4rem;
-	border-radius: var(--border);
+	border-radius: var(--border) var(--border) 0 0;
 	margin-left: 0px;
 }
 
 .footer_custom .footer_part:last-child{
-	padding: 10px;
+	padding-top: 10px;
+	padding-left: 50px;
 }
