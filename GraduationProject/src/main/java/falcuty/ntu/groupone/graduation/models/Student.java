@@ -32,11 +32,13 @@ public class Student {
     @Column(name = "avg_grade", nullable = false)
     private Double avgGrade;
 
+    @Column(name = "img_url", nullable = false)
+    private String imgUrl;
     // Constructors
     public Student() {}
 
     public Student(String id, MyClass myClass, String name, String cv, String email, String phoneNumber,
-			String password, Double avgGrade) {
+			String password, Double avgGrade, String imgURL) {
 		super();
 		this.id = id;
 		this.myClass = myClass;
@@ -46,6 +48,7 @@ public class Student {
 		this.phoneNumber = phoneNumber;
 		this.password = password;
 		this.avgGrade = avgGrade;
+		this.imgUrl = imgURL;
 	}
 
 	// Getters and Setters
@@ -57,11 +60,11 @@ public class Student {
         this.id = id;
     }
 
-    public MyClass getClassEntity() {
+    public MyClass getMyClass() {
         return myClass;
     }
 
-    public void setClassEntity(MyClass myClass) {
+    public void setMyClass(MyClass myClass) {
         this.myClass = myClass;
     }
 
@@ -112,4 +115,14 @@ public class Student {
     public void setAvgGrade(Double avgGrade) {
         this.avgGrade = avgGrade;
     }
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+    
+    
 }
