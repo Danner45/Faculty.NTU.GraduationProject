@@ -13,31 +13,36 @@ import falcuty.ntu.groupone.graduation.repositories.ISupervisorRepository;
 public class SupervisorService implements ISupervisorService{
 
 	@Autowired
-	private ISupervisorRepository supervisorRespository;
+	private ISupervisorRepository supervisorRepository;
 	
 	public SupervisorService(ISupervisorRepository supervisorRespository) {
-		this.supervisorRespository = supervisorRespository;
+		this.supervisorRepository = supervisorRespository;
 	}
 
 	@Override
 	public List<Supervisor> getAllSupervisors() {
-		return supervisorRespository.findAll();
+		return supervisorRepository.findAll();
 	}
 
 	@Override
     public Supervisor saveSupervisor(Integer id, Supervisor updatedSupervisor) {
-        return supervisorRespository.findById(id)
+        return supervisorRepository.findById(id)
             .map(existing -> {
                 existing.setCv(updatedSupervisor.getCv());
                 existing.setImgUrl(updatedSupervisor.getImgUrl());
-                return supervisorRespository.save(existing);
+                return supervisorRepository.save(existing);
             })
             .orElseThrow(() -> new RuntimeException("Supervisor not found with ID: " + id));
     }
 
 	@Override
 	public Optional<Supervisor> findSupervisorById(Integer id) {
-		return supervisorRespository.findById(id);
+		return supervisorRepository.findById(id);
+	}
+
+	@Override
+	public Optional<Supervisor> findSupervisorByEmail(String email) {
+		return supervisorRepository.findByEmail(email);
 	}
 
 	

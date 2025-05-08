@@ -6,7 +6,8 @@ import java.util.Optional;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
 
 public interface ISupervisorService {
-	public List<Supervisor> getAllSupervisors();
-	public Supervisor saveSupervisor(Integer id,Supervisor supervisor);
-	public Optional<Supervisor> findSupervisorById(Integer id);
+	List<Supervisor> getAllSupervisors();
+	Supervisor saveSupervisor(Integer id,Supervisor supervisor);
+	Optional<Supervisor> findSupervisorById(Integer id);
+	Optional<Supervisor> findSupervisorByEmail(String email);
 }
