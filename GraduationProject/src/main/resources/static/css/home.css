@@ -15,28 +15,35 @@
 	line-height: 150%;
 }
 
+.intro .intro_text button{
+	color: 
+}
+
 .intro .intro_img{
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	position: relative;
 }
 
 .intro_img .school_img{	
 	width: 390px;           
   	height: 390px;
-  	background-image: url('/image/system/background.png');
+  	background-image:linear-gradient(to bottom, rgba(175, 44, 44, 0.1), rgba(73, 18, 18, 0.5)), url('/image/system/background.png');
   	background-position: 0px -100px;
-  	background-size: 220%;
+  	background-size: 150% 150%, 220%;
   	overflow: hidden;
   	border-radius: 50%;
-  	position: relative;
 }
 
-.intro_img .school_img:after{
+.intro_img::after{
 	content: "";
 	width: 390px;
 	height: 390px;
 	border: 1px solid var(--sub-text-color);
+	border-radius: 50%;
 	position: absolute;
-	
+	top: 18px;
+	right: 17%;
 }
+
