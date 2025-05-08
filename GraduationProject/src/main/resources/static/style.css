@@ -71,7 +71,7 @@ a{
 }
 
 .footer_container{
-	padding-top: 42px;
+	padding-top: 20px;
 	background-color: var(--main-color);
 }
 
@@ -80,6 +80,14 @@ a{
 	font-weight: 700;
 }
 
-.footer_container .footer_part:last-child{
-	padding-top: 10px;
+.footer_custom{
+	max-width: 100%;
+	background-color: var(--white-color);
+	padding: 1.5rem 4rem;
+	border-radius: var(--border);
+	margin-left: 0px;
+}
+
+.footer_custom .footer_part:last-child{
+	padding: 10px;
 }
