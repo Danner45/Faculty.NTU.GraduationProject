@@ -10,18 +10,46 @@
 </head>
 <body>
 	<div th:replace="layout::header('Phạm Thị Thu Thúy')"></div>
-	<div class="container p-5">
+	<div class="container-fluid">
 		<div class="intro row">
 			<div class="col intro_text">
 				<h2>HỆ THỐNG ĐỒ ÁN CHUYÊN ĐỀ</h2>
 				<p>Ra trường hay không, nằm trong tay bạn...</p>
-				<button>Đăng ký ngay <img src="/image/system/arrow.svg" alt="next"></button>
+				<button >Tạo đề tài <img src="/image/system/arrow.svg" alt="next"></button>
 			</div>
 			<div class="col intro_img">
 				<div class="school_img"></div>
 			</div>
 		</div>
+		<div class="this_year_topics">
+			<h3>Đề tài của tôi cho khóa 2021-2025</h3>
+			<div class="topcic_list">
+				<h3 style="color:var(--main-color)">THẦY/CÔ CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
+				<div class="card_list">
+					<div class="card_topic">
+						<div class="card_content">
+							<p>Phát triển ứng dụng xác thực khuôn mặt sử dụng mạng neural tích chập</p>
+							<ul>
+								<li>Lĩnh vực: <span>AI</span></li>
+								<li>Khóa: <span>K63</span></li>
+								<li>Trạng thái: <span>Chờ đăng ký</span></li>
+							</ul>
+						</div>
+					</div>
+					<div class="card_topic">
+						
+					</div>
+					<div class="card_topic">
+						
+					</div>
+					<div class="card_topic">
+						
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+	
 	<div th:replace="layout::footer"></div>
 </body>
 </html>
