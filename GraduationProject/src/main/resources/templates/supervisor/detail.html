@@ -30,13 +30,11 @@
   					</div>
 				</div>
 			</div>
-			
+			<a th:href="@{'/supervisors/edit/' + ${supervisor.id}}">
+    			<button>Chỉnh sửa</button>
+  			</a>
 		</div>
 	</div>
-
-  <a th:href="@{'/supervisors/edit/' + ${supervisor.id}}">
-    <button>Chỉnh sửa</button>
-  </a>
 	<div th:replace="layout::footer"></div>
 </body>
 </html>
