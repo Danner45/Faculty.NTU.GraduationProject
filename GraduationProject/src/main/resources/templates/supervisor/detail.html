@@ -9,16 +9,14 @@
 </head>
 <body>
 	<div th:replace="layout::header(${supervisor.name})"></div>
-<div class="info-box">
-  <img th:src="@{${supervisor.imgUrl}}" alt="Ảnh đại diện"/>
-
-  <h2 th:text="${supervisor.name}">Nguyễn Văn A</h2>
-
-  <p><span class="label">Email:</span> <span th:text="${supervisor.email}">email@example.com</span></p>
-  <p><span class="label">Chức vụ:</span> <span th:text="${supervisor.position}">1</span></p>
-  <p><span class="label">Khoa:</span> <span th:text="${supervisor.department.name}">Công nghệ phần mềm</span></p>
-  <p><span class="label">Số đề tài hướng dẫn tối đa:</span> <span th:text="${supervisor.maxTopic}">3</span></p>
-  <p><span class="label">Số đề tài nghiên cứu tối đa:</span> <span th:text="${supervisor.maxResearch}">5</span></p>
+	<div class="info-box">
+  	<img th:src="@{${supervisor.imgUrl}}" alt="Ảnh đại diện"/>
+	<h2 th:text="${supervisor.name}"></h2>
+	<p><span class="label">Email:</span> <span th:text="${supervisor.email}">email@example.com</span></p>
+  	<p><span class="label">Chức vụ:</span> <span th:text="${supervisor.position}">1</span></p>
+  	<p><span class="label">Khoa:</span> <span th:text="${supervisor.department.name}">Công nghệ phần mềm</span></p>
+  	<p><span class="label">Số đề tài hướng dẫn tối đa:</span> <span th:text="${supervisor.maxTopic}">3</span></p>
+  	<p><span class="label">Số đề tài nghiên cứu tối đa:</span> <span th:text="${supervisor.maxResearch}">5</span></p>
 
   <h3>CV</h3>
   <!-- Sử dụng th:utext để hiển thị nội dung HTML từ TinyMCE -->

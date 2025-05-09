@@ -14,13 +14,13 @@
 			</div>
 			<ul class="nav justify-content-end">
 			  <li class="">
-			    <a class="" aria-current="page" href="/">Trang chủ</a>
+			    <a aria-current="page" th:href="@{/}" th:classappend="${currentPath == '/'} ? 'nav_active' : ''">Trang chủ</a>
 			  </li>
 			  <li class="">
-			    <a class="" aria-current="page" href="#">Đồ án/Chuyên đề</a>
+			    <a aria-current="page" th:href="@{/}" th:classappend="${currentPath == '/topic'} ? 'nav_active' : ''">Đồ án/Chuyên đề</a>
 			  </li>
 			  <li class="">
-			    <a th:text="${name}" class="" aria-current="page" href="#"></a>
+			    <a th:text="${name}" aria-current="page" href="/supervisors/detail/1"></a>
 			  </li>
 			</ul>
 		</div>

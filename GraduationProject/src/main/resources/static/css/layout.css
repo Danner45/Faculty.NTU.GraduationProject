@@ -41,6 +41,10 @@ a{
 	padding: 0 42px;
 }
 
+.nav_active{
+	color: #EBAD57;
+}
+
 .logo{
 	display: flex;
 	align-items: center;
