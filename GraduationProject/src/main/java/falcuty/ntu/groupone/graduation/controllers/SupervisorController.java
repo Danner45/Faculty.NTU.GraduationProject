@@ -72,18 +72,9 @@ public class SupervisorController {
 	    supervisorService.saveSupervisor(id, updatedSupervisor);
 	    return "redirect:/supervisors/detail/" + id;
 	}
-
 	
-	@PostMapping("/upload-image")
-	@ResponseBody
-	public Map<String, String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
-	    String filename = StringUtils.cleanPath(file.getOriginalFilename());
-	    String uploadDir = new ClassPathResource("static/image/uploads/").getFile().getAbsolutePath();
-	    Path path = Paths.get(uploadDir, filename);
-	    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-	    // Trả về URL ảnh để TinyMCE chèn vào nội dung
-	    String fileUrl = "/image/uploads/" + filename;
-	    return Map.of("location", fileUrl);
+	@GetMapping("/topics/all")
+	public String getAllTopics() {
+		return "supervisor/topic_list";
 	}
 }
