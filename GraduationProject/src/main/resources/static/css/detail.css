@@ -1,0 +1,35 @@
+@charset "UTF-8";
+
+.default_infor{
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+	margin: 50px 87px 40px 87px;
+}
+
+.default_infor img{
+	width: 304px;
+	height: 304px;
+	border-radius: 50%;
+}
+
+.default_infor h2{
+	font-size: 2rem;
+}
+
+.more_infor{
+	margin: 0 87px 40px 87px;
+}
+
+.more_infor .title{
+	padding-bottom: 20px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid black;
+}
+
+.cv_container{
+	max-width: 100%;
+	overflow: hidden;
+	padding: 24px;
+	border: 1px solid black;
+}
