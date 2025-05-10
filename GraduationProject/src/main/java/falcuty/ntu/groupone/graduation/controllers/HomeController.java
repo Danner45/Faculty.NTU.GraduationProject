@@ -122,21 +122,16 @@ public class HomeController {
 	
 	@PostMapping("/profile/update")
 	public String updateProfile(@AuthenticationPrincipal UserDetails userDetails,
-	                            @ModelAttribute("user") Object updatedUser,
 	                            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-	                            @RequestParam(value = "imgUrl", required = false) String existingImgUrl) throws IOException {
+	                            @RequestParam(value = "imgUrl", required = false) String existingImgUrl,
+	                            @RequestParam("cv") String cv) throws IOException {
 
 	    String email = userDetails.getUsername();
 
-	    // Nếu là Supervisor
 	    Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
-	    if (supervisorOpt.isPresent() && updatedUser instanceof Supervisor supervisorData) {
+	    if (supervisorOpt.isPresent()) {
 	        Supervisor supervisor = supervisorOpt.get();
-
-	        // Cập nhật thông tin cơ bản
-	        supervisor.setCv(supervisorData.getCv());
-
-	        // Cập nhật ảnh
+	        supervisor.setCv(cv);
 	        if (imageFile != null && !imageFile.isEmpty()) {
 	            String filename = StringUtils.cleanPath(imageFile.getOriginalFilename());
 	            String uploadDir = new ClassPathResource("static/image/").getFile().getAbsolutePath();
@@ -147,18 +142,14 @@ public class HomeController {
 	        } else {
 	            supervisor.setImgUrl(existingImgUrl);
 	        }
-
-	        supervisorService.saveSupervisor(email, supervisorData) // Update
-	        return "redirect:/profile"; // hoặc /supervisors/detail/{id} nếu bạn muốn
+	        supervisorService.saveSupervisor(email, supervisor);
+	        return "redirect:/profile/" + email;
 	    }
 
-	    // Nếu là Student
 	    Optional<Student> studentOpt = studentService.findStudentByEmail(email);
-	    if (studentOpt.isPresent() && updatedUser instanceof Student studentData) {
+	    if (studentOpt.isPresent()) {
 	        Student student = studentOpt.get();
-
-	        student.setCv(studentData.getCv());
-
+	        student.setCv(cv);
 	        if (imageFile != null && !imageFile.isEmpty()) {
 	            String filename = StringUtils.cleanPath(imageFile.getOriginalFilename());
 	            String uploadDir = new ClassPathResource("static/image/").getFile().getAbsolutePath();
@@ -169,11 +160,11 @@ public class HomeController {
 	        } else {
 	            student.setImgUrl(existingImgUrl);
 	        }
-
-	        studentService.saveStudent(email, studentData)
-	        return "redirect:/profile";
+	        studentService.saveStudent(email, student);
+	        return "redirect:/profile/" + email;
 	    }
 
 	    throw new IllegalArgumentException("Không tìm thấy người dùng để cập nhật.");
 	}
+
 }

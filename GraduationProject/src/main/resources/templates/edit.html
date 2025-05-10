@@ -53,7 +53,7 @@
 <body>
 	<div th:replace="layout::header(${user.name}, ${email})"></div>
 	<div class="container-fluid">
-		<form th:action="@{'/profile/update/" th:object="${user}" method="post" enctype="multipart/form-data">
+		<form th:action="@{'/profile/update'}" th:object="${user}" method="post" enctype="multipart/form-data">
 			<div class="default_infor">
 				<div class="edit_img">
 					<label class="avatar-upload">
