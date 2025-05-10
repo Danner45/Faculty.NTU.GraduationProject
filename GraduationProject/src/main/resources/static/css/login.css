@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+.login_content{
+	margin: 40px 176px;
+	border-radius: var(--border);
+	background-color: #F5F5F5;
+}
+
+.login_form h3{
+	color: var(--main-color);
+	font-family: Geologica;
+	font-size: 40px;
+	font-weight: 600;
+}
+
+
+.login_form, .input_field{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.login_form input{
+	width: 90%;
+	height: 45px;
+	border-radius: var(--border);
+	background-color: var(--white-color);
+	padding: 0 16px;
+}
+
+.input_field{
+	width: 100%;
+	gap: 10px;
+}
+
+.input_field label{
+	width: 90%;
+	display: flex;
+}

@@ -40,7 +40,7 @@ public class LoginService implements UserDetailsService {
             Student s = optionalStu.get();
             return User.builder()
                     .username(s.getEmail())
-                    .password(s.getPassword())
+                    .password("{noop}" + s.getPassword())
                     .roles("STUDENT")
                     .build();
         }

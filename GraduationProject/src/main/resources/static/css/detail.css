@@ -13,6 +13,39 @@
 	border-radius: 50%;
 }
 
+.edit_img img{
+	object-fit: cover;
+    transition: 0.3s;
+}
+
+.avatar-upload {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.avatar-upload .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 304px;
+    height: 304px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+.avatar-upload:hover .overlay {
+    opacity: 1;
+}
+
 .default_infor h2{
 	font-size: 2rem;
 }
@@ -28,8 +61,15 @@
 }
 
 .cv_container{
-	max-width: 100%;
-	overflow: hidden;
 	padding: 24px;
 	border: 1px solid black;
+}
+
+.more_infor button{
+	background-color: var(--main-color);
+	padding: 14px 24px;
+	margin-top: 24px;
+	color: var(--white-color);
+	border: none;
+	border-radius: var(--border);
 }

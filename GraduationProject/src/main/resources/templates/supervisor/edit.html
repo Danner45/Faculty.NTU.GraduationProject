@@ -1,73 +1,91 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Chỉnh sửa thông tin Giảng viên</title>
+    <title>Chỉnh sửa thông tin</title>
     <meta charset="UTF-8">
     <!-- Place the first <script> tag in your HTML's <head> -->
-
-<script src="/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  	<link th:href="@{/css/layout.css}" rel="stylesheet">
+  	<link th:href="@{/css/detail.css}" rel="stylesheet">
+	<script src="/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
 
 <!-- Place the following <script> and <textarea> tags your HTML's <body> -->
-<script>
-  tinymce.init({
-    selector: 'textarea',
-    plugins: [
-      // Core editing features
-      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-      // Your account includes a free trial of TinyMCE premium features
-      // Try the most popular premium features until May 20, 2025:
-      'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
-    ],
-    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | image',
-    images_upload_url: '/upload-image',
-    automatic_uploads: true,
-    mergetags_list: [
-      { value: 'First.Name', title: 'First Name' },
-      { value: 'Email', title: 'Email' },
-    ],
-    automatic_uploads: true,
-    images_upload_handler: function (blobInfo, success, failure) {
-      const formData = new FormData();
-      formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-      fetch('/upload-image', {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => response.json())
-      .then(result => {
-        success(result.location); // URL trả về sẽ được nhúng vào nội dung
-      })
-      .catch(() => {
-        failure('Upload failed');
-      });
-    }
-  });
-</script>
+	<script>
+	  tinymce.init({
+	    selector: 'textarea',
+	    width: 1433,
+	    height: 700,
+	    plugins: [
+	      // Core editing features
+	      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
+	      // Your account includes a free trial of TinyMCE premium features
+	      // Try the most popular premium features until May 20, 2025:
+	      'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
+	    ],
+	    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | image',
+	    images_upload_url: '/upload-image',
+	    automatic_uploads: true,
+	    mergetags_list: [
+	      { value: 'First.Name', title: 'First Name' },
+	      { value: 'Email', title: 'Email' },
+	    ],
+	    automatic_uploads: true,
+	    images_upload_handler: function (blobInfo, success, failure) {
+	      const formData = new FormData();
+	      formData.append('file', blobInfo.blob(), blobInfo.filename());
+	
+	      fetch('/upload-image', {
+	        method: 'POST',
+	        body: formData
+	      })
+	      .then(response => response.json())
+	      .then(result => {
+	        success(result.location); // URL trả về sẽ được nhúng vào nội dung
+	      })
+	      .catch(() => {
+	        failure('Upload failed');
+	      });
+	    }
+	  });
+	</script>
 </head>
 <body>
-    <h1>Chỉnh sửa Giảng viên</h1>
-
-    <form th:action="@{'/supervisors/update/' + ${supervisor.id}}" th:object="${supervisor}" method="post" enctype="multipart/form-data">
-        <label>Tên:</label>
-        <input type="text" th:field="*{name}" required /><br/>
-
-    <textarea id="cv" name="cv" rows="10" th:field="*{cv}"></textarea><br><br>>
-    <!-- Ảnh hiển thị -->
-    <img id="previewImage"
-         th:src="@{${supervisor.imgUrl}}"
-         alt="Ảnh đại diện"
-         width="150"
-         height="150" /><br/>
+	<div th:replace="layout::header(${supervisor.name})"></div>
+	<div class="container-fluid">
+		<form th:action="@{'/supervisors/update/' + ${supervisor.id}}" th:object="${supervisor}" method="post" enctype="multipart/form-data">
+			<div class="default_infor">
+				<div class="edit_img">
+					<label class="avatar-upload">
+					    <img th:src="@{${supervisor.imgUrl}}" alt="Ảnh đại diện" id="avatar"/>
+					    <div class="overlay">
+					        <span>🖊 Đổi ảnh</span>
+					    </div>
+					    <input type="file" name="imageFile" accept="image/*" onchange="previewSelectedImage(event)" hidden />
+					</label>
+		    		<!-- ⚠️ Giữ lại ảnh cũ nếu không chọn ảnh mới -->
+		    		<input type="hidden" name="imgUrl" th:value="${supervisor.imgUrl}" />
+				</div>
+				<div class="infor_text">
+					<h2>Thông tin giảng viên:</h2>
+					<p>Họ và tên: <span th:text="${supervisor.name}"></span></p>
+					<p>Email: <span th:text="${supervisor.email}"></span></p>
+				  	<p>Chức vụ: <span th:text="${supervisor.position}"></span></p>
+				  	<p>Khoa: <span th:text="${supervisor.department.name}"></span></p>
+				</div>
+			</div>
+		
+			<div class="more_infor">
+				<h2 class="title">Thêm thông tin tại đây</h2>
+		    	<textarea id="cv" name="cv" rows="10" th:field="*{cv}"></textarea><br/>
+	        	<button type="submit">Lưu thay đổi</button>
+			</div>
+	    </form>
+	
+	</div>
+    <div th:replace="layout::footer"></div>
     
-    <!-- Ảnh mới -->
-    <input type="file" name="imageFile" accept="image/*" onchange="previewSelectedImage(event)" /><br/>
-
-    <!-- ⚠️ Giữ lại ảnh cũ nếu không chọn ảnh mới -->
-    <input type="hidden" name="imgUrl" th:value="${supervisor.imgUrl}" />
-
-        <button type="submit">Lưu thay đổi</button>
-    </form>
+    
     
     <script>
 	function previewSelectedImage(event) {
@@ -75,7 +93,7 @@
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const preview = document.getElementById("previewImage");
+            const preview = document.getElementById("avatar");
             preview.src = e.target.result;
         };
         reader.readAsDataURL(file);
