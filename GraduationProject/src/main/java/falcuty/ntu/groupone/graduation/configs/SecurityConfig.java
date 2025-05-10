@@ -14,7 +14,9 @@ public class SecurityConfig {
 		return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/login", "/css/**", "/js/**").permitAll()
+                                .requestMatchers("/login").permitAll()
+                                .requestMatchers("/supervisors/**").hasRole("SUPERVIOSR")
+                                .requestMatchers("/student/**").hasRole("STUDENT")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -23,7 +25,7 @@ public class SecurityConfig {
                         		.defaultSuccessUrl("/", true)
                         		.permitAll()
                 )
-                .logout(config -> config.logoutSuccessUrl("/"))
+                .logout(config -> config.logoutSuccessUrl("/login"))
                 .build();
 	}
 }

@@ -9,28 +9,28 @@
   <link th:href="@{/css/detail.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:replace="layout::header(${supervisor.name})"></div>
+	<div th:replace="layout::header(${user.name})"></div>
 	<div class="container-fluid">
 		<div class="default_infor">
-			<img th:src="@{${supervisor.imgUrl}}" alt="Ảnh đại diện"/>
-			<div class="infor_text">
+			<img th:src="@{${user.imgUrl}}" alt="Ảnh đại diện"/>
+			<div class="infor_text" th:if="${type} == 'supervisor'">
 				<h2>Thông tin giảng viên:</h2>
-				<p>Họ và tên: <span th:text="${supervisor.name}"></span></p>
-				<p>Email: <span th:text="${supervisor.email}"></span></p>
-			  	<p>Chức vụ: <span th:text="${supervisor.position}"></span></p>
-			  	<p>Khoa: <span th:text="${supervisor.department.name}"></span></p>
+				<p>Họ và tên: <span th:text="${user.name}"></span></p>
+				<p>Email: <span th:text="${user.email}"></span></p>
+			  	<p>Chức vụ: <span th:text="${user.position}"></span></p>
+			  	<p>Khoa: <span th:text="${user.department.name}"></span></p>
 			</div>
 		</div>
 		<div class="more_infor">
 			<h2 class="title">Thông tin thêm</h2>
 			<div class="cv_container">
 				<div style="max-width: 100%; overflow: hidden;">
-					<div class="cv_content" th:utext="${supervisor.cv}">
+					<div class="cv_content" th:utext="${user.cv}">
 						<h2>Chưa có thông tin thêm</h2>
   					</div>
 				</div>
 			</div>
-			<a th:href="@{'/supervisors/edit/' + ${supervisor.id}}">
+			<a th:href="@{'/profile/edit'}">
     			<button>Chỉnh sửa</button>
   			</a>
 		</div>
