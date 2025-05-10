@@ -33,8 +33,20 @@ public class HomeController {
 	@GetMapping("/")
 	public String getHome(HttpServletRequest request, ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		String email = userDetails.getUsername();
-		Optional<Supervisor> supervisor = supervisorService.findSupervisorByEmail(email);
-		model.addAttribute("supervisor", supervisor.get().getName());
+		Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
+		if (supervisorOpt.isPresent()) {
+			model.addAttribute("type", "supervisor");
+			model.addAttribute("name", supervisorOpt.get().getName());
+		} else {
+			Optional<Student> studentOpt = studentService.findStudentByEmail(email);
+			if (studentOpt.isPresent()) {
+				model.addAttribute("type", "student");
+				model.addAttribute("name", studentOpt.get().getName());
+		    } else {
+		        model.addAttribute("name", "Người dùng không xác định");
+		    }
+		}
+		model.addAttribute("email", email);
 		model.addAttribute("currentPath", request.getRequestURI());
 		return "index";
 	}
@@ -44,23 +56,30 @@ public class HomeController {
 		return "login";
 	}
 	
-	@GetMapping("/profile")
-	public String getDetail(ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
-		String username = userDetails.getUsername();
-		if (hasRole(userDetails, "SUPERVISOR")) {
-	        Supervisor supervisor = supervisorService.findSupervisorByEmail(username)
-	            .orElseThrow(() -> new RuntimeException("Supervisor not found"));
+	@GetMapping("/profile/{email}")
+	public String getDetail(@PathVariable String email,
+	                          @AuthenticationPrincipal UserDetails userDetails,
+	                          ModelMap model) {
+	    Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
+	    Optional<Student> studentOpt = studentService.findStudentByEmail(email);
+
+	    if (supervisorOpt.isPresent()) {
+	        Supervisor supervisor = supervisorOpt.get();
+	        boolean isOwner = userDetails != null && userDetails.getUsername().equals(supervisor.getEmail());
 	        model.addAttribute("user", supervisor);
 	        model.addAttribute("type", "supervisor");
-	    } else if (hasRole(userDetails, "STUDENT")) {
-	        Student student = studentService.findStudentByEmail(username)
-	            .orElseThrow(() -> new RuntimeException("Student not found"));
+	        model.addAttribute("isOwner", isOwner);
+	        return "profile/view";
+	    } else if (studentOpt.isPresent()) {
+	        Student student = studentOpt.get();
+	        boolean isOwner = userDetails != null && userDetails.getUsername().equals(student.getEmail());
 	        model.addAttribute("user", student);
 	        model.addAttribute("type", "student");
+	        model.addAttribute("isOwner", isOwner);
+	        return "profile/view";
 	    } else {
-	        throw new AccessDeniedException("No access");
+	        throw new RuntimeException("User not found");
 	    }
-		return "detail";
 	}
 	
 	@GetMapping("/profile/edit")

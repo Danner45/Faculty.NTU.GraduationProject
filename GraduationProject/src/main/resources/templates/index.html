@@ -9,13 +9,13 @@
   <link th:href="@{/css/home.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:replace="layout::header(${supervisor})"></div>
+	<div th:replace="layout::header(${name})"></div>
 	<div class="container-fluid">
 		<div class="intro row">
 			<div class="col intro_text">
 				<h2>HỆ THỐNG ĐỒ ÁN CHUYÊN ĐỀ</h2>
 				<p>Ra trường hay không, nằm trong tay bạn...</p>
-				<button >Tạo đề tài <img src="/image/system/arrow.svg" alt="next"></button>
+				<a href="/project/create"><button>Tạo đề tài <img src="/image/system/arrow.svg" alt="next"></button></a>
 			</div>
 			<div class="col intro_img">
 				<div class="school_img"></div>
