@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.add_project{
+	margin: 24px 87px;
+}
+
+.add_project h3{
+	font-family: Geologica;
+	font-size: 2rem;
+	font-weight: 600;
+}

@@ -26,7 +26,8 @@ public class ProjectController {
 
         Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
-        model.addAttribute("supervisor", supervisor);
+        model.addAttribute("email", email);
+        model.addAttribute("name", supervisor.getName());
         return "new_project";
     }
 }
