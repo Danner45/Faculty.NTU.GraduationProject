@@ -38,3 +38,9 @@
 	width: 90%;
 	display: flex;
 }
+
+.login_form button{
+	background-color: var(--main-color);
+	width: 90%;
+	border-radius: var(--border);
+}

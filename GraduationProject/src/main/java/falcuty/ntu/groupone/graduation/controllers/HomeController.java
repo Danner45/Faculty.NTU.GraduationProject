@@ -69,17 +69,18 @@ public class HomeController {
 	        model.addAttribute("user", supervisor);
 	        model.addAttribute("type", "supervisor");
 	        model.addAttribute("isOwner", isOwner);
-	        return "profile/view";
+	        
 	    } else if (studentOpt.isPresent()) {
 	        Student student = studentOpt.get();
 	        boolean isOwner = userDetails != null && userDetails.getUsername().equals(student.getEmail());
 	        model.addAttribute("user", student);
 	        model.addAttribute("type", "student");
 	        model.addAttribute("isOwner", isOwner);
-	        return "profile/view";
 	    } else {
 	        throw new RuntimeException("User not found");
 	    }
+	    model.addAttribute("email", email);
+	    return "detail";
 	}
 	
 	@GetMapping("/profile/edit")
@@ -91,7 +92,7 @@ public class HomeController {
 	        .orElseThrow(() -> new IllegalArgumentException("Supervisor not found for username: " + username));
 
 	    model.addAttribute("supervisor", supervisor);
-	    return "supervisor/edit";
+	    return "edit";
 	}
 	
 	private boolean hasRole(UserDetails userDetails, String role) {
