@@ -51,27 +51,34 @@
 	</script>
 </head>
 <body>
-	<div th:replace="layout::header(${supervisor.name})"></div>
+	<div th:replace="layout::header(${user.name}, ${email})"></div>
 	<div class="container-fluid">
-		<form th:action="@{'/supervisors/update/' + ${supervisor.id}}" th:object="${supervisor}" method="post" enctype="multipart/form-data">
+		<form th:action="@{'/profile/update/" th:object="${user}" method="post" enctype="multipart/form-data">
 			<div class="default_infor">
 				<div class="edit_img">
 					<label class="avatar-upload">
-					    <img th:src="@{${supervisor.imgUrl}}" alt="Ảnh đại diện" id="avatar"/>
+					    <img th:src="@{${user.imgUrl}}" alt="Ảnh đại diện" id="avatar"/>
 					    <div class="overlay">
 					        <span>🖊 Đổi ảnh</span>
 					    </div>
 					    <input type="file" name="imageFile" accept="image/*" onchange="previewSelectedImage(event)" hidden />
 					</label>
 		    		<!-- ⚠️ Giữ lại ảnh cũ nếu không chọn ảnh mới -->
-		    		<input type="hidden" name="imgUrl" th:value="${supervisor.imgUrl}" />
+		    		<input type="hidden" name="imgUrl" th:value="${user.imgUrl}" />
 				</div>
-				<div class="infor_text">
+				<div class="infor_text" th:if="${type == 'supervisor'}">
 					<h2>Thông tin giảng viên:</h2>
-					<p>Họ và tên: <span th:text="${supervisor.name}"></span></p>
-					<p>Email: <span th:text="${supervisor.email}"></span></p>
-				  	<p>Chức vụ: <span th:text="${supervisor.position}"></span></p>
-				  	<p>Khoa: <span th:text="${supervisor.department.name}"></span></p>
+					<p>Họ và tên: <span th:text="${user.name}"></span></p>
+					<p>Email: <span th:text="${user.email}"></span></p>
+				  	<p>Chức vụ: <span th:text="${user.position}"></span></p>
+				  	<p>Khoa: <span th:text="${user.department.name}"></span></p>
+				</div>
+				<div class="infor_text" th:if="${type == 'student'}">
+					<h2>Thông tin giảng viên:</h2>
+					<p>Họ và tên: <span th:text="${user.name}"></span></p>
+					<p>Email: <span th:text="${user.email}"></span></p>
+				  	<p>Lớp: <span th:text="${user.myClass.idClass}"></span></p>
+				  	<p>Điểm trung bình: <span th:text="${user.avgGrade}"></span></p>
 				</div>
 			</div>
 		

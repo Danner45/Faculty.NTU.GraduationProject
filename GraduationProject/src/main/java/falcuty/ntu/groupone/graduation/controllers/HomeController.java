@@ -1,15 +1,26 @@
 package falcuty.ntu.groupone.graduation.controllers;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import falcuty.ntu.groupone.graduation.models.Student;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
@@ -85,18 +96,84 @@ public class HomeController {
 	
 	@GetMapping("/profile/edit")
 	public String showEditForm(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
-	    String username = userDetails.getUsername();
+	    String email = userDetails.getUsername();
 
-	    Supervisor supervisor = supervisorService
-	        .findSupervisorByEmail(username)
-	        .orElseThrow(() -> new IllegalArgumentException("Supervisor not found for username: " + username));
+	    Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
+	    if (supervisorOpt.isPresent()) {
+	        model.addAttribute("user", supervisorOpt.get());
+	        model.addAttribute("type", "supervisor");
+	        return "edit";
+	    }
 
-	    model.addAttribute("supervisor", supervisor);
-	    return "edit";
+	    Optional<Student> studentOpt = studentService.findStudentByEmail(email);
+	    if (studentOpt.isPresent()) {
+	        model.addAttribute("user", studentOpt.get());
+	        model.addAttribute("type", "student");
+	        return "edit";
+	    }
+	    model.addAttribute("email", email);
+	    throw new IllegalArgumentException("User not found for email: " + email);
 	}
 	
 	private boolean hasRole(UserDetails userDetails, String role) {
 	    return userDetails.getAuthorities().stream()
 	        .anyMatch(auth -> auth.getAuthority().equals("ROLE_" + role));
+	}
+	
+	@PostMapping("/profile/update")
+	public String updateProfile(@AuthenticationPrincipal UserDetails userDetails,
+	                            @ModelAttribute("user") Object updatedUser,
+	                            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+	                            @RequestParam(value = "imgUrl", required = false) String existingImgUrl) throws IOException {
+
+	    String email = userDetails.getUsername();
+
+	    // Nếu là Supervisor
+	    Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
+	    if (supervisorOpt.isPresent() && updatedUser instanceof Supervisor supervisorData) {
+	        Supervisor supervisor = supervisorOpt.get();
+
+	        // Cập nhật thông tin cơ bản
+	        supervisor.setCv(supervisorData.getCv());
+
+	        // Cập nhật ảnh
+	        if (imageFile != null && !imageFile.isEmpty()) {
+	            String filename = StringUtils.cleanPath(imageFile.getOriginalFilename());
+	            String uploadDir = new ClassPathResource("static/image/").getFile().getAbsolutePath();
+	            Files.createDirectories(Paths.get(uploadDir));
+	            Path path = Paths.get(uploadDir, filename);
+	            Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+	            supervisor.setImgUrl("/image/" + filename);
+	        } else {
+	            supervisor.setImgUrl(existingImgUrl);
+	        }
+
+	        supervisorService.saveSupervisor(email, supervisorData) // Update
+	        return "redirect:/profile"; // hoặc /supervisors/detail/{id} nếu bạn muốn
+	    }
+
+	    // Nếu là Student
+	    Optional<Student> studentOpt = studentService.findStudentByEmail(email);
+	    if (studentOpt.isPresent() && updatedUser instanceof Student studentData) {
+	        Student student = studentOpt.get();
+
+	        student.setCv(studentData.getCv());
+
+	        if (imageFile != null && !imageFile.isEmpty()) {
+	            String filename = StringUtils.cleanPath(imageFile.getOriginalFilename());
+	            String uploadDir = new ClassPathResource("static/image/").getFile().getAbsolutePath();
+	            Files.createDirectories(Paths.get(uploadDir));
+	            Path path = Paths.get(uploadDir, filename);
+	            Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+	            student.setImgUrl("/image/" + filename);
+	        } else {
+	            student.setImgUrl(existingImgUrl);
+	        }
+
+	        studentService.saveStudent(email, studentData)
+	        return "redirect:/profile";
+	    }
+
+	    throw new IllegalArgumentException("Không tìm thấy người dùng để cập nhật.");
 	}
 }

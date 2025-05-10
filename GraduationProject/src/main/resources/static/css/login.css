@@ -31,16 +31,32 @@
 
 .input_field{
 	width: 100%;
-	gap: 10px;
+	gap: 0;
 }
 
 .input_field label{
 	width: 90%;
 	display: flex;
+	margin-bottom: 5px;
 }
 
 .login_form button{
+	color: var(--white-color);
 	background-color: var(--main-color);
 	width: 90%;
 	border-radius: var(--border);
+	border: none;
+	padding: 10px;
+	margin-top: 24px;
+}
+
+.login_form a{
+	width: 90%;
+	display: flex;
+	justify-content: flex-end;
+	cursor: default;
+}
+
+.login_form a lable:hover{
+	color: var(--main-color);
 }

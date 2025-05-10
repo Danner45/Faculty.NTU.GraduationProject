@@ -25,14 +25,14 @@ public class StudentService implements IStudentService{
 	}
 
 	@Override
-	public Student saveSupervisor(String id, Student student) {
-		return studentRepository.findById(id)
+	public Student saveStudent(String email, Student student) {
+		return studentRepository.findByEmail(email)
 	            .map(existing -> {
 	                existing.setCv(student.getCv());
 	                existing.setImgUrl(student.getImgUrl());
 	                return studentRepository.save(existing);
 	            })
-	            .orElseThrow(() -> new RuntimeException("Supervisor not found with ID: " + id));
+	            .orElseThrow(() -> new RuntimeException("Student not found with ID: " + email));
 	}
 
 	@Override
