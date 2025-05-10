@@ -24,4 +24,9 @@ public class HomeController {
 		model.addAttribute("currentPath", request.getRequestURI());
 		return "index";
 	}
+	
+	@GetMapping("/login")
+	public String getLogin() {
+		return "login";
+	}
 }
