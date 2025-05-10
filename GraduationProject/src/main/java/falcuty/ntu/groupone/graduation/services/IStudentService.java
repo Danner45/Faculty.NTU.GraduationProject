@@ -7,7 +7,7 @@ import falcuty.ntu.groupone.graduation.models.Student;
 
 public interface IStudentService {
 	List<Student> getAllStudents();
-	Student saveSupervisor(String id,Student student);
+	Student saveStudent(String id,Student student);
 	Optional<Student> findStudentById(String id);
 	Optional<Student> findStudentByEmail(String email);
 }

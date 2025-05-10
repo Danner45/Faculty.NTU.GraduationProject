@@ -38,28 +38,7 @@ public class SupervisorController {
 	}
 	
 	
-	@PostMapping("/update/{id}")
-	public String updateSupervisor(@PathVariable Integer id,
-	                               @ModelAttribute Supervisor updatedSupervisor,
-	                               @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-	                               @RequestParam(value = "imgUrl", required = false) String existingImgUrl) throws IOException {
-
-	    // Nếu có ảnh mới → upload và gán lại đường dẫn
-	    if (imageFile != null && !imageFile.isEmpty()) {
-	        String filename = StringUtils.cleanPath(imageFile.getOriginalFilename());
-	        String uploadDir = new ClassPathResource("static/image/").getFile().getAbsolutePath();
-	        Files.createDirectories(Paths.get(uploadDir)); // Đảm bảo thư mục tồn tại
-	        Path path = Paths.get(uploadDir, filename);
-	        Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-	        updatedSupervisor.setImgUrl("/image/" + filename);
-	    } else {
-	        // Nếu không chọn ảnh mới → dùng ảnh cũ
-	        updatedSupervisor.setImgUrl(existingImgUrl);
-	    }
-
-	    supervisorService.saveSupervisor(id, updatedSupervisor);
-	    return "redirect:/supervisors/detail/" + id;
-	}
+	
 	
 	@GetMapping("/topics/all")
 	public String getAllTopics() {

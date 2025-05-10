@@ -6,7 +6,7 @@
 <link th:href="@{/style.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:fragment="header(name)" class="nav_container">
+	<div th:fragment="header(name, email)" class="nav_container">
 		<div class="nav_custom">
 			<div class="logo">
 				<img alt="NTU Logo" src="/image/system/Logo_DH_NhaTrang.png">
@@ -20,7 +20,7 @@
 			    <a aria-current="page" th:href="@{/supervisors/topics/all}" th:classappend="${currentPath == '/topic'} ? 'nav_active' : ''">Đồ án/Chuyên đề</a>
 			  </li>
 			  <li class="">
-			    <a th:text="${name}" aria-current="page" href="/profile"></a>
+			    <a th:text="${name}" th:href="@{/profile/{email}(email=${email})}"></a>
 			  </li>
 			</ul>
 		</div>

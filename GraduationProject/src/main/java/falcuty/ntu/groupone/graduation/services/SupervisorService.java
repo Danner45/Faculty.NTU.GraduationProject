@@ -25,14 +25,14 @@ public class SupervisorService implements ISupervisorService{
 	}
 
 	@Override
-    public Supervisor saveSupervisor(Integer id, Supervisor updatedSupervisor) {
-        return supervisorRepository.findById(id)
+    public Supervisor saveSupervisor(String email, Supervisor updatedSupervisor) {
+        return supervisorRepository.findByEmail(email)
             .map(existing -> {
                 existing.setCv(updatedSupervisor.getCv());
                 existing.setImgUrl(updatedSupervisor.getImgUrl());
                 return supervisorRepository.save(existing);
             })
-            .orElseThrow(() -> new RuntimeException("Supervisor not found with ID: " + id));
+            .orElseThrow(() -> new RuntimeException("Supervisor not found with ID: " + email));
     }
 
 	@Override

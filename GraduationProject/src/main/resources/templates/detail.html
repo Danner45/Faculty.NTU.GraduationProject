@@ -9,7 +9,7 @@
   <link th:href="@{/css/detail.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:replace="layout::header(${user.name})"></div>
+	<div th:replace="layout::header(${user.name}, ${email})"></div>
 	<div class="container-fluid">
 		<div class="default_infor">
 			<img th:src="@{${user.imgUrl}}" alt="Ảnh đại diện"/>
@@ -19,6 +19,13 @@
 				<p>Email: <span th:text="${user.email}"></span></p>
 			  	<p>Chức vụ: <span th:text="${user.position}"></span></p>
 			  	<p>Khoa: <span th:text="${user.department.name}"></span></p>
+			</div>
+			<div class="infor_text" th:if="${type} == 'student'">
+				<h2>Thông tin sinh viên:</h2>
+				<p>Họ và tên: <span th:text="${user.name}"></span></p>
+				<p>Email: <span th:text="${user.email}"></span></p>
+			  	<p>Lớp: <span th:text="${user.myClass.idClass}"></span></p>
+			  	<p>Điểm trung bình: <span th:text="${user.avgGrade}"></span></p>
 			</div>
 		</div>
 		<div class="more_infor">
@@ -30,7 +37,7 @@
   					</div>
 				</div>
 			</div>
-			<a th:href="@{'/profile/edit'}">
+			<a th:if="${isOwner}" th:href="@{'/profile/edit'}">
     			<button>Chỉnh sửa</button>
   			</a>
 		</div>
