@@ -25,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ch.qos.logback.core.model.Model;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
-import falcuty.ntu.groupone.graduation.services.SupervisorService;
+import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
 
 @Controller
 @RequestMapping("/supervisors")

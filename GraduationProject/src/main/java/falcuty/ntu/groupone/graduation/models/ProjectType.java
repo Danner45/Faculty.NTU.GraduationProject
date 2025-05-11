@@ -8,7 +8,7 @@ public class ProjectType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_type")
+    @Column(name = "id_typ")
     private int idType;
 
     @Column(name = "name")

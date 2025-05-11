@@ -47,13 +47,16 @@ public class ResearchTopic {
 
     @Column(name = "review")
     private String review;
+    
+    @Column(name="is_research")
+    private Boolean isResearch;
    
     public ResearchTopic() {
     }
 
     public ResearchTopic(int idResearchTopic, Supervisor teacherCreated, Supervisor teacherAccepted,
                          ProjectType projectType, Course course, String topic, String description,
-                         String detail, int maxJoin, int state, Double grade, String review) {
+                         String detail, int maxJoin, int state, Double grade, String review, Boolean isResearch) {
         this.idResearchTopic = idResearchTopic;
         this.teacherCreated = teacherCreated;
         this.teacherAccepted = teacherAccepted;
@@ -66,6 +69,7 @@ public class ResearchTopic {
         this.state = state;
         this.grade = grade;
         this.review = review;
+        this.isResearch = isResearch;
     }
 
     // Getters & Setters
@@ -102,11 +106,11 @@ public class ResearchTopic {
         this.projectType = projectType;
     }
 
-    public Course getIdCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setIdCourse(Course idCourse) {
+    public void setCourse(Course idCourse) {
         this.course = idCourse;
     }
 
@@ -165,4 +169,14 @@ public class ResearchTopic {
     public void setReview(String review) {
         this.review = review;
     }
+
+	public Boolean getIsResearch() {
+		return isResearch;
+	}
+
+	public void setIsResearch(Boolean isResearch) {
+		this.isResearch = isResearch;
+	}
+    
+    
 }
