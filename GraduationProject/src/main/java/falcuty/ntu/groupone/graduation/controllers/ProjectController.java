@@ -1,6 +1,7 @@
 package falcuty.ntu.groupone.graduation.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -58,11 +59,11 @@ public class ProjectController {
                                       @RequestParam("course") Integer courseId,
                                       @RequestParam("isResearch") Integer isResearch) {
 
-        ProjectType type = projectTypeService.getById(typeId);
-        Course course = courseService.getById(courseId);
+        Optional<ProjectType> type = projectTypeService.findProjectTypeById(typeId);
+        Optional<Course> course = courseService.findCourseById(courseId);
 
-        project.setProjectType(type);
-        project.setCourse(course);
+        project.setProjectType(type.get());
+        project.setCourse(course.get());
         project.setIsResearch(isResearch == 1);
 
         projectService.saveProject(project);

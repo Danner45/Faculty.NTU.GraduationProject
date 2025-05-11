@@ -1,6 +1,7 @@
 package falcuty.ntu.groupone.graduation.services.implement;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,4 +18,8 @@ public class CourseService {
 	public List<Course> getLast4Courses() {
         return courseRepository.findTop4ByOrderByIdCourseDesc();
     }
+	
+	public Optional<Course> findCourseById(int id){
+		return courseRepository.findById(id);
+	}
 }
