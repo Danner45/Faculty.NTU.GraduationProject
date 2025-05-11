@@ -1,11 +1,39 @@
 @charset "UTF-8";
 
 .add_project{
-	margin: 24px 87px;
+	margin: 24px 110px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
 }
 
 .add_project h3{
+	color: var(--main-color);
 	font-family: Geologica;
 	font-size: 2rem;
 	font-weight: 600;
+}
+
+.input_field{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.input_field label{
+	font-weight: 600;
+	font-size: 1.2rem;
+}
+
+.input_field input, select{
+	padding: 5px 10px;
+}
+
+.add_project button{
+	width: fit-content;
+	padding: 14px 24px;
+	border-radius: var(--border);
+	background-color: var(--main-color);
+	color: var(--white-color);
+	border: none;
 }

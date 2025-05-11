@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -46,7 +48,24 @@ public class ProjectController {
         model.addAttribute("email", email);
         model.addAttribute("name", supervisor.getName());
         model.addAttribute("projectTypes", projectTypes);
-        model.addAttribute("course", courses);
+        model.addAttribute("courses", courses);
         return "new_project";
+    }
+	
+	@PostMapping("/add")
+    public String handleCreateProject(@ModelAttribute ResearchTopic project,
+                                      @RequestParam("projectType") Integer typeId,
+                                      @RequestParam("course") Integer courseId,
+                                      @RequestParam("isResearch") Integer isResearch) {
+
+        ProjectType type = projectTypeService.getById(typeId);
+        Course course = courseService.getById(courseId);
+
+        project.setProjectType(type);
+        project.setCourse(course);
+        project.setIsResearch(isResearch == 1);
+
+        projectService.saveProject(project);
+        return "redirect:/project/list"; // Hoặc trang xác nhận
     }
 }

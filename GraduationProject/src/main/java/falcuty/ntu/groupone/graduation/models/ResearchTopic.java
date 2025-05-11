@@ -106,11 +106,11 @@ public class ResearchTopic {
         this.projectType = projectType;
     }
 
-    public Course getIdCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setIdCourse(Course idCourse) {
+    public void setCourse(Course idCourse) {
         this.course = idCourse;
     }
 
