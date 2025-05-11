@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
 import falcuty.ntu.groupone.graduation.services.SupervisorService;
 
@@ -26,6 +27,7 @@ public class ProjectController {
 
         Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
+        model.addAttribute("project", new ResearchTopic());
         model.addAttribute("email", email);
         model.addAttribute("name", supervisor.getName());
         return "new_project";
