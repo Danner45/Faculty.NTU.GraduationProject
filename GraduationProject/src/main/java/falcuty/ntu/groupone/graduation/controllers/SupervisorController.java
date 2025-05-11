@@ -37,9 +37,6 @@ public class SupervisorController {
 		this.supervisorService = supervisorService;
 	}
 	
-	
-	
-	
 	@GetMapping("/topics/all")
 	public String getAllTopics() {
 		return "supervisor/topic_list";

@@ -17,7 +17,7 @@
 			    <a aria-current="page" th:href="@{/}" th:classappend="${currentPath == '/'} ? 'nav_active' : ''">Trang chủ</a>
 			  </li>
 			  <li class="">
-			    <a aria-current="page" th:href="@{/supervisors/topics/all}" th:classappend="${currentPath == '/topic'} ? 'nav_active' : ''">Đồ án/Chuyên đề</a>
+			    <a aria-current="page" th:href="@{/my-topics}" th:classappend="${currentPath == '/my-topic'} ? 'nav_active' : ''">Đồ án/Chuyên đề</a>
 			  </li>
 			  <li class="">
 			    <a th:text="${name}" th:href="@{/profile/{email}(email=${email})}"></a>
