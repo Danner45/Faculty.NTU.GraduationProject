@@ -20,6 +20,7 @@ import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
 import falcuty.ntu.groupone.graduation.services.implement.CourseService;
 import falcuty.ntu.groupone.graduation.services.implement.ProjectTypeService;
+import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
 
 
@@ -35,6 +36,9 @@ public class ProjectController {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private ResearchTopicService researchTopicService;
 	
 	@GetMapping("/create")
     public String newProject(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
@@ -57,16 +61,20 @@ public class ProjectController {
     public String handleCreateProject(@ModelAttribute ResearchTopic project,
                                       @RequestParam("projectType") Integer typeId,
                                       @RequestParam("course") Integer courseId,
-                                      @RequestParam("isResearch") Integer isResearch) {
-
+                                      @RequestParam("isResearch") Integer isResearch,
+                                      @AuthenticationPrincipal UserDetails userDetails) {
+		Optional<Supervisor> supervisor = supervisorService.findSupervisorByEmail(userDetails.getUsername());
         Optional<ProjectType> type = projectTypeService.findProjectTypeById(typeId);
         Optional<Course> course = courseService.findCourseById(courseId);
-
+        
         project.setProjectType(type.get());
         project.setCourse(course.get());
         project.setIsResearch(isResearch == 1);
+        project.setTeacherCreated(supervisor.get());
+        project.setState(0);
+        project.setMaxJoin(1);
 
-        projectService.saveProject(project);
-        return "redirect:/project/list"; // Hoặc trang xác nhận
+        researchTopicService.addResearchTopic(project);
+        return "redirect:/"; // Hoặc trang xác nhận
     }
 }

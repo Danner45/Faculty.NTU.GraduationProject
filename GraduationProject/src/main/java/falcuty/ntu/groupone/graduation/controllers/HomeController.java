@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import falcuty.ntu.groupone.graduation.models.Course;
+import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Student;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
+import falcuty.ntu.groupone.graduation.services.implement.CourseService;
+import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
 import falcuty.ntu.groupone.graduation.services.implement.StudentService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,6 +42,12 @@ public class HomeController {
 	@Autowired
 	private StudentService studentService;
 	
+	@Autowired
+	private ResearchTopicService researchTopicService;
+	
+	@Autowired
+	private CourseService courseService;
+	
 	public HomeController(SupervisorService supervisorService) {
 		this.supervisorService = supervisorService;
 	}
@@ -46,8 +57,11 @@ public class HomeController {
 		String email = userDetails.getUsername();
 		Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
 		if (supervisorOpt.isPresent()) {
+			Optional<Course> course = courseService.findCourseById(63);
+			List<ResearchTopic> researchTopics = researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), true, course.get());
 			model.addAttribute("type", "supervisor");
 			model.addAttribute("name", supervisorOpt.get().getName());
+			model.addAttribute("researchtopics",researchTopics);
 		} else {
 			Optional<Student> studentOpt = studentService.findStudentByEmail(email);
 			if (studentOpt.isPresent()) {
