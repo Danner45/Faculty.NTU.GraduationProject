@@ -1,4 +1,4 @@
-package falcuty.ntu.groupone.graduation.services;
+package falcuty.ntu.groupone.graduation.services.implement;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import falcuty.ntu.groupone.graduation.models.Student;
 import falcuty.ntu.groupone.graduation.repositories.IStudentRepository;
+import falcuty.ntu.groupone.graduation.services.interf.IStudentService;
 
 @Service
 public class StudentService implements IStudentService{

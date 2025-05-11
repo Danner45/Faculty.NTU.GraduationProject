@@ -24,8 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import falcuty.ntu.groupone.graduation.models.Student;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
-import falcuty.ntu.groupone.graduation.services.StudentService;
-import falcuty.ntu.groupone.graduation.services.SupervisorService;
+import falcuty.ntu.groupone.graduation.services.implement.StudentService;
+import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller

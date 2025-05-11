@@ -95,12 +95,32 @@
 				<input type="text" name="projectName">
 			</div>
 			<div class="input_field">
-				<label>Loại đề tài</label>
-				<input type="text" name="projectType">
+				<label>Lĩnh vực</label>
+				<select name="projectType" id="projectType">
+				    <option value="">-- Chọn lĩnh vực đồ án --</option>
+				    <option th:each="type : ${projectTypes}"
+				            th:value="${type.idType}"
+				            th:text="${type.name}">
+				    </option>
+				</select>
 			</div>
 			<div class="input_field">
-				<label>Lĩnh vực</label>
-				<input type="text" name="projectMajor">
+				<label>Loại đề tài</label>
+				<select name="isResearch" id="isResearch">
+				    <option value="">-- Chọn loại đề tài --</option>
+				    <option value=1>Đồ án</option>
+				    <option value=1>Chuyên đề</option>
+				</select>
+			</div>
+			<div class="input_field">
+				<label>Đề tài cho khóa</label>
+				<select name="course" id="course">
+				    <option value="">-- Chọn khóa --</option>
+				    <option th:each="course : ${courses}"
+				            th:value="${course.idCourse}"
+				            th:text="K ${course.idCourse}">
+				    </option>
+				</select>
 			</div>
 			<div class="input_field">
 				<label>Mô tả</label>

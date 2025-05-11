@@ -1,4 +1,4 @@
-package falcuty.ntu.groupone.graduation.services;
+package falcuty.ntu.groupone.graduation.services.interf;
 
 import java.util.List;
 import java.util.Optional;
