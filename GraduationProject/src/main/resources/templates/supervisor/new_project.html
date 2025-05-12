@@ -85,7 +85,7 @@
 	</script>
 </head>
 <body>
-	<div th:replace="layout::header(${name}, ${email})"></div>
+	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
 	
 	<div class="container-fluid">
 		<form action="/project/add" method="post" th:object="${project}" enctype="multipart/form-data" class="add_project">

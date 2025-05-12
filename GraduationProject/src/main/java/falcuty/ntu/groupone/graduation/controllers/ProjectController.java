@@ -49,6 +49,7 @@ public class ProjectController {
         
         List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
         List<Course> courses = courseService.getLast4Courses();
+        model.addAttribute("type", "supervisor");
         model.addAttribute("project", new ResearchTopic());
         model.addAttribute("email", email);
         model.addAttribute("name", supervisor.getName());
@@ -75,6 +76,6 @@ public class ProjectController {
         project.setMaxJoin(1);
 
         researchTopicService.addResearchTopic(project);
-        return "redirect:/supervisors/"; // Hoặc trang xác nhận
+        return "redirect:/supervisors/home"; // Hoặc trang xác nhận
     }
 }

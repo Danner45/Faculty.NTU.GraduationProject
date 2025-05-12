@@ -14,7 +14,7 @@
 			</div>
 			<ul class="nav justify-content-end">
 			  <li class="">
-			    <a aria-current="page" th:href="${type == 'supervisor'} ? @{/supervisors/home} : @{/students/home}" th:classappend="${currentPath == '/'} ? 'nav_active' : ''">Trang chủ</a>
+			    <a aria-current="page" th:href="${type == 'supervisor'} ? @{/supervisors/home} : @{/students/home}" th:classappend="${currentPath == '/supervisors/home'} ? 'nav_active' : ''">Trang chủ</a>
 			  </li>
 			  <li class="">
 			    <a aria-current="page" th:href="@{/supervisors/topics/all}" th:classappend="${currentPath == '/topic'} ? 'nav_active' : ''">Đồ án/Chuyên đề</a>

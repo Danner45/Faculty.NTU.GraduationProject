@@ -17,7 +17,7 @@
 				<h2>Thông tin giảng viên:</h2>
 				<p>Họ và tên: <span th:text="${user.name}"></span></p>
 				<p>Email: <span th:text="${user.email}"></span></p>
-			  	<p>Chức vụ: <span th:text="${user.position}"></span></p>
+			  	<p>Chức vụ: <span th:text="${user.position == 1} ? 'Tiến Sĩ' : 'Thạc Sĩ'"></span></p>
 			  	<p>Khoa: <span th:text="${user.department.name}"></span></p>
 			</div>
 			<div class="infor_text" th:if="${type} == 'student'">
