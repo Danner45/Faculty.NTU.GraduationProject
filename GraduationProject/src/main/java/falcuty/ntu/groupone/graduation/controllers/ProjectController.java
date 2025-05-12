@@ -55,7 +55,7 @@ public class ProjectController {
         model.addAttribute("name", supervisor.getName());
         model.addAttribute("projectTypes", projectTypes);
         model.addAttribute("courses", courses);
-        return "supervisor/new_project";
+        return "supervisor/project_new";
     }
 	
 	@PostMapping("/add")
@@ -78,4 +78,5 @@ public class ProjectController {
         researchTopicService.addResearchTopic(project);
         return "redirect:/supervisors/home"; // Hoặc trang xác nhận
     }
+	
 }

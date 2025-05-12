@@ -28,7 +28,7 @@
             		<h3 style="color:var(--main-color)">THẦY/CÔ CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
         		</div>
 				<div class="card_list" th:if="${!#lists.isEmpty(researchtopics)}">
-					<a class="card_topic" href="/" th:each="project : ${researchtopics}">
+					<a class="card_topic" th:each="project : ${researchtopics}" th:href="@{/project/detail/{id}(id=${project.idResearchTopic})}">
 						<div class="card_content">
 							<p th:text="${project.topic}"></p>
 							<ul>
