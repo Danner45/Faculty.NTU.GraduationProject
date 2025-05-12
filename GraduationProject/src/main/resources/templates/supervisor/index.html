@@ -21,32 +21,23 @@
 				<div class="school_img"></div>
 			</div>
 		</div>
-		<div class="this_year_topics" th:if="${type == 'supervisor'}">
+		<div class="this_year_topics">
 			<h3>Đề tài của tôi cho khóa 2021-2025</h3>
 			<div class="topcic_list">
 				<div th:if="${#lists.isEmpty(researchtopics)}">
             		<h3 style="color:var(--main-color)">THẦY/CÔ CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
         		</div>
-				<div class="card_list">
-					<a class="card_topic" href="/">
+				<div class="card_list" th:if="${!#lists.isEmpty(researchtopics)}">
+					<a class="card_topic" href="/" th:each="project : ${researchtopics}">
 						<div class="card_content">
-							<p>Phát triển ứng dụng xác thực khuôn mặt sử dụng mạng neural tích chập</p>
+							<p th:text="${project.topic}"></p>
 							<ul>
-								<li>Lĩnh	 vực: <span>AI</span></li>
+								<li>Lĩnh vực: <span th:text="${project.projectType.name}">AI</span></li>
 								<li>Sinh viên đăng ký: <span>0</span></li>
 								<li>Trạng thái: <span>Chờ đăng ký</span></li>
 							</ul>
 						</div>
 					</a>
-					<div class="card_topic">
-						
-					</div>
-					<div class="card_topic">
-						
-					</div>
-					<div class="card_topic">
-					
-					</div>	
 				</div>
 			</div>
 		</div>

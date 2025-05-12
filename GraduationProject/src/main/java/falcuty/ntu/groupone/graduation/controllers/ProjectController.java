@@ -54,7 +54,7 @@ public class ProjectController {
         model.addAttribute("name", supervisor.getName());
         model.addAttribute("projectTypes", projectTypes);
         model.addAttribute("courses", courses);
-        return "new_project";
+        return "supervisor/new_project";
     }
 	
 	@PostMapping("/add")
