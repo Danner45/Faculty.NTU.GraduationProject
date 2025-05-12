@@ -6,7 +6,7 @@
 <link th:href="@{/style.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:fragment="header(name, email)" class="nav_container">
+	<div th:fragment="header(name, email, type)" class="nav_container">
 		<div class="nav_custom">
 			<div class="logo">
 				<img alt="NTU Logo" src="/image/system/Logo_DH_NhaTrang.png">
@@ -14,7 +14,7 @@
 			</div>
 			<ul class="nav justify-content-end">
 			  <li class="">
-			    <a aria-current="page" th:href="@{/}" th:classappend="${currentPath == '/'} ? 'nav_active' : ''">Trang chủ</a>
+			    <a aria-current="page" th:href="${type == 'supervisor'} ? @{/supervisors/home} : @{/students/home}" th:classappend="${currentPath == '/'} ? 'nav_active' : ''">Trang chủ</a>
 			  </li>
 			  <li class="">
 			    <a aria-current="page" th:href="@{/supervisors/topics/all}" th:classappend="${currentPath == '/topic'} ? 'nav_active' : ''">Đồ án/Chuyên đề</a>
@@ -24,6 +24,10 @@
 			  </li>
 			</ul>
 		</div>
+	</div>
+	
+	<div th:fragment="intro(type)">
+		
 	</div>
 	
 	<div th:fragment="footer" class="footer_container">

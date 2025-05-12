@@ -75,6 +75,6 @@ public class ProjectController {
         project.setMaxJoin(1);
 
         researchTopicService.addResearchTopic(project);
-        return "redirect:/"; // Hoặc trang xác nhận
+        return "redirect:/supervisors/"; // Hoặc trang xác nhận
     }
 }

@@ -9,7 +9,7 @@
   <link th:href="@{/css/detail.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:replace="layout::header(${user.name}, ${email})"></div>
+	<div th:replace="layout::header(${user.name}, ${email}, ${type})"></div>
 	<div class="container-fluid">
 		<div class="default_infor">
 			<img th:src="@{${user.imgUrl}}" alt="Ảnh đại diện"/>
