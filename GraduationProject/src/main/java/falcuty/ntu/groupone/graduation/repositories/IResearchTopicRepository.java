@@ -10,4 +10,5 @@ import falcuty.ntu.groupone.graduation.models.Supervisor;
 
 public interface IResearchTopicRepository extends JpaRepository<ResearchTopic, Integer>{
 	List<ResearchTopic> findByTeacherCreatedAndIsResearchAndCourse(Supervisor supervisor, boolean isResearch, Course course);
+	ResearchTopic findResearchTopicByIdResearchTopic(int id);
 }

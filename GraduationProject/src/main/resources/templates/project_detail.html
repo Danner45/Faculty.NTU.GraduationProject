@@ -8,7 +8,10 @@
  	<link th:href="@{/css/layout.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:replace="layout::header(${user.name}, ${email}, ${type})"></div>
+	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
+	<div class="container-fluid">
+		
+	</div>
 	<div th:replace="layout::footer"></div>
 </body>
 </html>

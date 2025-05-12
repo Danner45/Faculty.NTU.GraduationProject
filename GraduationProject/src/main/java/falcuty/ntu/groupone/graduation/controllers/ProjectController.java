@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -76,7 +77,21 @@ public class ProjectController {
         project.setMaxJoin(1);
 
         researchTopicService.addResearchTopic(project);
-        return "redirect:/supervisors/home"; // Hoặc trang xác nhận
+        return "redirect:/supervisors/home";
     }
 	
+	@GetMapping("/detail/{id}")
+	public String getDetailProject(@PathVariable Integer id,
+									@AuthenticationPrincipal UserDetails userDetails,
+			 						ModelMap model) {
+		String email = userDetails.getUsername();
+		Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
+	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
+		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		model.addAttribute("type", "supervisor");
+		model.addAttribute("email", email);
+        model.addAttribute("name", supervisor.getName());
+        model.addAttribute("researchtopic", researchTopic);
+        return "project_detail";
+	}
 }

@@ -9,5 +9,6 @@ import falcuty.ntu.groupone.graduation.models.Supervisor;
 public interface IResearchTopicSerivce {
 	List<ResearchTopic> findAllResearchOrTopicForCourse(Course idCourse, boolean isResearch);
 	List<ResearchTopic> findAllTeacherResearchTopic(Supervisor supervisor, boolean isResearch, Course course);
+	ResearchTopic findResearchTopicById(int id);
 	ResearchTopic addResearchTopic(ResearchTopic researchTopic);
 }
