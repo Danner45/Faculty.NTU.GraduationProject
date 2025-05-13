@@ -10,7 +10,7 @@
 
 .project_detail{
 	margin: 24px 87px;
-	font-size: 24px;
+	font-size: 20px;
 }
 
 .project_detail>p,
@@ -27,4 +27,31 @@
 .project_part{
 	display: flex;
 	justify-content: space-between;
+}
+
+.count_enrol{
+	margin:24px 87px;
+	font-size: 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.count_enrol p{
+	margin: 0;
+}
+
+.count_enrol .button button{
+	padding: 8px 24px;
+	border-radius: 12px;
+	border: none;
+	background-color: var(--main-color);
+	color: white;
+}
+
+.count_enrol .button a:first-child button{
+	background-color: white;
+	color: var(--main-color);	
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	margin-right: 8px;
 }

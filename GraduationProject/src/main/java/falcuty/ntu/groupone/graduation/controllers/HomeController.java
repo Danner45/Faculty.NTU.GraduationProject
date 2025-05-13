@@ -28,6 +28,7 @@ import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Student;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
 import falcuty.ntu.groupone.graduation.services.implement.CourseService;
+import falcuty.ntu.groupone.graduation.services.implement.EnrolService;
 import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
 import falcuty.ntu.groupone.graduation.services.implement.StudentService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
@@ -47,6 +48,9 @@ public class HomeController {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private EnrolService enrolService;
 	
 	public HomeController(SupervisorService supervisorService) {
 		this.supervisorService = supervisorService;

@@ -32,6 +32,7 @@ import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Student;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
 import falcuty.ntu.groupone.graduation.services.implement.CourseService;
+import falcuty.ntu.groupone.graduation.services.implement.EnrolService;
 import falcuty.ntu.groupone.graduation.services.implement.ProjectTypeService;
 import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
@@ -51,6 +52,9 @@ public class SupervisorController {
 	
 	@Autowired
 	private ProjectTypeService projectTypeService;
+	
+	@Autowired
+	private EnrolService enrolService;
 	
 	
 	public SupervisorController(SupervisorService supervisorService) {
@@ -129,10 +133,12 @@ public class SupervisorController {
 		Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
 	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
 		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		int countStudent = enrolService.countStudentEnrol(researchTopic);
 		model.addAttribute("type", "supervisor");
 		model.addAttribute("email", email);
         model.addAttribute("name", supervisor.getName());
         model.addAttribute("researchtopic", researchTopic);
+        model.addAttribute("count", countStudent);
         return "supervisor/project_detail";
 	}
 }
