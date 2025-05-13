@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.project_title{
+	font-family: Geologica;
+	font-weight: 600;
+	font-size: 2rem;
+	margin: 24px;
+	text-align: center;
+}
+
+.project_detail{
+	margin: 24px 87px;
+}
+
+.project_detail h3{
+	font-family: Geologica;
+	font-weight: 600;
+	font-size: 2rem;	
+	text-align: center;
+}
+
+.project_detail p{
+	display: flex;	
+}

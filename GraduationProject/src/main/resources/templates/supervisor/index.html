@@ -11,38 +11,81 @@
 <body>
 	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
 	<div class="container-fluid">
-		<div class="intro row">
-			<div class="col intro_text">
-				<h2>HỆ THỐNG ĐỒ ÁN CHUYÊN ĐỀ</h2>
-				<p>Ra trường hay không, nằm trong tay bạn...</p>
-				<a href="/project/create"><button>Tạo đề tài <img src="/image/system/arrow.svg" alt="next"></button></a>
-			</div>
-			<div class="col intro_img">
-				<div class="school_img"></div>
-			</div>
-		</div>
+		<div th:replace="layout::intro(type)"></div>
 		<div class="this_year_topics">
 			<h3>Đề tài của tôi cho khóa 2021-2025</h3>
 			<div class="topcic_list">
 				<div th:if="${#lists.isEmpty(researchtopics)}">
             		<h3 style="color:var(--main-color)">THẦY/CÔ CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
         		</div>
-				<div class="card_list" th:if="${!#lists.isEmpty(researchtopics)}">
-					<a class="card_topic" th:each="project : ${researchtopics}" th:href="@{/project/detail/{id}(id=${project.idResearchTopic})}">
-						<div class="card_content">
-							<p th:text="${project.topic}"></p>
-							<ul>
-								<li>Lĩnh vực: <span th:text="${project.projectType.name}">AI</span></li>
-								<li>Sinh viên đăng ký: <span>0</span></li>
-								<li>Trạng thái: <span th:text="${project.state == 0 ? 'Chờ đăng ký' : (project.state == 1 ? 'Đang thực hiện' : (project.state == 2 ? 'Đã hoàn thành' : 'Không xác định'))}"></span></li>
-							</ul>
+				<div class="card_slider_wrapper">
+					<button id="prevBtn" class="slider_btn">&#8592;</button>
+					  
+					<div class="card_slider">
+						<div class="card_list" id="cardList" 
+					         th:if="${!#lists.isEmpty(researchtopics)}">
+					    	<div class="card_topic" 
+					           th:each="project : ${researchtopics}">
+					    		<div class="card_content">
+					    			<img src="/image/system/topic.png"/>
+					          		<p th:text="${project.topic}"></p>
+					          		<ul>
+					            		<li>Sinh viên đăng ký: <span>0</span></li>
+					            		<li>Trạng thái: 
+					              		<span th:text="${project.state == 0 ? 'Đang chờ duyệt sinh viên' : 
+					                               (project.state == 1 ? 'Đang thực hiện' : 
+					                               (project.state == 2 ? 'Đã hoàn thành' : 'Không xác định'))}">
+					              		</span>
+					            		</li>
+					          		</ul>
+					          		<a th:href="@{/supervisors/project/detail/{id}(id=${project.idResearchTopic})}"><button>Duyệt sinh viên <img src="/image/system/arrow.svg"></button></a>
+					        	</div>
+					     	</div>
 						</div>
-					</a>
+					</div>
+					
+					<button id="nextBtn" class="slider_btn">&#8594;</button>
 				</div>
+
 			</div>
 		</div>
 	</div>
 	<div th:replace="layout::footer"></div>
-
+	
+	<script>
+	  const cardList = document.getElementById("cardList");
+	  const cardTopics = cardList.querySelectorAll(".card_topic");
+	  const totalCards = cardTopics.length;
+	  const cardsPerPage = 4;
+	  let currentIndex = 0;
+	
+	  const prevBtn = document.getElementById("prevBtn");
+	  const nextBtn = document.getElementById("nextBtn");
+	
+	  function updateSlider() {
+	    const cardWidth = cardTopics[0].offsetWidth + 16; // 16px = gap
+	    const offset = currentIndex * cardWidth;
+	    cardList.style.transform = `translateX(-${offset}px)`;
+	  }
+	
+	  nextBtn.addEventListener("click", () => {
+	    if (currentIndex < totalCards - cardsPerPage) {
+	      currentIndex++;
+	    } else {
+	      currentIndex = 0; // quay lại đầu
+	    }
+	    updateSlider();
+	  });
+	
+	  prevBtn.addEventListener("click", () => {
+	    if (currentIndex > 0) {
+	      currentIndex--;
+	    } else {
+	      currentIndex = totalCards - cardsPerPage; // quay lại cuối
+	    }
+	    updateSlider();
+	  });
+	</script>
+	
 </body>
 </html>
