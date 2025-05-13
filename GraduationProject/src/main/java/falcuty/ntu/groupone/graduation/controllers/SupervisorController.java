@@ -65,6 +65,7 @@ public class SupervisorController {
 		if (supervisorOpt.isPresent()) {
 			Optional<Course> course = courseService.findCourseById(63);
 			List<ResearchTopic> researchTopics = researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), true, course.get());
+			researchTopics.addAll(researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), false, course.get()));
 			model.addAttribute("type", "supervisor");
 			model.addAttribute("name", supervisorOpt.get().getName());
 			model.addAttribute("researchtopics",researchTopics);

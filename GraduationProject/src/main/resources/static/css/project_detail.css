@@ -2,23 +2,29 @@
 
 .project_title{
 	font-family: Geologica;
+	color: var(--main-color);
 	font-weight: 600;
 	font-size: 2rem;
-	margin: 24px;
-	text-align: center;
+	margin: 24px 87px;
 }
 
 .project_detail{
 	margin: 24px 87px;
+	font-size: 24px;
 }
 
-.project_detail h3{
-	font-family: Geologica;
-	font-weight: 600;
-	font-size: 2rem;	
-	text-align: center;
+.project_detail>p,
+.project_part>p{
+	display: flex;
+	font-weight: 800;
 }
 
-.project_detail p{
-	display: flex;	
+.project_detail span{
+	font-weight: 500;
+	margin-left: 10px;
+}
+
+.project_part{
+	display: flex;
+	justify-content: space-between;
 }
