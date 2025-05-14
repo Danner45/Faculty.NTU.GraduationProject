@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ch.qos.logback.core.model.Model;
 import falcuty.ntu.groupone.graduation.models.Course;
+import falcuty.ntu.groupone.graduation.models.Enrol;
 import falcuty.ntu.groupone.graduation.models.ProjectType;
 import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Student;
@@ -79,11 +80,6 @@ public class SupervisorController {
 		model.addAttribute("email", email);
 		model.addAttribute("currentPath", request.getRequestURI());
 		return "supervisor/index";
-	}
-	
-	@GetMapping("/topics/all")
-	public String getAllTopics() {
-		return "supervisor/topic_list";
 	}
 	
 	@GetMapping("/project/create")
@@ -140,5 +136,23 @@ public class SupervisorController {
         model.addAttribute("researchtopic", researchTopic);
         model.addAttribute("count", countStudent);
         return "supervisor/project_detail";
+	}
+	
+	@GetMapping("/project/detail/{id}/enrol_list")
+	public String getEnrolList(@PathVariable Integer id,
+								@AuthenticationPrincipal UserDetails userDetails,
+								ModelMap model) {
+		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		List<Enrol> enrols = enrolService.getEnrolListByProject(researchTopic);
+		String email = userDetails.getUsername();
+		Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
+	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
+		int count = enrols.size();
+		model.addAttribute("topic", researchTopic.getTopic());
+		model.addAttribute("email", email);
+        model.addAttribute("name", supervisor.getName());
+		model.addAttribute("enrols", enrols);
+		model.addAttribute("count", count);
+		return "supervisor/project_enrol_list";
 	}
 }

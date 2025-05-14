@@ -32,13 +32,6 @@ public class ProjectController {
 	@Autowired
 	private SupervisorService supervisorService;
 	
-	@Autowired
-	private ProjectTypeService projectTypeService;
 	
-	@Autowired
-	private CourseService courseService;
-	
-	@Autowired
-	private ResearchTopicService researchTopicService;
 	
 }

@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.enrol_detail{
+	margin: 24px 87px;
+}
+
+.enrol_detail h3{
+	font-family: Geologica;
+	font-size: 2rem;
+	font-weight: 600;
+	color: var(--main-color);
+	margin-bottom: 1rem;
+}
+
+.enrol_title{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.enrol_title p{
+	font-weight: 500;
+	
+}
