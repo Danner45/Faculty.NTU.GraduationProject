@@ -16,7 +16,7 @@ public class ResearchTopic {
     private Supervisor teacherCreated;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_accepted", nullable = false)
+    @JoinColumn(name = "teacher_accepted", nullable = true)
     private Supervisor teacherAccepted;
 
     @ManyToOne

@@ -51,7 +51,7 @@
 	</script>
 </head>
 <body>
-	<div th:replace="layout::header(${user.name}, ${email})"></div>
+	<div th:replace="layout::header(${user.name}, ${email}, ${type})"></div>
 	<div class="container-fluid">
 		<form th:action="@{'/profile/update'}" th:object="${user}" method="post" enctype="multipart/form-data">
 			<div class="default_infor">

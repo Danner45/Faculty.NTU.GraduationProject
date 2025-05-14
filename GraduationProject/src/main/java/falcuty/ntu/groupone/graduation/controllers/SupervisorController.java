@@ -5,7 +5,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -24,8 +26,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ch.qos.logback.core.model.Model;
+import falcuty.ntu.groupone.graduation.models.Course;
+import falcuty.ntu.groupone.graduation.models.ProjectType;
+import falcuty.ntu.groupone.graduation.models.ResearchTopic;
+import falcuty.ntu.groupone.graduation.models.Student;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
+import falcuty.ntu.groupone.graduation.services.implement.CourseService;
+import falcuty.ntu.groupone.graduation.services.implement.EnrolService;
+import falcuty.ntu.groupone.graduation.services.implement.ProjectTypeService;
+import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/supervisors")
@@ -33,15 +44,101 @@ public class SupervisorController {
 	@Autowired
 	private SupervisorService supervisorService;
 	
+	@Autowired
+	private ResearchTopicService researchTopicService;
+	
+	@Autowired
+	private CourseService courseService;
+	
+	@Autowired
+	private ProjectTypeService projectTypeService;
+	
+	@Autowired
+	private EnrolService enrolService;
+	
+	
 	public SupervisorController(SupervisorService supervisorService) {
 		this.supervisorService = supervisorService;
 	}
 	
 	
-	
+	@GetMapping("/home")
+	public String getHome(HttpServletRequest request, ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
+		String email = userDetails.getUsername();
+		Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
+		if (supervisorOpt.isPresent()) {
+			Optional<Course> course = courseService.findCourseById(63);
+			List<ResearchTopic> researchTopics = researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), true, course.get());
+			researchTopics.addAll(researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), false, course.get()));
+			model.addAttribute("type", "supervisor");
+			model.addAttribute("name", supervisorOpt.get().getName());
+			model.addAttribute("researchtopics",researchTopics);
+		} else {
+		    model.addAttribute("name", "Người dùng không xác định");
+		}
+		model.addAttribute("email", email);
+		model.addAttribute("currentPath", request.getRequestURI());
+		return "supervisor/index";
+	}
 	
 	@GetMapping("/topics/all")
 	public String getAllTopics() {
 		return "supervisor/topic_list";
+	}
+	
+	@GetMapping("/project/create")
+    public String newProject(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
+        String email = userDetails.getUsername();
+
+        Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
+        
+        List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
+        List<Course> courses = courseService.getLast4Courses();
+        model.addAttribute("type", "supervisor");
+        model.addAttribute("project", new ResearchTopic());
+        model.addAttribute("email", email);
+        model.addAttribute("name", supervisor.getName());
+        model.addAttribute("projectTypes", projectTypes);
+        model.addAttribute("courses", courses);
+        return "supervisor/project_new";
+    }
+	
+	@PostMapping("/project/add")
+    public String handleCreateProject(@ModelAttribute ResearchTopic project,
+                                      @RequestParam("projectType") Integer typeId,
+                                      @RequestParam("course") Integer courseId,
+                                      @RequestParam("isResearch") Integer isResearch,
+                                      @AuthenticationPrincipal UserDetails userDetails) {
+		Optional<Supervisor> supervisor = supervisorService.findSupervisorByEmail(userDetails.getUsername());
+        Optional<ProjectType> type = projectTypeService.findProjectTypeById(typeId);
+        Optional<Course> course = courseService.findCourseById(courseId);
+        
+        project.setProjectType(type.get());
+        project.setCourse(course.get());
+        project.setIsResearch(isResearch == 1);
+        project.setTeacherCreated(supervisor.get());
+        project.setState(0);
+        project.setMaxJoin(1);
+
+        researchTopicService.addResearchTopic(project);
+        return "redirect:/supervisors/home";
+    }
+	
+	@GetMapping("/project/detail/{id}")
+	public String getDetailProject(@PathVariable Integer id,
+									@AuthenticationPrincipal UserDetails userDetails,
+			 						ModelMap model) {
+		String email = userDetails.getUsername();
+		Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
+	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
+		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		int countStudent = enrolService.countStudentEnrol(researchTopic);
+		model.addAttribute("type", "supervisor");
+		model.addAttribute("email", email);
+        model.addAttribute("name", supervisor.getName());
+        model.addAttribute("researchtopic", researchTopic);
+        model.addAttribute("count", countStudent);
+        return "supervisor/project_detail";
 	}
 }

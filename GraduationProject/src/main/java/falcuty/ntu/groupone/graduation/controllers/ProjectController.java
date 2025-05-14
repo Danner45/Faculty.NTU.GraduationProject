@@ -1,6 +1,7 @@
 package falcuty.ntu.groupone.graduation.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +21,7 @@ import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
 import falcuty.ntu.groupone.graduation.services.implement.CourseService;
 import falcuty.ntu.groupone.graduation.services.implement.ProjectTypeService;
+import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
 
 
@@ -35,37 +38,7 @@ public class ProjectController {
 	@Autowired
 	private CourseService courseService;
 	
-	@GetMapping("/create")
-    public String newProject(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
-        String email = userDetails.getUsername();
-
-        Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
-            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
-        
-        List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
-        List<Course> courses = courseService.getLast4Courses();
-        model.addAttribute("project", new ResearchTopic());
-        model.addAttribute("email", email);
-        model.addAttribute("name", supervisor.getName());
-        model.addAttribute("projectTypes", projectTypes);
-        model.addAttribute("courses", courses);
-        return "new_project";
-    }
+	@Autowired
+	private ResearchTopicService researchTopicService;
 	
-	@PostMapping("/add")
-    public String handleCreateProject(@ModelAttribute ResearchTopic project,
-                                      @RequestParam("projectType") Integer typeId,
-                                      @RequestParam("course") Integer courseId,
-                                      @RequestParam("isResearch") Integer isResearch) {
-
-        ProjectType type = projectTypeService.getById(typeId);
-        Course course = courseService.getById(courseId);
-
-        project.setProjectType(type);
-        project.setCourse(course);
-        project.setIsResearch(isResearch == 1);
-
-        projectService.saveProject(project);
-        return "redirect:/project/list"; // Hoặc trang xác nhận
-    }
 }
