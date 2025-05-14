@@ -50,7 +50,7 @@ public class ResearchTopic {
     
     @Column(name="is_research")
     private Boolean isResearch;
-   
+    
     public ResearchTopic() {
     }
 
@@ -177,6 +177,5 @@ public class ResearchTopic {
 	public void setIsResearch(Boolean isResearch) {
 		this.isResearch = isResearch;
 	}
-    
-    
+
 }

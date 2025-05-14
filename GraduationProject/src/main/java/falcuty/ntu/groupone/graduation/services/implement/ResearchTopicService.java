@@ -16,7 +16,10 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 	
 	@Autowired
 	IResearchTopicRepository researchTopicRepository;
-
+	
+	public List<ResearchTopic> findAllByStateZero() {
+        return researchTopicRepository.findAllByStateZero();
+    }
 	@Override
 	public List<ResearchTopic> findAllResearchOrTopicForCourse(Course course, boolean isResearch) {
 		// TODO Auto-generated method stub
@@ -37,7 +40,7 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 	public ResearchTopic findResearchTopicById(int id) {
 		return researchTopicRepository.findResearchTopicByIdResearchTopic(id);
 	}
-	
-	
+
+    
 	
 }
