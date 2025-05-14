@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationSuccessHandler successHandler) throws Exception {
 		return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                 				.loginPage("/login")
                 				.loginProcessingUrl("/login")
-                        		.defaultSuccessUrl("/", true)
+                        		.successHandler(successHandler)
                         		.permitAll()
                 )
                 .logout(config -> config.logoutSuccessUrl("/login"))

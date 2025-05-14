@@ -9,7 +9,7 @@
   	<link th:href="@{/css/login.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:replace="layout::header('', '')"></div>
+	<div th:replace="layout::header('', '', '')"></div>
 	<div class="container-fluid">
 		<div class="login_content row">
 			<form th:action="@{/login}" method="post" class="col-6 login_form">
