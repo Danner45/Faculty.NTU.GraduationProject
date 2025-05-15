@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ch.qos.logback.core.model.Model;
+import falcuty.ntu.groupone.graduation.models.CountResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Course;
 import falcuty.ntu.groupone.graduation.models.Enrol;
 import falcuty.ntu.groupone.graduation.models.ProjectType;
@@ -75,9 +77,15 @@ public class SupervisorController {
 			Optional<Course> course = courseService.findCourseById(63);
 			List<ResearchTopic> researchTopics = researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), true, course.get());
 			researchTopics.addAll(researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), false, course.get()));
+			List<CountResearchTopic> countResearchTopics = new ArrayList<>();
+
+			for (ResearchTopic topic : researchTopics) {
+			    int count = enrolService.countStudentEnrol(topic);
+			    countResearchTopics.add(new CountResearchTopic(topic, count));
+			}
 			model.addAttribute("type", "supervisor");
 			model.addAttribute("name", supervisorOpt.get().getName());
-			model.addAttribute("researchtopics",researchTopics);
+			model.addAttribute("counts", countResearchTopics);
 		} else {
 		    model.addAttribute("name", "Người dùng không xác định");
 		}
@@ -92,7 +100,6 @@ public class SupervisorController {
 
         Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
-        
         List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
         List<Course> courses = courseService.getLast4Courses();
         model.addAttribute("type", "supervisor");

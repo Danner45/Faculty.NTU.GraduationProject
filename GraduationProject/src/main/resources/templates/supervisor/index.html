@@ -15,7 +15,7 @@
 		<div class="this_year_topics">
 			<h3>Đề tài của tôi cho khóa 2021-2025</h3>
 			<div class="topcic_list">
-				<div th:if="${#lists.isEmpty(researchtopics)}">
+				<div th:if="${#lists.isEmpty(counts)}">
             		<h3 style="color:var(--main-color)">THẦY/CÔ CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
         		</div>
 				<div class="card_slider_wrapper">
@@ -23,23 +23,30 @@
 					  
 					<div class="card_slider">
 						<div class="card_list" id="cardList" 
-					         th:if="${!#lists.isEmpty(researchtopics)}">
+					         th:if="${!#lists.isEmpty(counts)}">
 					    	<div class="card_topic" 
-					           th:each="project : ${researchtopics}">
+					           th:each="project : ${counts}">
 					    		<div class="card_content">
 					    			<img src="/image/system/topic.png"/>
-					          		<p th:text="${project.topic}"></p>
-					          		<ul>
-					            		<li>Sinh viên đăng ký: <span ></span></li>
+					          		<p th:text="${project.project.topic}"></p>
+					          		<ul th:if="${project.project.state == 0}">
+					            		<li>Sinh viên đăng ký: <span th:text="${project.count}"></span></li>
 					            		<li>Trạng thái: 
-					              		<span th:text="${project.state == 0 ? 'Đang chờ duyệt sinh viên' : 
-					                               (project.state == 1 ? 'Đang thực hiện' : 
-					                               (project.state == 2 ? 'Đã hoàn thành' : 'Không xác định'))}">
+					              		<span>
+					              			Đang chờ duyệt sinh viên
 					              		</span>
 					            		</li>
 					          		</ul>
-					          		<a th:href="@{/supervisors/project/detail/{id}(id=${project.idResearchTopic})}">
-					          			<button th:text="${project.state == 0 ? 'Duyệt sinh viên' : 'Xem chi tiết'}">
+					          		<ul th:if="${project.project.state == 1}">
+					            		<li>Cập nhật: <span th:text="${#dates.format(project.project.lastModify, 'dd/MM/yyyy')}"></span></li>
+					            		<li>Trạng thái: 
+					              		<span>
+					              			Đang thực hiện
+					              		</span>
+					            		</li>
+					          		</ul>
+					          		<a th:href="@{/supervisors/project/detail/{id}(id=${project.project.idResearchTopic})}">
+					          			<button th:text="${project.project.state == 0 ? 'Duyệt sinh viên' : 'Xem chi tiết'}">
 					                    	<img src="/image/system/arrow.svg">
 					                 	</button>
 					                 </a>

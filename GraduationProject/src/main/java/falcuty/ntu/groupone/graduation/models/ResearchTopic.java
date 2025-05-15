@@ -196,6 +196,15 @@ public class ResearchTopic {
 	public void setExpireDay(Date expireDay) {
 		this.expireDay = expireDay;
 	}
+
+	public Date getLastModify() {
+		return lastModify;
+	}
+
+	public void setLastModify(Date lastModify) {
+		this.lastModify = lastModify;
+	}
     
+	
     
 }
