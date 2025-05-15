@@ -1,5 +1,7 @@
 package falcuty.ntu.groupone.graduation.models;
 
+import java.util.Date;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -42,21 +44,28 @@ public class ResearchTopic {
     @Column(name = "state", nullable = false)
     private Integer state;
 
-    @Column(name = "grade")
+    @Column(name = "grade", nullable = true)
     private Double grade;
 
-    @Column(name = "review")
+    @Column(name = "review", nullable = true)
     private String review;
     
-    @Column(name="is_research")
+    @Column(name = "is_research", nullable = false)
     private Boolean isResearch;
+    
+    @Column(name = "last_modify", nullable = true)
+    private Date lastModify;
+    
+    @Column(name = "expire_day", nullable = false)
+    private Date expireDay;
    
     public ResearchTopic() {
     }
 
     public ResearchTopic(int idResearchTopic, Supervisor teacherCreated, Supervisor teacherAccepted,
                          ProjectType projectType, Course course, String topic, String description,
-                         String detail, int maxJoin, int state, Double grade, String review, Boolean isResearch) {
+                         String detail, int maxJoin, int state, Double grade, String review, Boolean isResearch,
+                         Date lastModify, Date expireDay) {
         this.idResearchTopic = idResearchTopic;
         this.teacherCreated = teacherCreated;
         this.teacherAccepted = teacherAccepted;
@@ -70,6 +79,8 @@ public class ResearchTopic {
         this.grade = grade;
         this.review = review;
         this.isResearch = isResearch;
+        this.lastModify = lastModify;
+        this.expireDay = expireDay;
     }
 
     // Getters & Setters
@@ -176,6 +187,14 @@ public class ResearchTopic {
 
 	public void setIsResearch(Boolean isResearch) {
 		this.isResearch = isResearch;
+	}
+
+	public Date getExpireDay() {
+		return expireDay;
+	}
+
+	public void setExpireDay(Date expireDay) {
+		this.expireDay = expireDay;
 	}
     
     

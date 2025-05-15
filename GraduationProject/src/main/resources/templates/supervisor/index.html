@@ -38,7 +38,11 @@
 					              		</span>
 					            		</li>
 					          		</ul>
-					          		<a th:href="@{/supervisors/project/detail/{id}(id=${project.idResearchTopic})}"><button>Duyệt sinh viên <img src="/image/system/arrow.svg"></button></a>
+					          		<a th:href="@{/supervisors/project/detail/{id}(id=${project.idResearchTopic})}">
+					          			<button th:text="${project.state == 0 ? 'Duyệt sinh viên' : 'Xem chi tiết'}">
+					                    	<img src="/image/system/arrow.svg">
+					                 	</button>
+					                 </a>
 					        	</div>
 					     	</div>
 						</div>

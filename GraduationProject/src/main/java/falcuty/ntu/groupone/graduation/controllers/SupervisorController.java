@@ -163,11 +163,7 @@ public class SupervisorController {
 	@GetMapping("/project/enrol/confirm")
     public String confirmEnrol(@RequestParam("studentId") String studentId,
                                @RequestParam("projectId") Integer topicId) {
-        enrolService.confirmEnrolment(studentId, topicId);
-        ResearchTopic researchTopic = researchTopicService.findResearchTopicById(topicId);
-        Optional<Student> student = studentService.findStudentById(studentId);
-        enrolService.deleteByResearchTopicAndStateEnrol(researchTopic, 0);
-        enrolService.deleteByStudentAndStateEnrol(student.get(), 0);
+		enrolService.confirmEnrol(studentId, topicId);
         return "redirect:/supervisors/project/detail/" + topicId;
     }
 }

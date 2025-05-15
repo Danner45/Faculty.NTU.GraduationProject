@@ -14,5 +14,5 @@ public interface IEnrolService {
 	void deleteByResearchTopicAndStateEnrol(ResearchTopic researchTopic, Integer state);
 	void deleteByStudentAndStateEnrol(Student student, Integer state);
 	int countStudentEnrol(ResearchTopic researchTopic);
-	void confirmEnrol(Student student, ResearchTopic researchTopic);
+	void confirmEnrol(String studentId, Integer researchTopicId);
 }
