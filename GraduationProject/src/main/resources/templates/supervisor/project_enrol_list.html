@@ -18,12 +18,15 @@
 				<p>Tên đề tài: <span th:text="${topic}"></span></p>
 				<p>Số lượng sinh viên đăng ký: <span th:text="${count}"></span></p>
 			</div>
-			<table>
+			<table class="enrol_list" style="padding: 16px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
 				<tbody>
 					<tr th:each="enrol, iterStat : ${enrols}"> 
-						<td><span th:text="${iterStat.index+1}"></span>. <span th:text="${enrol.student.name}"></span></td>
 						<td>
-							<a th:href="@{/profile/{email}(email=${enrol.student.email})}">Xem chi tiết</a> | <a>Chấp nhận</a>
+							<span th:text="${iterStat.index+1}"></span>. <span th:text="${enrol.student.name}"></span>
+						</td>
+						<td>
+							<a th:href="@{/profile/{email}(email=${enrol.student.email})}">Xem chi tiết</a> | 
+							<a th:href="@{/project/enrol/confirm(studentId=${enrol.student.id}, projectId=${enrol.researchTopic.idResearchTopic})}">Chấp nhận</a>
 						</td>
 					</tr>
 				</tbody>

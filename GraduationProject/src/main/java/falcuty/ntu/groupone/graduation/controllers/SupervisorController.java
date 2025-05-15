@@ -36,6 +36,7 @@ import falcuty.ntu.groupone.graduation.services.implement.CourseService;
 import falcuty.ntu.groupone.graduation.services.implement.EnrolService;
 import falcuty.ntu.groupone.graduation.services.implement.ProjectTypeService;
 import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
+import falcuty.ntu.groupone.graduation.services.implement.StudentService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -56,6 +57,9 @@ public class SupervisorController {
 	
 	@Autowired
 	private EnrolService enrolService;
+	
+	@Autowired
+	private StudentService studentService;
 	
 	
 	public SupervisorController(SupervisorService supervisorService) {
@@ -155,4 +159,15 @@ public class SupervisorController {
 		model.addAttribute("count", count);
 		return "supervisor/project_enrol_list";
 	}
+	
+	@GetMapping("/project/enrol/confirm")
+    public String confirmEnrol(@RequestParam("studentId") String studentId,
+                               @RequestParam("projectId") Integer topicId) {
+        enrolService.confirmEnrolment(studentId, topicId);
+        ResearchTopic researchTopic = researchTopicService.findResearchTopicById(topicId);
+        Optional<Student> student = studentService.findStudentById(studentId);
+        enrolService.deleteByResearchTopicAndStateEnrol(researchTopic, 0);
+        enrolService.deleteByStudentAndStateEnrol(student.get(), 0);
+        return "redirect:/supervisors/project/detail/" + topicId;
+    }
 }

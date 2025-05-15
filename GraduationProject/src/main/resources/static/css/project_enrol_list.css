@@ -20,6 +20,7 @@
 }
 
 .enrol_title p{
+	font-size: 20px;
 	font-weight: 500;
 	margin: 0;
 }
@@ -32,8 +33,41 @@
 	text-transform: uppercase;
 }
 
-.enrol_title table{
-	padding: 16px;
+.enrol_list{
+	width: 100%;
+	border-radius: var(--border);
+	margin-top: 1rem;
+}
+
+.enrol_list tr{
+	padding: 1rem;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-	
+	display: flex;
+	justify-content: space-between;
+}
+
+.enrol_list tr span{
+	color: var(--sub-text-color);
+}
+
+.enrol_list tr:first-child{
+	border-radius: var(--border) var(--border) 0 0 ;
+}
+
+.enrol_list tr:last-child{
+	border-radius: 0 0 var(--border) var(--border);
+}
+
+.enrol_list tr:nth-child(odd){
+	background-color: #F5F5F5;
+}
+
+.enrol_list td a{
+	text-decoration: underline;
+	color: black;
+}
+
+.enrol_list td a:hover{
+	text-decoration: underline;
+	color: var(--main-color);
 }
