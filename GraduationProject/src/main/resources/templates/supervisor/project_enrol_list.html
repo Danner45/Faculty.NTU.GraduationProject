@@ -20,7 +20,7 @@
 			</div>
 			<table>
 				<tbody>
-					<tr th:each="enrol, iterStat  : ${enrols}"> 
+					<tr th:each="enrol, iterStat : ${enrols}"> 
 						<td><span th:text="${iterStat.index+1}"></span>. <span th:text="${enrol.student.name}"></span></td>
 						<td>
 							<a th:href="@{/profile/{email}(email=${enrol.student.email})}">Xem chi tiết</a> | <a>Chấp nhận</a>

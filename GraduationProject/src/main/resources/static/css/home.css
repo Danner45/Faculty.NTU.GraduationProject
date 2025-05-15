@@ -61,45 +61,45 @@
 }
 
 .card_slider_wrapper {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
+  	position: relative;
+  	overflow: hidden;
+  	width: 100%;
 }
 
 .card_slider {
-  overflow: hidden;
+  	overflow: hidden;
 }
 
 .card_list {
-  display: flex;
-  gap: 1rem;
-  transition: transform 0.5s ease-in-out;
+  	display: flex;
+  	gap: 1rem;
+  	transition: transform 0.5s ease-in-out;
 }
 
 .card_topic {
-  max-width: 24%;
-  box-sizing: border-box;
-  flex-shrink: 0;
+  	max-width: 24%;
+  	box-sizing: border-box;
+  	flex-shrink: 0;
 }
 
 .slider_btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0,0,0,0.5);
-  color: white;
-  border: none;
-  font-size: 24px;
-  padding: 8px 12px;
-  cursor: pointer;
-  z-index: 10;
+  	position: absolute;
+  	top: 50%;
+  	transform: translateY(-50%);
+  	background-color: rgba(0,0,0,0.5);
+  	color: white;
+  	border: none;
+  	font-size: 24px;
+  	padding: 8px 12px;
+  	cursor: pointer;
+  	z-index: 10;
 }
 
 #prevBtn {
-  left: 0;
+  	left: 0;
 }
 #nextBtn {
-  right: 0;
+  	right: 0;
 }
 
 

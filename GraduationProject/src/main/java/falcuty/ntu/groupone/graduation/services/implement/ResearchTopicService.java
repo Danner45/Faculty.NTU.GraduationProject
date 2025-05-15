@@ -19,7 +19,6 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 
 	@Override
 	public List<ResearchTopic> findAllResearchOrTopicForCourse(Course course, boolean isResearch) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

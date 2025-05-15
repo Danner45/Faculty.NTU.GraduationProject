@@ -21,5 +21,19 @@
 
 .enrol_title p{
 	font-weight: 500;
+	margin: 0;
+}
+
+.enrol_title p span{
+	font-weight: 400;
+}
+
+.enrol_title p span:first-child{
+	text-transform: uppercase;
+}
+
+.enrol_title table{
+	padding: 16px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	
 }
