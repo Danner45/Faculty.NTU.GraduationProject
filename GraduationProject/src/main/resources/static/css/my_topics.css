@@ -22,16 +22,19 @@ body {
     justify-content: space-between;
 }
 .card-container {
-    display: flex;
+    display: grid;
     gap: 20px;
     margin-top: 24px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    
 }
 .card-image{
     background-color: #e8a84b;
     border: 1px;
     border-radius: 20px;
-    width: 385px;
+    width: 100%;
     height: 265px;
+    object-fit: cover;
 }
 .card {
     border-radius: 8px;

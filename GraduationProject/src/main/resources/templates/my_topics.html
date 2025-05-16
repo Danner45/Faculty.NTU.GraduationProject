@@ -9,7 +9,7 @@
 <title>Đề Tài Của Tôi</title>
 </head>
 <body>
-<div th:replace="layout::header(${name}, ${email})"></div>
+<div th:replace="layout::header(${name}, ${email}, ${'supervisor'})"></div>
 	
 	<div class="container">
         <div class="area-filter">
@@ -46,7 +46,7 @@
         </div>
         <div class="card-container">
             <div th:each="topic : ${topics}" class="card">
-	        <div class="card-image"></div>
+	        <img class="card-image" src="/image/system/topic.png"/>
 		        <div class="card-content">
 		            <h2 th:text="${topic.topic}">Tên đề tài</h2>
 		            <p th:text="'Tình trạng: ' + ${topic.state == 1 ? 'Đã hoàn thành' : topic.state == 0 ? 'Chưa được thực hiện' : 'Đang thực hiện'}"></p>

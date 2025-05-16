@@ -18,7 +18,7 @@ public class ResearchTopicController {
 	@Autowired
     private ResearchTopicService researchTopicService;
 
-    @GetMapping("/my-topics")
+    @GetMapping("/my_topics")
     public String getMyTopics(Model model, Principal principal) {
         String email = principal.getName(); // Lấy email tài khoản đã đăng nhập
 

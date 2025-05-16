@@ -4,16 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-<<<<<<< HEAD
-import org.springframework.security.core.userdetails.UsernameNotFoundException; 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import falcuty.ntu.groupone.graduation.models.Course;
 import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
 import falcuty.ntu.groupone.graduation.repositories.IResearchTopicRepository;
 import falcuty.ntu.groupone.graduation.repositories.ISupervisorRepository;
+import falcuty.ntu.groupone.graduation.services.interf.IResearchTopicSerivce;
 
 @Service
-public class ResearchTopicService {
+public class ResearchTopicService implements IResearchTopicSerivce{
     @Autowired
     private IResearchTopicRepository researchTopicRepository;
     
@@ -29,21 +30,8 @@ public class ResearchTopicService {
         return supervisorRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy giáo viên với email: " + email));
     }
-=======
-
-import falcuty.ntu.groupone.graduation.models.Course;
-import falcuty.ntu.groupone.graduation.models.ResearchTopic;
-import falcuty.ntu.groupone.graduation.models.Supervisor;
-import falcuty.ntu.groupone.graduation.repositories.IResearchTopicRepository;
-import falcuty.ntu.groupone.graduation.services.interf.IResearchTopicSerivce;
-
-@Service
-public class ResearchTopicService implements IResearchTopicSerivce{
-	
-	@Autowired
-	IResearchTopicRepository researchTopicRepository;
-
-	@Override
+    
+    @Override
 	public List<ResearchTopic> findAllResearchOrTopicForCourse(Course course, boolean isResearch) {
 		// TODO Auto-generated method stub
 		return null;
@@ -63,8 +51,4 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 	public ResearchTopic findResearchTopicById(int id) {
 		return researchTopicRepository.findResearchTopicByIdResearchTopic(id);
 	}
-	
-	
-	
->>>>>>> main
 }

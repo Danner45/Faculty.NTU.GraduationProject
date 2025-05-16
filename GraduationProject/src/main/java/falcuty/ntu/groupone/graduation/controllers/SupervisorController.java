@@ -61,9 +61,6 @@ public class SupervisorController {
 		this.supervisorService = supervisorService;
 	}
 	
-<<<<<<< HEAD
-=======
-	
 	@GetMapping("/home")
 	public String getHome(HttpServletRequest request, ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		String email = userDetails.getUsername();
@@ -83,7 +80,7 @@ public class SupervisorController {
 		return "supervisor/index";
 	}
 	
->>>>>>> main
+
 	@GetMapping("/topics/all")
 	public String getAllTopics() {
 		return "supervisor/topic_list";
