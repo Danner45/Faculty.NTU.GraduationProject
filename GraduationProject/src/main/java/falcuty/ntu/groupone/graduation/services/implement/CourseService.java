@@ -22,4 +22,8 @@ public class CourseService {
 	public Optional<Course> findCourseById(int id){
 		return courseRepository.findById(id);
 	}
+	
+	public Course findCourseByGraduationYear(int year){
+		return courseRepository.findByGraduationYear(year);
+	}
 }

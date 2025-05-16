@@ -5,13 +5,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -74,9 +79,10 @@ public class SupervisorController {
 		String email = userDetails.getUsername();
 		Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
 		if (supervisorOpt.isPresent()) {
-			Optional<Course> course = courseService.findCourseById(63);
-			List<ResearchTopic> researchTopics = researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), true, course.get());
-			researchTopics.addAll(researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), false, course.get()));
+			int currentYear = LocalDate.now().getYear();
+			Course course = courseService.findCourseByGraduationYear(currentYear);
+			List<ResearchTopic> researchTopics = researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), true, course);
+			researchTopics.addAll(researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), false, course));
 			List<CountResearchTopic> countResearchTopics = new ArrayList<>();
 
 			for (ResearchTopic topic : researchTopics) {
@@ -84,9 +90,9 @@ public class SupervisorController {
 			    countResearchTopics.add(new CountResearchTopic(topic, count));
 			}
 			System.out.println(countResearchTopics.size());
-			model.addAttribute("type", "supervisor");
 			model.addAttribute("name", supervisorOpt.get().getName());
 			model.addAttribute("counts", countResearchTopics);
+			model.addAttribute("course", course);
 		} else {
 		    model.addAttribute("name", "Người dùng không xác định");
 		}
@@ -117,7 +123,8 @@ public class SupervisorController {
                                       @RequestParam("projectType") Integer typeId,
                                       @RequestParam("course") Integer courseId,
                                       @RequestParam("isResearch") Integer isResearch,
-                                      @AuthenticationPrincipal UserDetails userDetails) {
+                                      @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam("expireDay") Date expireDay,
+                                      @AuthenticationPrincipal UserDetails userDetails) throws ParseException {
 		Optional<Supervisor> supervisor = supervisorService.findSupervisorByEmail(userDetails.getUsername());
         Optional<ProjectType> type = projectTypeService.findProjectTypeById(typeId);
         Optional<Course> course = courseService.findCourseById(courseId);
@@ -128,7 +135,7 @@ public class SupervisorController {
         project.setTeacherCreated(supervisor.get());
         project.setState(0);
         project.setMaxJoin(1);
-
+        project.setExpireDay(expireDay);
         researchTopicService.addResearchTopic(project);
         return "redirect:/supervisors/home";
     }
