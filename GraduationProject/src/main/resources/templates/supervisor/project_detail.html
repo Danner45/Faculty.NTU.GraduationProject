@@ -25,11 +25,33 @@
 			<p>Chi tiết</p> 
 			<div th:utext="*{detail}"></div>
 		</div>
-		<div class="count_enrol">
+		<div class="enrol_bottom" th:if="${researchtopic.state == 0}">
 			<p>Số lượng sinh viên đăng ký: <span th:text="${count}"></span></p>
-			<div class="button">
+			<div class="confirm_button">
 				<a th:href="@{/supervisors/project/detail/{id}/enrol_list(id=${researchtopic.idResearchTopic})}"><button>Xem chi tiết sinh viên đã đăng ký</button></a>
 				<a><button>Sửa đề tài</button></a>
+			</div>
+		</div>
+		
+		<div class="enrol_bottom" th:if="${researchtopic.state == 1}">
+			<div>
+				<p>Báo cáo của sinh viên: </p>
+				<p>Thời gian nộp gần nhất: <span th:text="${#dates.format(researchtopic.lastModify, 'dd/MM/yyyy')}"></span> </p>
+			</div>
+			<div style="display: flex; flex-direction: column; align-items:end;">
+				<p style="color:#BDBBBB">Thời hạn nộp bài: <span th:text="${#dates.format(researchtopic.expireDay, 'dd/MM/yyyy')}"></span></p>
+				<a th:href="@{/supervisors/project/mark/{id}(id=${researchtopic.idResearchTopic})}"><button>
+					Chấm điểm
+				</button></a>
+			</div>
+		</div>
+		<div class="enrol_bottom" th:if="${researchtopic.state == 2}">
+			<div>
+				<p>Báo cáo của sinh viên: </p>
+				<p>Ngày nộp bài: <span th:text="${#dates.format(researchtopic.lastModify, 'dd/MM/yyyy')}"></span> </p>
+				<p>Điểm: <span th:text="${researchtopic.grade}"></span></p>
+				<p>Nhận xét: </p>
+				<div th:utext="${researchtopic.review}"></div>
 			</div>
 		</div>
 	</div>

@@ -38,8 +38,7 @@ public class StudentService implements IStudentService{
 
 	@Override
 	public Optional<Student> findStudentById(String id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+		return studentRepository.findById(id);
 	}
 	
 	

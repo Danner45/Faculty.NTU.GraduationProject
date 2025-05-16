@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Danh sách đăng ký </title>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  	<link th:href="@{/css/layout.css}" rel="stylesheet">	
+  	<link th:href="@{/css/project_enrol_list.css}" rel="stylesheet">
+</head>
+<body>
+	<div th:replace="layout::header(${name}, ${email}, 'supervisor')"></div>
+	<div class="container-fluid">
+		<div th:replace="layout::intro('supervisor')"></div>
+		<div class="enrol_detail">
+			<h3>Danh sách sinh viên đăng ký đề tài</h3>
+			<div class="enrol_title">
+				<p>Tên đề tài: <span th:text="${topic}"></span></p>
+				<p>Số lượng sinh viên đăng ký: <span th:text="${count}"></span></p>
+			</div>
+			<table class="enrol_list" style="padding: 16px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+				<tbody>
+					<tr th:each="enrol, iterStat : ${enrols}"> 
+						<td>
+							<span th:text="${iterStat.index+1}"></span>. <span th:text="${enrol.student.name}"></span>
+						</td>
+						<td>
+							<a th:href="@{/profile/{email}(email=${enrol.student.email})}">Xem chi tiết</a> | 
+							<a th:href="@{/supervisors/project/enrol/confirm(studentId=${enrol.student.id}, projectId=${enrol.researchTopic.idResearchTopic})}">Chấp nhận</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div th:replace="layout::footer"></div>
+</body>
+</html>

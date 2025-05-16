@@ -22,7 +22,6 @@ public class ResearchTopicService implements IResearchTopicSerivce{
     }
 	@Override
 	public List<ResearchTopic> findAllResearchOrTopicForCourse(Course course, boolean isResearch) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -40,7 +39,11 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 	public ResearchTopic findResearchTopicById(int id) {
 		return researchTopicRepository.findResearchTopicByIdResearchTopic(id);
 	}
+	
+	public ResearchTopic saveResearchTopic(ResearchTopic researchTopic) {
+		return researchTopicRepository.save(researchTopic);
+	}
+	
 
-    
 	
 }

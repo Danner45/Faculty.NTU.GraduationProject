@@ -17,6 +17,12 @@ public class EnrolService implements IEnrolService{
 	
 	@Autowired
 	private IEnrolRepository enrolRepository;
+	
+	@Autowired
+	private StudentService studentService;
+	
+	@Autowired
+	private ResearchTopicService researchTopicService;
 
 	@Override
 	public List<Enrol> getEnrolListByProject(ResearchTopic researchTopic) {
@@ -48,5 +54,27 @@ public class EnrolService implements IEnrolService{
 	public int countStudentEnrol(ResearchTopic researchTopic) {
 		return enrolRepository.countByResearchTopic(researchTopic);
 	}
+
+	@Override
+	public void confirmEnrol(String studentId, Integer researchTopicId) {
+		Student student = studentService.findStudentById(studentId).get();
+	    ResearchTopic topic = researchTopicService.findResearchTopicById(researchTopicId);
+
+	    Enrol enrol = enrolRepository.findByStudentAndResearchTopic(student, topic)
+	        .orElseThrow(() -> new RuntimeException("Enrol not found"));
+
+	    enrol.setStateEnrol(1);
+	    topic.setState(1);
+	    
+	    
+	    enrolRepository.save(enrol);
+
+	    enrolRepository.deleteByResearchTopicAndStateEnrol(topic, 0);
+
+	    enrolRepository.deleteByStudentAndStateEnrol(student, 0);
+		
+	}
+	
+	
 	
 }

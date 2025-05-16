@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -26,7 +27,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ch.qos.logback.core.model.Model;
+import falcuty.ntu.groupone.graduation.models.CountResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Course;
+import falcuty.ntu.groupone.graduation.models.Enrol;
 import falcuty.ntu.groupone.graduation.models.ProjectType;
 import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Student;
@@ -35,6 +38,7 @@ import falcuty.ntu.groupone.graduation.services.implement.CourseService;
 import falcuty.ntu.groupone.graduation.services.implement.EnrolService;
 import falcuty.ntu.groupone.graduation.services.implement.ProjectTypeService;
 import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
+import falcuty.ntu.groupone.graduation.services.implement.StudentService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -56,6 +60,9 @@ public class SupervisorController {
 	@Autowired
 	private EnrolService enrolService;
 	
+	@Autowired
+	private StudentService studentService;
+	
 	
 	public SupervisorController(SupervisorService supervisorService) {
 		this.supervisorService = supervisorService;
@@ -70,9 +77,15 @@ public class SupervisorController {
 			Optional<Course> course = courseService.findCourseById(63);
 			List<ResearchTopic> researchTopics = researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), true, course.get());
 			researchTopics.addAll(researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), false, course.get()));
+			List<CountResearchTopic> countResearchTopics = new ArrayList<>();
+
+			for (ResearchTopic topic : researchTopics) {
+			    int count = enrolService.countStudentEnrol(topic);
+			    countResearchTopics.add(new CountResearchTopic(topic, count));
+			}
 			model.addAttribute("type", "supervisor");
 			model.addAttribute("name", supervisorOpt.get().getName());
-			model.addAttribute("researchtopics",researchTopics);
+			model.addAttribute("counts", countResearchTopics);
 		} else {
 		    model.addAttribute("name", "Người dùng không xác định");
 		}
@@ -81,18 +94,12 @@ public class SupervisorController {
 		return "supervisor/index";
 	}
 	
-	@GetMapping("/topics/all")
-	public String getAllTopics() {
-		return "supervisor/topic_list";
-	}
-	
 	@GetMapping("/project/create")
     public String newProject(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
         String email = userDetails.getUsername();
 
         Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
-        
         List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
         List<Course> courses = courseService.getLast4Courses();
         model.addAttribute("type", "supervisor");
@@ -141,4 +148,32 @@ public class SupervisorController {
         model.addAttribute("count", countStudent);
         return "supervisor/project_detail";
 	}
+	
+	@GetMapping("/project/detail/{id}/enrol_list")
+	public String getEnrolList(@PathVariable Integer id,
+								@AuthenticationPrincipal UserDetails userDetails,
+								ModelMap model) {
+		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		List<Enrol> enrols = enrolService.getEnrolListByProject(researchTopic);
+		String email = userDetails.getUsername();
+		Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
+	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
+		int count = enrols.size();
+		model.addAttribute("topic", researchTopic.getTopic());
+		model.addAttribute("email", email);
+        model.addAttribute("name", supervisor.getName());
+		model.addAttribute("enrols", enrols);
+		model.addAttribute("count", count);
+		return "supervisor/project_enrol_list";
+	}
+	
+	@GetMapping("/project/enrol/confirm")
+    public String confirmEnrol(@RequestParam("studentId") String studentId,
+                               @RequestParam("projectId") Integer topicId) {
+		enrolService.confirmEnrol(studentId, topicId);
+        return "redirect:/supervisors/project/detail/" + topicId;
+    }
+	
+//	@GetMapping("/project/mark/{id}")
+//	public
 }
