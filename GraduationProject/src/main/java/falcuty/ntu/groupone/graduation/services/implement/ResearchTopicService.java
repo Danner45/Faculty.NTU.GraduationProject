@@ -37,6 +37,7 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 		return researchTopicRepository.findResearchTopicByIdResearchTopic(id);
 	}
 	
+	@Override
 	public ResearchTopic saveResearchTopic(ResearchTopic researchTopic) {
 		return researchTopicRepository.save(researchTopic);
 	}

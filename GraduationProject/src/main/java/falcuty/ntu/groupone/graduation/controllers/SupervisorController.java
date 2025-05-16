@@ -83,6 +83,7 @@ public class SupervisorController {
 			    int count = enrolService.countStudentEnrol(topic);
 			    countResearchTopics.add(new CountResearchTopic(topic, count));
 			}
+			System.out.println(countResearchTopics.size());
 			model.addAttribute("type", "supervisor");
 			model.addAttribute("name", supervisorOpt.get().getName());
 			model.addAttribute("counts", countResearchTopics);
