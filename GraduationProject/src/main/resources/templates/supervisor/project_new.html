@@ -115,13 +115,7 @@
 				</div>
 				<div class="input_field col">
 					<label>Đề tài cho khóa</label>
-					<select name="course" id="course">
-					    <option value="">-- Chọn khóa --</option>
-					    <option th:each="course : ${courses}"
-					            th:value="${course.idCourse}"
-					            th:text="${course.idCourse}">
-					    </option>
-					</select>
+					<input type="text" name="course" id="course" th:value="${course.idCourse}" disabled>
 				</div>
 				<div class="input_field col">
 					<label>Hạn đề tài</label>

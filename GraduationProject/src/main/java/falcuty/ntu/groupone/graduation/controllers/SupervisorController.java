@@ -108,29 +108,29 @@ public class SupervisorController {
         Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
         List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
-        List<Course> courses = courseService.getLast4Courses();
+        int currentYear = LocalDate.now().getYear();
+        Course course = courseService.findCourseByGraduationYear(currentYear);
         model.addAttribute("type", "supervisor");
         model.addAttribute("project", new ResearchTopic());
         model.addAttribute("email", email);
         model.addAttribute("name", supervisor.getName());
         model.addAttribute("projectTypes", projectTypes);
-        model.addAttribute("courses", courses);
+        model.addAttribute("course", course);
         return "supervisor/project_new";
     }
 	
 	@PostMapping("/project/add")
     public String handleCreateProject(@ModelAttribute ResearchTopic project,
                                       @RequestParam("projectType") Integer typeId,
-                                      @RequestParam("course") Integer courseId,
                                       @RequestParam("isResearch") Integer isResearch,
                                       @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam("expireDay") Date expireDay,
                                       @AuthenticationPrincipal UserDetails userDetails) throws ParseException {
 		Optional<Supervisor> supervisor = supervisorService.findSupervisorByEmail(userDetails.getUsername());
         Optional<ProjectType> type = projectTypeService.findProjectTypeById(typeId);
-        Optional<Course> course = courseService.findCourseById(courseId);
-        
+        int currentYear = LocalDate.now().getYear();
+        Course course = courseService.findCourseByGraduationYear(currentYear);
         project.setProjectType(type.get());
-        project.setCourse(course.get());
+        project.setCourse(course);
         project.setIsResearch(isResearch == 1);
         project.setTeacherCreated(supervisor.get());
         project.setState(0);
