@@ -65,6 +65,8 @@ public class EnrolService implements IEnrolService{
 
 	    enrol.setStateEnrol(1);
 	    topic.setState(1);
+	    
+	    
 	    enrolRepository.save(enrol);
 
 	    enrolRepository.deleteByResearchTopicAndStateEnrol(topic, 0);

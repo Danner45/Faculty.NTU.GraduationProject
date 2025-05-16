@@ -56,7 +56,7 @@ public class ResearchTopic {
     @Column(name = "last_modify", nullable = true)
     private Date lastModify;
     
-    @Column(name = "expire_day", nullable = false)
+    @Column(name = "expire_day", nullable = true)
     private Date expireDay;
    
     public ResearchTopic() {

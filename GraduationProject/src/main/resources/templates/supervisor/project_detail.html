@@ -38,11 +38,11 @@
 				<p>Báo cáo của sinh viên: </p>
 				<p>Thời gian nộp gần nhất: <span th:text="${#dates.format(researchtopic.lastModify, 'dd/MM/yyyy')}"></span> </p>
 			</div>
-			<div style="display: flex; flex-direction: column;justify-content: end">
+			<div style="display: flex; flex-direction: column; align-items:end;">
 				<p style="color:#BDBBBB">Thời hạn nộp bài: <span th:text="${#dates.format(researchtopic.expireDay, 'dd/MM/yyyy')}"></span></p>
-				<button>
+				<a th:href="@{/supervisors/project/mark/{id}(id=${researchtopic.idResearchTopic})}"><button>
 					Chấm điểm
-				</button>
+				</button></a>
 			</div>
 		</div>
 		<div class="enrol_bottom" th:if="${researchtopic.state == 2}">

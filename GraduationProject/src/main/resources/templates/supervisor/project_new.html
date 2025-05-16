@@ -88,7 +88,7 @@
 	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
 	
 	<div class="container-fluid">
-		<form action="supervisors/project/add" method="post" th:object="${project}" enctype="multipart/form-data" class="add_project">
+		<form action="/supervisors/project/add" method="post" th:object="${project}" enctype="multipart/form-data" class="add_project">
 			<h3>Tạo đề tài mới cho sinh viên</h3>
 			<div class="input_field">
 				<label>Tên đề tài</label>

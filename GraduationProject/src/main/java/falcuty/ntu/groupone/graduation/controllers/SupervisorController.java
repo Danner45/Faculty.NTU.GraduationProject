@@ -173,4 +173,7 @@ public class SupervisorController {
 		enrolService.confirmEnrol(studentId, topicId);
         return "redirect:/supervisors/project/detail/" + topicId;
     }
+	
+//	@GetMapping("/project/mark/{id}")
+//	public
 }
