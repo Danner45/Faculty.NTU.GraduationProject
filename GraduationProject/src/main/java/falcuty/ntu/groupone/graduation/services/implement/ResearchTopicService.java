@@ -16,7 +16,10 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 	
 	@Autowired
 	IResearchTopicRepository researchTopicRepository;
-
+	
+	public List<ResearchTopic> findAllByStateZero() {
+        return researchTopicRepository.findAllByStateZero();
+    }
 	@Override
 	public List<ResearchTopic> findAllResearchOrTopicForCourse(Course course, boolean isResearch) {
 		return null;
@@ -41,6 +44,6 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 		return researchTopicRepository.save(researchTopic);
 	}
 	
-	
+
 	
 }

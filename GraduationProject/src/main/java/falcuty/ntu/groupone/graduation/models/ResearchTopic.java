@@ -205,6 +205,5 @@ public class ResearchTopic {
 		this.lastModify = lastModify;
 	}
     
-	
-    
+
 }
