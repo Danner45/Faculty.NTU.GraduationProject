@@ -11,4 +11,5 @@ public interface IResearchTopicSerivce {
 	List<ResearchTopic> findAllTeacherResearchTopic(Supervisor supervisor, boolean isResearch, Course course);
 	ResearchTopic findResearchTopicById(int id);
 	ResearchTopic addResearchTopic(ResearchTopic researchTopic);
+	ResearchTopic saveResearchTopic(ResearchTopic researchTopic);
 }

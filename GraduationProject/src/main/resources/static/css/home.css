@@ -22,7 +22,7 @@
 	border-radius: var(--border);
 	border: rgba(0, 0, 0, 0.4) solid black;
 	position: relative;
-	margin-bottom: 16px;
+	margin: 16px 0;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -44,7 +44,7 @@
 
 .card_content p{
 	font-size: 20px;
-	font-weight: 800;
+	font-weight: 600;
 	display: -webkit-box;
   	-webkit-line-clamp: 2;
   	-webkit-box-orient: vertical;
@@ -61,45 +61,45 @@
 }
 
 .card_slider_wrapper {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
+  	position: relative;
+  	overflow: hidden;
+  	width: 100%;
 }
 
 .card_slider {
-  overflow: hidden;
+  	overflow: hidden;
 }
 
 .card_list {
-  display: flex;
-  gap: 1rem;
-  transition: transform 0.5s ease-in-out;
+  	display: flex;
+  	gap: 1rem;
+  	transition: transform 0.5s ease-in-out;
 }
 
 .card_topic {
-  max-width: 24%; /* 100% / 4 */
-  box-sizing: border-box;
-  flex-shrink: 0;
+  	max-width: 24%;
+  	box-sizing: border-box;
+  	flex-shrink: 0;
 }
 
 .slider_btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: rgba(0,0,0,0.5);
-  color: white;
-  border: none;
-  font-size: 24px;
-  padding: 8px 12px;
-  cursor: pointer;
-  z-index: 10;
+  	position: absolute;
+  	top: 50%;
+  	transform: translateY(-50%);
+  	background-color: rgba(0,0,0,0.5);
+  	color: white;
+  	border: none;
+  	font-size: 24px;
+  	padding: 8px 12px;
+  	cursor: pointer;
+  	z-index: 10;
 }
 
 #prevBtn {
-  left: 0;
+  	left: 0;
 }
 #nextBtn {
-  right: 0;
+  	right: 0;
 }
 
 

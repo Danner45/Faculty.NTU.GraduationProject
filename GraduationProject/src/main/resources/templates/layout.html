@@ -30,7 +30,7 @@
 	<div th:fragment="intro(type)" class="intro row">
 		<div class="col intro_text">
 			<h2>HỆ THỐNG ĐỒ ÁN CHUYÊN ĐỀ</h2>
-			<p>Ra trường hay không, nằm trong tay bạn...</p>
+			<p>Hỗ trợ đăng ký đồ án, chuyên đề...</p>
 			<a th:href="${type == 'supervisor'} ? @{/students/project/all} : @{/supervisors/project/create}"><button>Tạo đề tài <img src="/image/system/arrow.svg" alt="next"></button></a>
 		</div>
 		<div class="col intro_img">

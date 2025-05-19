@@ -34,7 +34,10 @@ public class Student {
 
     @Column(name = "img_url", nullable = false)
     private String imgUrl;
-    // Constructors
+
+    @Column(name= "total_credit", nullable = false)
+    private int total_credit;
+    
     public Student() {}
 
     public Student(String id, MyClass myClass, String name, String cv, String email, String phoneNumber,
@@ -124,5 +127,12 @@ public class Student {
 		this.imgUrl = imgUrl;
 	}
     
-    
+	public int getTotal_credit() {
+	    return total_credit;
+	}
+
+	public void setTotal_credit(int total_credit) {
+	    this.total_credit = total_credit;
+	}
+
 }
