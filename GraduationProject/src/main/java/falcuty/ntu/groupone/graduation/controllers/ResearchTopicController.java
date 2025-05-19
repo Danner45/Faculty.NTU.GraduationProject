@@ -20,16 +20,16 @@ public class ResearchTopicController {
 
     @GetMapping("/my_topics")
     public String getMyTopics(Model model, Principal principal) {
-        String email = principal.getName(); // Lấy email tài khoản đã đăng nhập
+        String email = principal.getName();
 
-        Supervisor teacher = researchTopicService.findSupervisorByEmail(email); // bạn cần implement hàm này
+        Supervisor teacher = researchTopicService.findSupervisorByEmail(email);
         List<ResearchTopic> topics = researchTopicService.getTopicsByTeacherId(teacher.getId());
 
         model.addAttribute("topics", topics);
-        model.addAttribute("name", teacher.getName()); // để hiển thị tên trong header
+        model.addAttribute("name", teacher.getName());
         model.addAttribute("email", email);
 
-        return "my_topics"; // tên file HTML trong /templates
+        return "/supervisor/my_topics";
 
     }
 }
