@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
-	<title>Tạo đề tài mới</title>
+	<title>Chỉnh sửa đề tài</title>
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
   	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   	<link th:href="@{/css/layout.css}" rel="stylesheet">
@@ -88,16 +88,16 @@
 	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
 	
 	<div class="container-fluid">
-		<form action="/supervisors/project/add" method="post" th:object="${project}" enctype="multipart/form-data" class="add_project">
-			<h3>Tạo đề tài mới cho sinh viên</h3>
+		<form th:action="@{'/project/edit/' + ${project.idResearchTopic}}" method="post" th:object="${project}" enctype="multipart/form-data" class="add_project">
+			<h3>Sửa đề tài</h3>
 			<div class="input_field">
 				<label>Tên đề tài</label>
-				<input type="text" name="topic">
+				<input type="text" name="topic" th:field="*{topic}">
 			</div>
 			<div class="row">
 				<div class="input_field col">
 					<label>Lĩnh vực</label>
-					<select name="projectType" id="projectType">
+					<select name="projectType" id="projectType" th:field="*{projectType}">
 					    <option value="">-- Chọn lĩnh vực đồ án --</option>
 					    <option th:each="type : ${projectTypes}"
 					            th:value="${type.idType}"
@@ -107,7 +107,7 @@
 				</div>
 				<div class="input_field col">
 					<label>Loại đề tài</label>
-					<select name="isResearch" id="isResearch">
+					<select name="isResearch" id="isResearch" th:field="*{isResearch}">
 					    <option value="">-- Chọn loại đề tài --</option>
 					    <option value=1>Đồ án</option>
 					    <option value=1>Chuyên đề</option>
@@ -119,7 +119,7 @@
 				</div>
 				<div class="input_field col">
 					<label>Hạn đề tài</label>
-					<input type="date" name="expireDay">
+					<input type="date" name="expireDay" th:field="*{expireDay}">
 				</div>
 			</div>
 			<div class="input_field">

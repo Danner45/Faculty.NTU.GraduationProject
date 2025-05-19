@@ -181,7 +181,21 @@ public class SupervisorController {
 		enrolService.confirmEnrol(studentId, topicId);
         return "redirect:/supervisors/project/detail/" + topicId;
     }
+
+	@GetMapping("/project/edit/{id}")
+	public String showEditProject(@PathVariable Integer id,
+	                              @AuthenticationPrincipal UserDetails userDetails,
+	                              ModelMap model) {
+	    ResearchTopic topic = researchTopicService.findResearchTopicById(id);
+
+	    List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
+	    int currentYear = LocalDate.now().getYear();
+        Course course = courseService.findCourseByGraduationYear(currentYear);
+	    model.addAttribute("project", topic);
+	    model.addAttribute("projectTypes", projectTypes);
+	    model.addAttribute("course", course);
+	    return "supervisor/project_edit"; // trỏ đến file HTML form chỉnh sửa
+	}
 	
-//	@GetMapping("/project/mark/{id}")
-//	public
+	
 }
