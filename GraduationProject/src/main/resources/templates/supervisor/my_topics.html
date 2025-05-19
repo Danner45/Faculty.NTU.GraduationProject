@@ -12,7 +12,7 @@
 <div th:replace="layout::header(${name}, ${email}, ${'supervisor'})"></div>
 	
 	<div class="container">
-        <div class="area-filter">
+        <!-- <div class="area-filter">
             <div class="filter-bar">
                 <div class="search-group">
                   <input type="text" id="searchName" placeholder="Tìm kiếm chủ đề..." />
@@ -38,7 +38,40 @@
                   <div class="filters" id="activeFilters"></div>
                   <button class="reset-btn" id="resetFilters" style="display: none;">Reset all filters ×</button>  
                 </div>
-        </div>
+        </div> -->
+        <div class="area-filter">
+		  <div class="filter-bar">
+		    <div class="search-group">
+		      <input type="text" id="searchTopic" name="searchTopic" placeholder="Tìm kiếm theo chủ đề..." />
+		      <span class="clear-btn" id="clearSearch">×</span>
+		    </div>
+		
+		    <select id="filterCourse" name="filterCourse">
+		      <option value="">Chọn khóa</option>
+		      <option value="K42">K42</option>
+		      <option value="K43">K43</option>
+		      <option value="K44">K44</option>
+		      <option value="K45">K45</option>
+		    </select>
+		
+		    <select id="filterType" name="filterType">
+		      <option value="">Chọn loại đề tài</option>
+		      <option value="Luận văn">Luận văn</option>
+		      <option value="Đồ án">Đồ án</option>
+		      <option value="Khác">Khác</option>
+		    </select>
+		
+		    <select id="filterStatus" name="filterStatus">
+		      <option value="">Tình trạng</option>
+		      <option value="Đã hoàn thành">Đã hoàn thành</option>
+		      <option value="Chưa được thực hiện">Chưa được thực hiện</option>
+		    </select>
+		  </div>
+		  <div class="filter-opp">
+		    <div class="filters" id="activeFilters"></div>
+		    <button class="reset-btn" id="resetFilters" style="display: none;">Reset all filters ×</button>
+		  </div>
+		</div>
                 
         <div class="title">
             <h1>Đề tài của tôi</h1>

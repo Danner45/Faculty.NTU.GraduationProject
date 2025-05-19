@@ -1,7 +1,10 @@
 const filtersContainer = document.getElementById('activeFilters');
-const filterYear = document.getElementById('filterYear');
+
+const searchTopic = document.getElementById('searchTopic');
+const filterCourse = document.getElementById('filterCourse');
+const filterType = document.getElementById('filterType');
 const filterStatus = document.getElementById('filterStatus');
-const searchName = document.getElementById('searchName');
+
 const resetButton = document.getElementById('resetFilters');
 const clearSearchBtn = document.getElementById('clearSearch');
 
@@ -23,30 +26,34 @@ function addFilter(type, value) {
   updateResetButtonVisibility();
 }
 
-filterYear.addEventListener('change', () => {
-  addFilter('year', filterYear.value);
-});
-
-filterStatus.addEventListener('change', () => {
-  addFilter('status', filterStatus.value);
-});
-
-searchName.addEventListener('input', () => {
-  const trimmed = searchName.value.trim();
+searchTopic.addEventListener('input', () => {
+  const trimmed = searchTopic.value.trim();
   if (trimmed) {
-    addFilter('name', trimmed);
+    addFilter('topic', trimmed);
   } else {
-    const item = document.querySelector('.filter-item[data-type="name"]');
+    const item = document.querySelector('.filter-item[data-type="topic"]');
     if (item) item.remove();
     updateResetButtonVisibility();
   }
 });
 
 clearSearchBtn.addEventListener('click', () => {
-  searchName.value = '';
-  const item = document.querySelector('.filter-item[data-type="name"]');
+  searchTopic.value = '';
+  const item = document.querySelector('.filter-item[data-type="topic"]');
   if (item) item.remove();
   updateResetButtonVisibility();
+});
+
+filterCourse.addEventListener('change', () => {
+  addFilter('course', filterCourse.value);
+});
+
+filterType.addEventListener('change', () => {
+  addFilter('type', filterType.value);
+});
+
+filterStatus.addEventListener('change', () => {
+  addFilter('status', filterStatus.value);
 });
 
 filtersContainer.addEventListener('click', function (e) {
@@ -55,17 +62,20 @@ filtersContainer.addEventListener('click', function (e) {
     const type = item.dataset.type;
     item.remove();
 
-    if (type === 'year') filterYear.value = '';
+    if (type === 'topic') searchTopic.value = '';
+    if (type === 'course') filterCourse.value = '';
+    if (type === 'type') filterType.value = '';
     if (type === 'status') filterStatus.value = '';
-    if (type === 'name') searchName.value = '';
+
     updateResetButtonVisibility();
   }
 });
 
 resetButton.addEventListener('click', () => {
   filtersContainer.innerHTML = '';
-  filterYear.value = '';
+  searchTopic.value = '';
+  filterCourse.value = '';
+  filterType.value = '';
   filterStatus.value = '';
-  searchName.value = '';
   updateResetButtonVisibility();
 });

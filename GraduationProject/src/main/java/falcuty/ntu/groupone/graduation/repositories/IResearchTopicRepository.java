@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import org.springframework.data.jpa.repository.Query;
 
-
 import falcuty.ntu.groupone.graduation.models.Course;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
 
