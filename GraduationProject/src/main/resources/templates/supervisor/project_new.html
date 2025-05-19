@@ -11,7 +11,7 @@
   	<script>
 	  tinymce.init({
 	    selector: 'textarea#description',
-	    width: 1433,
+	    width: 1280,
 	    height: 300,
 	    plugins: [
 	      // Core editing features
@@ -48,7 +48,7 @@
 	  
 	  tinymce.init({
 		    selector: 'textarea#detail',
-		    width: 1433,
+		    width: 1280,
 		    height: 500,
 		    plugins: [
 		      // Core editing features
@@ -88,7 +88,7 @@
 	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
 	
 	<div class="container-fluid">
-		<form action="supervisors/project/add" method="post" th:object="${project}" enctype="multipart/form-data" class="add_project">
+		<form action="/supervisors/project/add" method="post" th:object="${project}" enctype="multipart/form-data" class="add_project">
 			<h3>Tạo đề tài mới cho sinh viên</h3>
 			<div class="input_field">
 				<label>Tên đề tài</label>
@@ -115,13 +115,11 @@
 				</div>
 				<div class="input_field col">
 					<label>Đề tài cho khóa</label>
-					<select name="course" id="course">
-					    <option value="">-- Chọn khóa --</option>
-					    <option th:each="course : ${courses}"
-					            th:value="${course.idCourse}"
-					            th:text="${course.idCourse}">
-					    </option>
-					</select>
+					<input type="text" name="course" id="course" th:value="${course.idCourse}" disabled>
+				</div>
+				<div class="input_field col">
+					<label>Hạn đề tài</label>
+					<input type="date" name="expireDay">
 				</div>
 			</div>
 			<div class="input_field">

@@ -40,6 +40,11 @@ body {
     border-radius: 8px;
     border: none;
     /* width: 100%; */
+        border-radius: var(--border);
+    border: rgba(0, 0, 0, 0.4) solid black;
+    position: relative;
+    margin: 16px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .card-content {

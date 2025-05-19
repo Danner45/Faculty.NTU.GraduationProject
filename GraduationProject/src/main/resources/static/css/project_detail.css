@@ -29,19 +29,18 @@
 	justify-content: space-between;
 }
 
-.count_enrol{
+.enrol_bottom{
 	margin:24px 87px;
 	font-size: 20px;
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	justify-content: space-between;	
 }
 
-.count_enrol p{
+.enrol_bottom p{
 	margin: 0;
 }
 
-.count_enrol .button button{
+.enrol_bottom .confirm_button button{
 	padding: 8px 24px;
 	border-radius: 12px;
 	border: none;
@@ -49,9 +48,17 @@
 	color: white;
 }
 
-.count_enrol .button a:first-child button{
+.enrol_bottom .confirm_button a:first-child button{
 	background-color: white;
 	color: var(--main-color);	
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 	margin-right: 8px;
+}
+
+.enrol_bottom button{
+	padding: 8px 24px;
+	border-radius: var(--border);
+	border: none;
+	background-color: var(--main-color);
+	color: white;
 }

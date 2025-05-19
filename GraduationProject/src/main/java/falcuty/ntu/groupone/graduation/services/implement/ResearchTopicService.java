@@ -30,10 +30,12 @@ public class ResearchTopicService implements IResearchTopicSerivce{
         return supervisorRepository.findByEmail(email)
             .orElseThrow(() -> new UsernameNotFoundException("Không tìm thấy giáo viên với email: " + email));
     }
-    
-    @Override
+	
+	public List<ResearchTopic> findAllByStateZero() {
+        return researchTopicRepository.findAllByStateZero();
+    }
+	@Override
 	public List<ResearchTopic> findAllResearchOrTopicForCourse(Course course, boolean isResearch) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -51,4 +53,10 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 	public ResearchTopic findResearchTopicById(int id) {
 		return researchTopicRepository.findResearchTopicByIdResearchTopic(id);
 	}
+	
+	@Override
+	public ResearchTopic saveResearchTopic(ResearchTopic researchTopic) {
+		return researchTopicRepository.save(researchTopic);
+	}
+	
 }

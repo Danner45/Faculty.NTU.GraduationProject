@@ -49,8 +49,7 @@ public class HomeController {
 	@Autowired
 	private CourseService courseService;
 	
-	@Autowired
-	private EnrolService enrolService;
+	
 	
 	public HomeController(SupervisorService supervisorService) {
 		this.supervisorService = supervisorService;
