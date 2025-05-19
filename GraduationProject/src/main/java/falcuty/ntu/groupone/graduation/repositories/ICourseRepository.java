@@ -8,4 +8,5 @@ import falcuty.ntu.groupone.graduation.models.Course;
 
 public interface ICourseRepository extends JpaRepository<Course, Integer>{
 	List<Course> findTop4ByOrderByIdCourseDesc();
+	Course findByGraduationYear(Integer graduationYear);
 }

@@ -9,11 +9,11 @@
   <link th:href="@{/css/home.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
+	<div th:replace="layout::header(${name}, ${email}, 'supervisor')"></div>
 	<div class="container-fluid">
 		<div th:replace="layout::intro(type)"></div>
 		<div class="this_year_topics">
-			<h3>Đề tài của tôi cho khóa 2021-2025</h3>
+			<h3>Đề tài của tôi cho khóa <span th:text="${course.entryYear}"></span>-<span th:text="${course.graduationYear}"></span></h3>
 			<div class="topcic_list">
 				<div th:if="${#lists.isEmpty(counts)}">
             		<h3 style="color:var(--main-color)">THẦY/CÔ CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
@@ -30,14 +30,22 @@
 					    			<img src="/image/system/topic.png"/>
 					          		<p th:text="${project.project.topic}"></p>
 					          		<ul th:if="${project.project.state == 0}">
-					            		<li>Sinh viên đăng ký: <span th:text="${project.count}"></span></li>
+					            		<li>Lĩnh vực: <span th:text="${project.project.projectType.name	}"></span></li>
 					            		<li>Trạng thái: 
 					              		<span>
-					              			Đang chờ duyệt sinh viên
+					              			Đang chờ duyệt
 					              		</span>
 					            		</li>
 					          		</ul>
 					          		<ul th:if="${project.project.state == 1}">
+					            		<li>Sinh viên đăng ký: <span th:text="${project.count}"></span></li>
+					            		<li>Trạng thái: 
+					              		<span>
+					              			Chờ đăng ký
+					              		</span>
+					            		</li>
+					          		</ul>
+					          		<ul th:if="${project.project.state == 2}">
 					            		<li>Cập nhật: <span th:text="${#dates.format(project.project.lastModify, 'dd/MM/yyyy')}"></span></li>
 					            		<li>Trạng thái: 
 					              		<span>
@@ -45,8 +53,16 @@
 					              		</span>
 					            		</li>
 					          		</ul>
+					          		<ul th:if="${project.project.state == 3}">
+					            		<li>Ngày hoàn thành: <span th:text="${#dates.format(project.project.lastModify, 'dd/MM/yyyy')}"></span></li>
+					            		<li>Trạng thái: 
+					              		<span>
+					              			Đã hoàn thành
+					              		</span>
+					            		</li>
+					          		</ul>
 					          		<a th:href="@{/supervisors/project/detail/{id}(id=${project.project.idResearchTopic})}">
-					          			<button th:text="${project.project.state == 0 ? 'Duyệt sinh viên' : 'Xem chi tiết'}">
+					          			<button th:text="${project.project.state == 1 ? 'Duyệt sinh viên' : 'Xem chi tiết'}">
 					                    	<img src="/image/system/arrow.svg">
 					                 	</button>
 					                 </a>

@@ -1,6 +1,9 @@
 package falcuty.ntu.groupone.graduation.models;
 
+import java.time.LocalDate;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.*;
 
@@ -56,6 +59,7 @@ public class ResearchTopic {
     @Column(name = "last_modify", nullable = true)
     private Date lastModify;
     
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "expire_day", nullable = true)
     private Date expireDay;
    
