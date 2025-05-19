@@ -9,19 +9,13 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import falcuty.ntu.groupone.graduation.models.Department;
-import falcuty.ntu.groupone.graduation.services.DepartmentService;
+import falcuty.ntu.groupone.graduation.services.implement.DepartmentService;
 
 @Controller
 public class DepartmentController {
 	@Autowired
 	DepartmentService departmentService;
 	
-	@GetMapping("/")
-	public String getAll(ModelMap m) {
-		List<Department> dsDepartments = new ArrayList<Department>();
-		dsDepartments = departmentService.allSP();
-		m.addAttribute("departments", dsDepartments);
-		return "supervisor/index";
-	}
+
 	
 }

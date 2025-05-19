@@ -5,10 +5,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -22,8 +32,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import ch.qos.logback.core.model.Model;
+import falcuty.ntu.groupone.graduation.models.CountResearchTopic;
+import falcuty.ntu.groupone.graduation.models.Course;
+import falcuty.ntu.groupone.graduation.models.Enrol;
+import falcuty.ntu.groupone.graduation.models.ProjectType;
+import falcuty.ntu.groupone.graduation.models.ResearchTopic;
+import falcuty.ntu.groupone.graduation.models.Student;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
-import falcuty.ntu.groupone.graduation.services.SupervisorService;
+import falcuty.ntu.groupone.graduation.services.implement.CourseService;
+import falcuty.ntu.groupone.graduation.services.implement.EnrolService;
+import falcuty.ntu.groupone.graduation.services.implement.ProjectTypeService;
+import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
+import falcuty.ntu.groupone.graduation.services.implement.StudentService;
+import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/supervisors")
@@ -31,59 +53,135 @@ public class SupervisorController {
 	@Autowired
 	private SupervisorService supervisorService;
 	
+	@Autowired
+	private ResearchTopicService researchTopicService;
+	
+	@Autowired
+	private CourseService courseService;
+	
+	@Autowired
+	private ProjectTypeService projectTypeService;
+	
+	@Autowired
+	private EnrolService enrolService;
+	
+	@Autowired
+	private StudentService studentService;
+	
+	
 	public SupervisorController(SupervisorService supervisorService) {
 		this.supervisorService = supervisorService;
 	}
 	
-	@GetMapping("/detail/{id}")
-	public String getDetail(@PathVariable Integer id,ModelMap model) {
-		Supervisor supervisor = supervisorService.findSupervisorById(id).orElseThrow(() -> new RuntimeException("Supervisor not found with ID: " + id));;
-		model.addAttribute(supervisor);
+	
+	@GetMapping("/home")
+	public String getHome(HttpServletRequest request, ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
+		String email = userDetails.getUsername();
+		Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
+		if (supervisorOpt.isPresent()) {
+			int currentYear = LocalDate.now().getYear();
+			Course course = courseService.findCourseByGraduationYear(currentYear);
+			List<ResearchTopic> researchTopics = researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), true, course);
+			researchTopics.addAll(researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), false, course));
+			List<CountResearchTopic> countResearchTopics = new ArrayList<>();
+
+			for (ResearchTopic topic : researchTopics) {
+			    int count = enrolService.countStudentEnrol(topic);
+			    countResearchTopics.add(new CountResearchTopic(topic, count));
+			}
+			System.out.println(countResearchTopics.size());
+			model.addAttribute("name", supervisorOpt.get().getName());
+			model.addAttribute("counts", countResearchTopics);
+			model.addAttribute("course", course);
+		} else {
+		    model.addAttribute("name", "Người dùng không xác định");
+		}
+		model.addAttribute("email", email);
+		model.addAttribute("currentPath", request.getRequestURI());
 		return "supervisor/index";
 	}
 	
-	@GetMapping("/edit/{id}")
-	public String showEditForm(@PathVariable("id") int id, ModelMap model) {
-	    Supervisor supervisor = supervisorService.findSupervisorById(id)
-	        .orElseThrow(() -> new IllegalArgumentException("Invalid ID: " + id));
-	    model.addAttribute("supervisor", supervisor);
-	    return "supervisor/edit";
+	@GetMapping("/project/create")
+    public String newProject(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {
+        String email = userDetails.getUsername();
+
+        Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
+            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
+        List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
+        int currentYear = LocalDate.now().getYear();
+        Course course = courseService.findCourseByGraduationYear(currentYear);
+        model.addAttribute("type", "supervisor");
+        model.addAttribute("project", new ResearchTopic());
+        model.addAttribute("email", email);
+        model.addAttribute("name", supervisor.getName());
+        model.addAttribute("projectTypes", projectTypes);
+        model.addAttribute("course", course);
+        return "supervisor/project_new";
+    }
+	
+	@PostMapping("/project/add")
+    public String handleCreateProject(@ModelAttribute ResearchTopic project,
+                                      @RequestParam("projectType") Integer typeId,
+                                      @RequestParam("isResearch") Integer isResearch,
+                                      @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam("expireDay") Date expireDay,
+                                      @AuthenticationPrincipal UserDetails userDetails) throws ParseException {
+		Optional<Supervisor> supervisor = supervisorService.findSupervisorByEmail(userDetails.getUsername());
+        Optional<ProjectType> type = projectTypeService.findProjectTypeById(typeId);
+        int currentYear = LocalDate.now().getYear();
+        Course course = courseService.findCourseByGraduationYear(currentYear);
+        project.setProjectType(type.get());
+        project.setCourse(course);
+        project.setIsResearch(isResearch == 1);
+        project.setTeacherCreated(supervisor.get());
+        project.setState(0);
+        project.setMaxJoin(1);
+        project.setExpireDay(expireDay);
+        researchTopicService.addResearchTopic(project);
+        return "redirect:/supervisors/home";
+    }
+	
+	@GetMapping("/project/detail/{id}")
+	public String getDetailProject(@PathVariable Integer id,
+									@AuthenticationPrincipal UserDetails userDetails,
+			 						ModelMap model) {
+		String email = userDetails.getUsername();
+		Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
+	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
+		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		int countStudent = enrolService.countStudentEnrol(researchTopic);
+		model.addAttribute("type", "supervisor");
+		model.addAttribute("email", email);
+        model.addAttribute("name", supervisor.getName());
+        model.addAttribute("researchtopic", researchTopic);
+        model.addAttribute("count", countStudent);
+        return "supervisor/project_detail";
 	}
 	
-	@PostMapping("/update/{id}")
-	public String updateSupervisor(@PathVariable Integer id,
-	                               @ModelAttribute Supervisor updatedSupervisor,
-	                               @RequestParam(value="imageFile", required = false) MultipartFile imageFile,
-	                               @RequestParam("imgUrl") String existingImgUrl) throws IOException {
-	    
-		if (imageFile != null && !imageFile.isEmpty()) {
-	        // Upload ảnh mới
-	        String filename = StringUtils.cleanPath(imageFile.getOriginalFilename());
-	        String uploadDir = new ClassPathResource("static/image/").getFile().getAbsolutePath();
-	        Path path = Paths.get(uploadDir, filename);
-	        Files.copy(imageFile.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-	        updatedSupervisor.setImgUrl("/image/" + filename);
-	    } else {
-	        // Giữ lại ảnh cũ
-	        updatedSupervisor.setImgUrl(existingImgUrl);
-	    }
-
-	    supervisorService.saveSupervisor(id, updatedSupervisor);
-	    return "redirect:/supervisors/detail/" + id;
+	@GetMapping("/project/detail/{id}/enrol_list")
+	public String getEnrolList(@PathVariable Integer id,
+								@AuthenticationPrincipal UserDetails userDetails,
+								ModelMap model) {
+		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		List<Enrol> enrols = enrolService.getEnrolListByProject(researchTopic);
+		String email = userDetails.getUsername();
+		Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
+	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
+		int count = enrols.size();
+		model.addAttribute("topic", researchTopic.getTopic());
+		model.addAttribute("email", email);
+        model.addAttribute("name", supervisor.getName());
+		model.addAttribute("enrols", enrols);
+		model.addAttribute("count", count);
+		return "supervisor/project_enrol_list";
 	}
-
 	
-	@PostMapping("/upload-image")
-	@ResponseBody
-	public Map<String, String> uploadImage(@RequestParam("file") MultipartFile file) throws IOException {
-	    String filename = StringUtils.cleanPath(file.getOriginalFilename());
-	    String uploadDir = new ClassPathResource("static/image/uploads/").getFile().getAbsolutePath();
-	    Path path = Paths.get(uploadDir, filename);
-	    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-	    // Trả về URL ảnh để TinyMCE chèn vào nội dung
-	    String fileUrl = "/image/uploads/" + filename;
-	    return Map.of("location", fileUrl);
-	}
+	@GetMapping("/project/enrol/confirm")
+    public String confirmEnrol(@RequestParam("studentId") String studentId,
+                               @RequestParam("projectId") Integer topicId) {
+		enrolService.confirmEnrol(studentId, topicId);
+        return "redirect:/supervisors/project/detail/" + topicId;
+    }
+	
+//	@GetMapping("/project/mark/{id}")
+//	public
 }

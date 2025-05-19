@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link th:href="@{/style.css}" rel="stylesheet">
+</head>
+<body>
+	<div th:fragment="header(name, email, type)" class="nav_container">
+		<div class="nav_custom">
+			<div class="logo">
+				<img alt="NTU Logo" src="/image/system/Logo_DH_NhaTrang.png">
+				<span>Đại học Nha Trang</span>
+			</div>
+			<ul class="nav justify-content-end">
+			  <li class="">
+			    <a aria-current="page" th:href="${type == 'supervisor'} ? @{/supervisors/home} : @{/students/home}" th:classappend="${currentPath == '/supervisors/home'} ? 'nav_active' : ''">Trang chủ</a>
+			  </li>
+			  <li class="">
+			    <a aria-current="page" th:href="@{/supervisors/topics/all}" th:classappend="${currentPath == '/topic'} ? 'nav_active' : ''">Đồ án/Chuyên đề</a>
+			  </li>
+			  <li class="name_custom">
+			    <a th:text="${name}" th:href="@{/profile/{email}(email=${email})}"></a>
+			    <a th:href="@{/logout}"><img alt="" src="/image/system/logout.png"></a>
+			  </li>
+			</ul>
+		</div>
+	</div>
+	
+	<div th:fragment="intro(type)" class="intro row">
+		<div class="col intro_text">
+			<h2>HỆ THỐNG ĐỒ ÁN CHUYÊN ĐỀ</h2>
+			<p>Hỗ trợ đăng ký đồ án, chuyên đề...</p>
+			<a th:href="${type == 'supervisor'} ? @{/students/project/all} : @{/supervisors/project/create}"><button>Tạo đề tài <img src="/image/system/arrow.svg" alt="next"></button></a>
+		</div>
+		<div class="col intro_img">
+			<div class="school_img"></div>
+		</div>
+	</div>
+	
+	<div th:fragment="footer" class="footer_container">
+		<div class="row footer_custom">
+			<div class="col-7 footer_part">
+				<div class="logo">
+					<img alt="NTU Logo" src="/image/system/Logo_DH_NhaTrang.png">
+					<span>Đại học Nha Trang</span>
+				</div>
+				<p>
+					Trải qua 65 năm xây dựng và phát triển, Trường Đại học Nha Trang đã trở thành 
+					một trong những cơ sở đào tạo đa ngành, đa lĩnh vực quy mô lớn; là cơ sở nghiên 
+					cứu chủ đạo, triển khai ứng dụng công nghệ tiên tiến, đặc biệt trong lĩnh vực thủy 
+					sản phục vụ phát triển kinh tế xã hội khu vực Nam Trung Bộ, Tây Nguyên và phạm vì cả nước.
+				</p>
+				<h4>THÔNG TIN LIÊN HỆ</h4>
+				<p><img src="/image/system/location.svg" alt="location"><span>02 Nguyễn Đình Chiểu, phường Vĩnh Thọ, Nha Trang, Khánh Hòa</span></p>
+				<p><img src="/image/system/phone.svg" alt="location"><span>02583831149</span></p>
+				<p><img src="/image/system/mail.svg" alt="location"><span>dhnt@ntu.edu.vn</span></p>
+			</div>
+			<div class="col-5 footer_part">
+				<h4>THÔNG TIN THAM KHẢO ĐỒ ÁN CHUYÊN ĐỀ</h3>
+				<a href="">Tham khảo đề tài<br/></a>
+				<a href="">Lịch sử trường Đại học Nha Trang</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

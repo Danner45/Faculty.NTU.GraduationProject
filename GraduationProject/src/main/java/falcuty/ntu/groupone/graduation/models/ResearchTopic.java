@@ -1,5 +1,10 @@
 package falcuty.ntu.groupone.graduation.models;
 
+import java.time.LocalDate;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -16,7 +21,7 @@ public class ResearchTopic {
     private Supervisor teacherCreated;
 
     @ManyToOne
-    @JoinColumn(name = "teacher_accepted", nullable = false)
+    @JoinColumn(name = "teacher_accepted", nullable = true)
     private Supervisor teacherAccepted;
 
     @ManyToOne
@@ -42,18 +47,29 @@ public class ResearchTopic {
     @Column(name = "state", nullable = false)
     private Integer state;
 
-    @Column(name = "grade")
+    @Column(name = "grade", nullable = true)
     private Double grade;
 
-    @Column(name = "review")
+    @Column(name = "review", nullable = true)
     private String review;
+    
+    @Column(name = "is_research", nullable = false)
+    private Boolean isResearch;
+    
+    @Column(name = "last_modify", nullable = true)
+    private Date lastModify;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "expire_day", nullable = true)
+    private Date expireDay;
    
     public ResearchTopic() {
     }
 
     public ResearchTopic(int idResearchTopic, Supervisor teacherCreated, Supervisor teacherAccepted,
                          ProjectType projectType, Course course, String topic, String description,
-                         String detail, int maxJoin, int state, Double grade, String review) {
+                         String detail, int maxJoin, int state, Double grade, String review, Boolean isResearch,
+                         Date lastModify, Date expireDay) {
         this.idResearchTopic = idResearchTopic;
         this.teacherCreated = teacherCreated;
         this.teacherAccepted = teacherAccepted;
@@ -66,6 +82,9 @@ public class ResearchTopic {
         this.state = state;
         this.grade = grade;
         this.review = review;
+        this.isResearch = isResearch;
+        this.lastModify = lastModify;
+        this.expireDay = expireDay;
     }
 
     // Getters & Setters
@@ -102,11 +121,11 @@ public class ResearchTopic {
         this.projectType = projectType;
     }
 
-    public Course getIdCourse() {
+    public Course getCourse() {
         return course;
     }
 
-    public void setIdCourse(Course idCourse) {
+    public void setCourse(Course idCourse) {
         this.course = idCourse;
     }
 
@@ -165,4 +184,30 @@ public class ResearchTopic {
     public void setReview(String review) {
         this.review = review;
     }
+
+	public Boolean getIsResearch() {
+		return isResearch;
+	}
+
+	public void setIsResearch(Boolean isResearch) {
+		this.isResearch = isResearch;
+	}
+
+	public Date getExpireDay() {
+		return expireDay;
+	}
+
+	public void setExpireDay(Date expireDay) {
+		this.expireDay = expireDay;
+	}
+
+	public Date getLastModify() {
+		return lastModify;
+	}
+
+	public void setLastModify(Date lastModify) {
+		this.lastModify = lastModify;
+	}
+    
+
 }

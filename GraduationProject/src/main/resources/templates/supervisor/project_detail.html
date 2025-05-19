@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Chi tiết đề tài</title>
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+ 	<link th:href="@{/css/layout.css}" rel="stylesheet">
+ 	<link th:href="@{/css/project_detail.css}" rel="stylesheet">
+</head>
+<body>
+	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
+	<div class="container-fluid">
+		<div th:replace="layout::intro('supervisor')"></div>
+		<h3 class="project_title">Chi tiết đề tài</h3>
+		<div th:object="${researchtopic}" class="project_detail">
+			<p>Tên đề tài: <span th:text="*{topic}" style="text-transform: uppercase;"></span></h3>
+			<div class="project_part">
+				<p>Lĩnh vực: <span th:text="*{projectType.name}"></span></p>
+				<p>Loại đề tài: <span th:text="*{isResearch} ==	false ? 'Chuyên đề' : 'Đề tài'"></span>
+				<p>Đề tài dành cho khóa: <span th:text="*{course.idCourse}"></span></p>
+			</div>
+			<p>Mô tả:</p>
+			<div th:utext="*{description}"></div>
+			<p>Chi tiết</p> 
+			<div th:utext="*{detail}"></div>
+		</div>
+		<div class="enrol_bottom" th:if="${researchtopic.state == 1}">
+			<p>Số lượng sinh viên đăng ký: <span th:text="${count}"></span></p>
+			<div class="confirm_button">
+				<a th:href="@{/supervisors/project/detail/{id}/enrol_list(id=${researchtopic.idResearchTopic})}"><button>Xem chi tiết sinh viên đã đăng ký</button></a>
+			</div>
+		</div>
+		
+		<div class="enrol_bottom" th:if="${researchtopic.state == 2}">
+			<div>
+				<p>Báo cáo của sinh viên: </p>
+				<p>Thời gian nộp gần nhất: <span th:text="${#dates.format(researchtopic.lastModify, 'dd/MM/yyyy')}"></span> </p>
+			</div>
+			<div style="display: flex; flex-direction: column; align-items:end;">
+				<p style="color:#BDBBBB">Ngày chấm bài: <span th:text="${#dates.format(researchtopic.expireDay, 'dd/MM/yyyy')}"></span></p>
+				<a th:href="${#dates.createNow().after(researchtopic.expireDay)} ? @{/supervisors/project/mark/{id}(id=${researchtopic.idResearchTopic})} : null">
+				   <button th:disabled="${!#dates.createNow().after(researchtopic.expireDay)}"
+				           th:style="${!#dates.createNow().after(researchtopic.expireDay)} ? 'opacity:0.6;' : ''">
+				       Chấm điểm
+				   </button>
+				</a>
+			</div>
+		</div>
+		<div class="enrol_bottom" th:if="${researchtopic.state == 3}">
+			<div>
+				<p>Báo cáo của sinh viên: </p>
+				<p>Ngày nộp bài: <span th:text="${#dates.format(researchtopic.lastModify, 'dd/MM/yyyy')}"></span> </p>
+				<p>Điểm: <span th:text="${researchtopic.grade}"></span></p>
+				<p>Nhận xét: </p>
+				<div th:utext="${researchtopic.review}"></div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="layout::footer"></div>
+</body>
+</html>
