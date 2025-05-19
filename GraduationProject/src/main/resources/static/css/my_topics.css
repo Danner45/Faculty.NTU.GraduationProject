@@ -33,7 +33,7 @@ body {
     border: 1px;
     border-radius: 20px;
     width: 100%;
-    height: 265px;
+    height: auto;
     object-fit: cover;
 }
 .card {
@@ -45,21 +45,20 @@ body {
     position: relative;
     margin: 16px 0;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 16px;
 }
 
 .card-content {
     display: flex;
     flex-direction: column;
     margin: 16px;
-    gap: 16px;
 }
 
 .card-content h2 {
     margin-bottom: 10px;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 36px;
+    font-size: 20px;
+	font-weight: 600;
+    line-height: 30px;
     display: -webkit-box;
     -webkit-line-clamp: 2;       /* Giới hạn 2 dòng */
     -webkit-box-orient: vertical;
@@ -68,8 +67,8 @@ body {
 }
 
 .card-content p {
-    margin: 5px 0;
-    font-size: 20px;
+    margin: 0;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
 }
@@ -85,6 +84,7 @@ body {
     background: #AF2C2C;
     color: white;
     width: fit-content;
+    margin-top: 16px;
 }
 
 .view-all {
