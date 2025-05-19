@@ -30,14 +30,22 @@
 					    			<img src="/image/system/topic.png"/>
 					          		<p th:text="${project.project.topic}"></p>
 					          		<ul th:if="${project.project.state == 0}">
-					            		<li>Sinh viên đăng ký: <span th:text="${project.count}"></span></li>
+					            		<li>Lĩnh vực: <span th:text="${project.project.projectType.name	}"></span></li>
 					            		<li>Trạng thái: 
 					              		<span>
-					              			Đang chờ duyệt sinh viên
+					              			Đang chờ duyệt
 					              		</span>
 					            		</li>
 					          		</ul>
 					          		<ul th:if="${project.project.state == 1}">
+					            		<li>Sinh viên đăng ký: <span th:text="${project.count}"></span></li>
+					            		<li>Trạng thái: 
+					              		<span>
+					              			Chờ đăng ký
+					              		</span>
+					            		</li>
+					          		</ul>
+					          		<ul th:if="${project.project.state == 2}">
 					            		<li>Cập nhật: <span th:text="${#dates.format(project.project.lastModify, 'dd/MM/yyyy')}"></span></li>
 					            		<li>Trạng thái: 
 					              		<span>
@@ -45,8 +53,16 @@
 					              		</span>
 					            		</li>
 					          		</ul>
+					          		<ul th:if="${project.project.state == 3}">
+					            		<li>Ngày hoàn thành: <span th:text="${#dates.format(project.project.lastModify, 'dd/MM/yyyy')}"></span></li>
+					            		<li>Trạng thái: 
+					              		<span>
+					              			Đã hoàn thành
+					              		</span>
+					            		</li>
+					          		</ul>
 					          		<a th:href="@{/supervisors/project/detail/{id}(id=${project.project.idResearchTopic})}">
-					          			<button th:text="${project.project.state == 0 ? 'Duyệt sinh viên' : 'Xem chi tiết'}">
+					          			<button th:text="${project.project.state == 1 ? 'Duyệt sinh viên' : 'Xem chi tiết'}">
 					                    	<img src="/image/system/arrow.svg">
 					                 	</button>
 					                 </a>
