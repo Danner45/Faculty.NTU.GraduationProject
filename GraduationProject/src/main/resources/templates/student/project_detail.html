@@ -11,15 +11,8 @@
 <body>
 	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
 	<div class="container-fluid">
-		<h3 class="project_title">Chi tiết đề tài</h3>
+		<h3 class="project_title">Thông tin chi tiết đề tài</h3>
 		<div th:object="${researchtopic}" class="project_detail">
-			<p>Tên đề tài: <span th:text="*{topic}" style="text-transform: uppercase;"></span></h3>
-			<div class="project_part">
-				<p>Lĩnh vực: <span th:text="*{projectType.name}"></span></p>
-				<p>Loại đề tài: <span th:text="*{isResearch} ==	false ? 'Chuyên đề' : 'Đề tài'"></span>
-				<p>Đề tài dành cho khóa: <span th:text="*{course.idCourse}"></span></p>
-			</div>
-			<p>Chi tiết</p> 
 			<iframe th:src="@{*{detail}}" width="100%" height="600px"></iframe>
 		</div>
 		
@@ -31,14 +24,24 @@
 		</div>
 		
 		<div class="enrol_bottom" th:if="${researchtopic.state == 1}">
-			<p>Số lượng sinh viên đăng ký: <span th:text="${count}"></span></p>
-			<div class="confirm_button">
-				<a th:href="@{/supervisors/project/detail/{id}/enrol_list(id=${researchtopic.idResearchTopic})}"><button>Xem chi tiết sinh viên đã đăng ký</button></a>
-			</div>
+			<p>Số lượng sinh viên đã đăng ký: <span th:text="${count}"></span></p>
+			<form th:action="@{/students/enrol/{id}(id=${researchtopic.idResearchTopic})}" method="post">
+            	 <button type="button" onclick="openConfirm()">Đăng ký</button>
+            	 	<div id="confirmModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.4); z-index:1000;">
+					  <div style="background-color:#fff; padding:20px; margin:15% auto; border-radius:8px; width:400px; text-align:center;">
+					    <p><strong>Xác nhận đăng ký?</strong></p>
+					    <p>Sau khi đăng ký sẽ không thể đăng ký thêm</p>
+					    <div style="margin-top: 20px;">
+					      <button onclick="submitForm()" class="btn" style="background:var(--main-color); color: white">Đăng ký</button>
+					      <button onclick="closeConfirm()" class="btn btn-secondary" style="margin-left: 10px;">Hủy</button>
+					    </div>
+					  </div>
+					</div>
+       	 	</form>
 		</div>
 		
 		<div class="enrol_bottom" th:if="${researchtopic.state == 2}">
-			<div>
+<!-- 			<div>
 				<p>Báo cáo của sinh viên: </p>
 				<p>Thời gian nộp gần nhất: <span th:text="${#dates.format(researchtopic.lastModify, 'dd/MM/yyyy')}"></span> </p>
 			</div>
@@ -50,7 +53,7 @@
 				       Chấm điểm
 				   </button>
 				</a>
-			</div>
+			</div> -->
 		</div>
 		<div class="enrol_bottom" th:if="${researchtopic.state == 3}">
 			<div>
@@ -61,7 +64,25 @@
 				<div th:utext="${researchtopic.review}"></div>
 			</div>
 		</div>
+		<div>
+			<p>Đề tài tham khảo</p>
+			
+		</div>
 	</div>
 	<div th:replace="layout::footer"></div>
+	<script>
+  function openConfirm() {
+    document.getElementById("confirmModal").style.display = "block";
+  }
+
+  function closeConfirm() {
+    document.getElementById("confirmModal").style.display = "none";
+  }
+
+  function submitForm() {
+    document.getElementById("enrolForm").submit();
+  }
+</script>
+	
 </body>
 </html>

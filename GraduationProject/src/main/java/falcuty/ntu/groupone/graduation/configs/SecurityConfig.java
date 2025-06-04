@@ -12,6 +12,11 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationSuccessHandler successHandler) throws Exception {
 		return http
+	            .headers(headers -> headers
+	                    .frameOptions(frameOptions -> frameOptions
+	                        .sameOrigin() // Cho phép nhúng trong iframe cùng origin
+	                    )
+	                )
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                                 .requestMatchers("/login", "/css/**", "/image/**").permitAll()

@@ -21,6 +21,7 @@ public class Enrol {
 
     @Column(name = "state_enrol", nullable = false)
     private Integer stateEnrol;
+   
 
     // Constructors
     public Enrol() {}
@@ -63,4 +64,7 @@ public class Enrol {
     public void setStateEnrol(Integer stateEnrol) {
         this.stateEnrol = stateEnrol;
     }
+
+    
+    
 }

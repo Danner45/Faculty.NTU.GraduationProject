@@ -10,19 +10,57 @@
 </head>
 <body>
 	<!-- Header của sinh viên -->
-	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
+	<div th:replace="layout::header(${name}, ${email}, 'student')"></div>
 
 	<div class="container-fluid">
+		
 		<!-- Giới thiệu về sinh viên -->
-		<div th:replace="layout::intro(type)"></div>
-
+		<div th:replace="layout::intro('student')"></div>
+			<div th:if="${enrol != null}" class="enrol_topic">
+				<h3 th:text="${enrol.stateEnrol} == 0 ? 'Đề tài đã đăng ký' : 'Đề tài thực hiện'"></h3>
+				<div class="card_content">
+			    	<img src="/image/system/topic.png" />
+			    	<div class="card_detail">
+				    	<p th:text="${enrol.researchTopic.topic}"></p>
+				        <ul>
+				        	<li>Sinh viên đăng ký: <span th:text="${count}"></span></li>
+				            <li>Trạng thái: 
+				                <span th:text="${enrol.researchTopic.state == 1 ? 'Đang chờ duyệt' : 
+				                                (enrol.researchTopic.state == 2 ? 'Đang thực hiện' : 'Đã hoàn thành')}"
+				                      class="status_badge"></span>
+				            </li>
+				            <li>Lĩnh vực: <span th:text="${enrol.researchTopic.projectType.name}"></span></li>
+				            <li>Giáo viên hướng dẫn:<span th:text="${enrol.researchTopic.teacherCreated.position == 2 ? 'ThS.' : 'TS.'}" ></span><span th:text="${enrol.researchTopic.teacherCreated.name}"></span></li>
+				            <li class="action_buttons">
+				            	<a th:href="@{/students/project/detail/{id}(id=${enrol.researchTopic.idResearchTopic})}">
+									<button class="btn_view">
+										Xem chi tiết
+									</button>
+								</a>
+				            	<form th:action="@{/students/cancel_enrol/{id}(id=${enrol.idEnrol})}" method="post">
+				            		<button type="button" onclick="openConfirm()" class="btn_cancel">Hủy đăng ký</button>
+				            		<div id="confirmModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.4); z-index:1000;">
+									  <div style="background-color:#fff; padding:20px; margin:15% auto; border-radius:8px; width:400px; text-align:center;">
+									    <p><strong>Xác nhận hủy đăng ký?</strong></p>
+									    <div style="margin-top: 20px;">
+									      <button onclick="submitForm()" class="btn" style="background:var(--main-color); color: white">Xác nhận</button>
+									      <button onclick="closeConfirm()" class="btn" style="margin-left: 10px; background: white">Hủy</button>
+									    </div>
+									  </div>
+									</div>
+				            	</form>
+				            </li>
+				         </ul>
+			    	</div>
+			     </div>
+			</div>
 		<!-- Đề tài nghiên cứu của sinh viên -->
-			<div class="this_year_topics">
-			    <h3>Đề tài nghiên cứu của tôi cho khóa 2021-2025</h3>
+			<div th:if="${enrol == null}" class="this_year_topics">
+			    <h3>Đề tài tham khảo cho khóa 2021 - 2025</h3>
 			    <div class="topic_list">
 			        <!-- Kiểm tra nếu không có đề tài -->
 			        <div th:if="${#lists.isEmpty(researchtopics)}">
-			            <h3 style="color:var(--main-color)">THẦY/CÔ CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
+			            <h3 style="color:var(--main-color)">GIẢNG VIÊN CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
 			        </div>
 			
 			        <!-- Nếu có đề tài, lặp qua danh sách -->
@@ -39,11 +77,15 @@
 			                            <ul>
 			                                <li>Sinh viên đăng ký: <span>0</span></li>
 			                                <li>Trạng thái: 
-			                                    <span th:text="${project.state == 0 ? 'Đang chờ duyệt sinh viên' : 
-			                                                   (project.state == 1 ? 'Đang thực hiện' : 
-			                                                   (project.state == 2 ? 'Đã hoàn thành' : 'Không xác định'))}"></span>
+			                                    <span th:text="${project.state == 1 ? 'Chờ đăng ký' : 
+			                                                   (project.state == 2 ? 'Đang thực hiện' : 'Đã hoàn thành')}"></span>
 			                                </li>
 			                            </ul>
+			                            <a th:href="@{/students/project/detail/{id}(id=${project.idResearchTopic})}">
+					          			<button th:text="${project.state == 1 ? 'Đăng ký' : 'Xem chi tiết'}">
+					                    	<img th:src="@{/image/system/arrow.svg}">
+					                 	</button>
+					                 </a>
 			                        </div>
 			                    </div>
 			                </div>
@@ -60,7 +102,7 @@
 	<!-- Footer của sinh viên -->
 	<div th:replace="layout::footer"></div>
 	
-	<script>
+	<script th:if="${enrol == null}">
 	  const cardList = document.getElementById("cardList");
 	  const cardTopics = cardList.querySelectorAll(".card_topic");
 	  const totalCards = cardTopics.length;
@@ -94,6 +136,22 @@
 	    updateSlider();
 	  });
 	</script>
-	
+	<script th:if="${enrol!=null}">
+  function openConfirm() {
+    document.getElementById("confirmModal").style.display = "block";
+  }
+
+  function closeConfirm() {
+    document.getElementById("confirmModal").style.display = "none";
+  }
+
+  function submitForm() {
+    document.getElementById("enrolForm").submit();
+  }
+</script>
+<script th:if="${message != null}">
+	alert('[[${message}]]');
+</script>
+
 </body>
 </html>

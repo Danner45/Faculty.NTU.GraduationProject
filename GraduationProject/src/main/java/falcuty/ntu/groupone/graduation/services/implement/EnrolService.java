@@ -30,7 +30,7 @@ public class EnrolService implements IEnrolService{
 	}
 
 	@Override
-	public List<Enrol> getEnrolListByStudent(Student student) {
+	public Enrol getEnrolListByStudent(Student student) {
 		return enrolRepository.findByStudent(student);
 	}
 
@@ -66,7 +66,6 @@ public class EnrolService implements IEnrolService{
 	    enrol.setStateEnrol(1);
 	    topic.setState(1);
 	    
-	    
 	    enrolRepository.save(enrol);
 
 	    enrolRepository.deleteByResearchTopicAndStateEnrol(topic, 0);
@@ -75,6 +74,12 @@ public class EnrolService implements IEnrolService{
 		
 	}
 	
+	public void saveEnrol(Enrol enrol) {
+		enrolRepository.save(enrol);
+	}
 	
+	public void deleteById(Integer id) {
+		enrolRepository.deleteById(id);
+	}
 	
 }

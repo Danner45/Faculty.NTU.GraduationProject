@@ -2,7 +2,8 @@
 
 
 
-.this_year_topics{
+.this_year_topics,
+.enrol_topic{
 	padding: 24px 87px;
 	flex-direction: column;	
 	gap: 24px;
@@ -26,23 +27,23 @@
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.card_content{
+.card_topic .card_content{
 	padding: 1rem;
 	border-radius: 0 0 var(--border) var(--border);
 }
 
-.card_content ul{
+.card_topic .card_content ul{
 	list-style: none;
 	padding: 0;
 }
 
-.card_content>img{
+.card_topic .card_content>img{
 	width: 100%;
 	height: auto;
 	object-fit: cover;
 }
 
-.card_content p{
+.card_topic .card_content p{
 	font-size: 20px;
 	font-weight: 600;
 	display: -webkit-box;
@@ -52,7 +53,7 @@
   	text-overflow: ellipsis;
 }
 
-.card_content button{
+.card_topic .card_content button{
 	color: var(--white-color);
 	background-color: var(--main-color);
 	border-radius: var(--border);
@@ -103,4 +104,108 @@
 }
 
 
+.enrol_topic .card_content{
+    background: white;
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    overflow: hidden;
+    min-height: 300px;
+    margin-top: 16px;
+}
 
+.enrol_topic .card_content img{
+	width: 300px;
+	height: auto;
+	object-fit: cover;
+	padding: 30px;
+}
+
+.enrol_topic .card_content p{
+    font-size: 1.3em;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+.enrol_topic .card_detail{
+	flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.enrol_topic .card_detail ul{
+	flex: 1;
+    margin-bottom: 25px;
+}
+
+.enrol_topic .card_content ul li{
+	display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    gap: 10px;
+    font-weight: 500;
+    color: #4a5568;
+    min-width: 160px;
+}
+
+.enrol_topic .card_content li span{
+	color: black;
+    font-weight: 500;
+}
+
+.enrol_topic .card_content .status_badge{
+    background: #fed7d7;
+    color: #c53030;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.enrol_topic .card_content .action_buttons{
+	display: flex;
+	gap : 12px;
+	justify-self: start;
+	
+}
+
+.enrol_topic .card_content .btn_view{
+	background: var(--main-color);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95em;
+}
+
+.enrol_topic .card_content .btn_view:hover{
+	background: #a02622;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(200, 48, 46, 0.3);
+}
+
+.enrol_topic .card_content .btn_cancel{
+	background: white;
+    color: #c8302e;
+    border: 2px solid var(--main-color);
+    padding: 10px 24px;
+    border-radius: 25px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95em;
+}
+
+.enrol_topic .card_content .btn_cancel:hover{
+	background: var(--main-color);
+    color: white;
+    transform: translateY(-2px);
+}

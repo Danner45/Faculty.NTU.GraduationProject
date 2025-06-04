@@ -11,7 +11,7 @@ import falcuty.ntu.groupone.graduation.models.Student;
 
 public interface IEnrolRepository extends JpaRepository<Enrol, Integer>{
 	List<Enrol> findByResearchTopic(ResearchTopic researchTopic);
-	List<Enrol> findByStudent(Student student);
+	Enrol findByStudent(Student student);
 	void deleteByResearchTopicAndStateEnrol(ResearchTopic researchTopic, Integer state);
 	void deleteByStudentAndStateEnrol(Student student, Integer state);
 	Optional<Enrol> findByStudentAndResearchTopic(Student student, ResearchTopic researchTopic);

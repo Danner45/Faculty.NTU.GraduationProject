@@ -88,7 +88,7 @@
 	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
 	
 	<div class="container-fluid">
-		<form th:action="@{'/project/edit/' + ${project.idResearchTopic}}" method="post" th:object="${project}" enctype="multipart/form-data" class="add_project">
+		<form th:action="@{'/supervisors/project/edit/' + ${project.idResearchTopic}}" method="post" th:object="${project}" enctype="multipart/form-data" class="add_project">
 			<h3>Sửa đề tài</h3>
 			<div class="input_field">
 				<label>Tên đề tài</label>
@@ -123,13 +123,25 @@
 				</div>
 			</div>
 			<div class="input_field">
-				<label>Mô tả</label>
-				<textarea id="description" name="description" rows="10" th:field="*{description}">Viết mô tả ngắn cho đề tài</textarea>
-			</div>
-			<div class="input_field">
-				<label>Chi tiết đề tài</label>
-				<textarea id="detail" name="detail" rows="10" th:field="*{detail}"></textarea>
-			</div>
+		        <label for="detailFile">Tải file chi tiết đề tài (PDF)</label>
+    
+			    <!-- Input file -->
+			    <input type="file" id="detailFile" name="detailFile" accept="application/pdf"
+			           onchange="previewPDF(this, 'detailPreview')" />
+			
+			    <!-- Hiển thị file PDF sẵn có -->
+			    <iframe id="detailPreview"
+			            th:if="${project.detail != null}"
+			            th:src="@{${project.detail}}"
+			            width="100%" height="600px"
+			            style="border: 1px solid #ccc;"></iframe>
+			
+			    <!-- Nếu chưa có file thì ẩn iframe -->
+			    <iframe id="detailPreview"
+			            th:if="${project.detail == null}"
+			            style="display: none; border: 1px solid #ccc;"
+			            width="100%" height="600px"></iframe>
+		    </div>
 			<div style="display: flex; justify-content: end">
 				<button type="submit">Sửa đề tài</button>	
 			</div>
@@ -139,5 +151,23 @@
 	</div>
 	
 	<div th:replace="layout::footer"></div>
+	<script>
+  function previewPDF(input, previewId) {
+    const file = input.files[0];
+    const previewFrame = document.getElementById(previewId);
+
+    if (file && file.type === "application/pdf") {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        previewFrame.src = e.target.result;
+        previewFrame.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    } else {
+      previewFrame.style.display = "none";
+    }
+  }
+</script>
+	
 </body>
 </html>
