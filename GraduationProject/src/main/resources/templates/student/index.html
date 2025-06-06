@@ -28,7 +28,7 @@
 				                <span th:text="${enrol.researchTopic.state == 1 ? 'Đang chờ duyệt' : 
 				                                (enrol.researchTopic.state == 2 ? 'Đang thực hiện' : 'Đã hoàn thành')}"
 				                      class="status_badge"></span>
-				            </li>
+				            </li>	
 				            <li>Lĩnh vực: <span th:text="${enrol.researchTopic.projectType.name}"></span></li>
 				            <li>Giáo viên hướng dẫn:<span th:text="${enrol.researchTopic.teacherCreated.position == 2 ? 'ThS.' : 'TS.'}" ></span><span th:text="${enrol.researchTopic.teacherCreated.name}"></span></li>
 				            <li class="action_buttons">

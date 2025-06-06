@@ -87,13 +87,19 @@ public class StudentController {
 		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
 		if(researchTopic.getState() == 1) {
 			int countStudent = enrolService.countStudentEnrol(researchTopic);
+	        Enrol enrol = enrolService.getEnrolListByStudent(student.get());
+	        if(enrol != null) {
+	        	model.addAttribute("enrol",enrol);
+	        }
 	        model.addAttribute("count", countStudent);
+		}
+		if(researchTopic.getState() == 2) {
+			
 		}
 		model.addAttribute("type", "student");
 		model.addAttribute("email", email);
         model.addAttribute("name", student.get().getName());
         model.addAttribute("researchtopic", researchTopic);
-
         return "student/project_detail";
 	}
 	

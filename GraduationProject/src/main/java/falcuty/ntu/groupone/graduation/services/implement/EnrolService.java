@@ -64,7 +64,8 @@ public class EnrolService implements IEnrolService{
 	        .orElseThrow(() -> new RuntimeException("Enrol not found"));
 
 	    enrol.setStateEnrol(1);
-	    topic.setState(1);
+	    topic.setState(2);
+	    researchTopicService.saveResearchTopic(topic);
 	    
 	    enrolRepository.save(enrol);
 
