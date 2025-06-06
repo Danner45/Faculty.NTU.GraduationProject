@@ -47,6 +47,7 @@ import falcuty.ntu.groupone.graduation.services.implement.ProjectTypeService;
 import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
 import falcuty.ntu.groupone.graduation.services.implement.StudentService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -70,6 +71,8 @@ public class SupervisorController {
 	@Autowired
 	private StudentService studentService;
 	
+	@Autowired
+	private ServletContext servletContext;
 	
 	public SupervisorController(SupervisorService supervisorService) {
 		this.supervisorService = supervisorService;
@@ -131,43 +134,36 @@ public class SupervisorController {
 
 	    Course course = courseService.findCourseByGraduationYear(LocalDate.now().getYear());
 
+		/*
+		 * if (!file.isEmpty()) { String uploadPath =
+		 * servletContext.getRealPath("/uploads"); // trỏ đến webapp/uploads File
+		 * uploadDir = new File(uploadPath); if (!uploadDir.exists()) {
+		 * uploadDir.mkdirs(); }
+		 * 
+		 * String fileName = project.getTopic().replaceAll("\\s+", "_") + "_" +
+		 * System.currentTimeMillis() + ".pdf"; project.setDetail(fileName); } else {
+		 * System.out.println("Không nhận được file"); }
+		 */
 	    if (!file.isEmpty()) {
-	        String uploadDir = "D:/upload-folder/";
+            try {
+                String filename = project.getTopic().replaceAll("\\s+", "_") + "_" +System.currentTimeMillis() + ".pdf";
+                String uploadPath = servletContext.getRealPath("/uploads"); // trỏ đến webapp/uploads
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                	uploadDir.mkdirs();
+                }
 
-	        // Tạo thư mục nếu chưa có
-	        File uploadPath = new File(uploadDir);
-	        if (!uploadPath.exists()) {
-	            uploadPath.mkdirs();
-	        }
+                // Lưu file
+                File savedFile = new File(uploadPath, filename);
+                file.transferTo(savedFile);
 
-	        // Tạo fileName tùy chỉnh, ví dụ: uuid + gốc tên file
-	        String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
-	        String fileExtension = "";
+                // Lưu đường dẫn ảnh tương đối
+                project.setDetail(filename);
 
-	        int dotIndex = originalFileName.lastIndexOf('.');
-	        if (dotIndex > 0) {
-	            fileExtension = originalFileName.substring(dotIndex);
-	        }
-
-	        String fileName = project.getTopic().replaceAll("\\s+", "_") + "_" + System.currentTimeMillis() + ".pdf";
-
-	        // Dùng Path.resolve() thay vì + để tránh lỗi đường dẫn
-	        Path path = Paths.get(uploadDir).resolve(fileName);
-
-	        try {
-	            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-
-	            // Lưu đường dẫn tương đối để hiển thị
-	            project.setDetail("/files/" + fileName);
-
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	            // Có thể thêm xử lý lỗi hoặc báo lỗi cho người dùng
-	        }
-	    } else {
-	        System.out.println("Không nhận được file");
-	    }
-
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 	    project.setCourse(course);
 	    project.setTeacherCreated(supervisor);
 	    project.setState(0);
@@ -255,20 +251,25 @@ public class SupervisorController {
 
 	    // Xử lý file
 	    if (!file.isEmpty()) {
-	        String uploadDir = "D:/upload-folder/";
-	        String originalFilename = StringUtils.cleanPath(file.getOriginalFilename());
-	        
-	        // Tùy chọn: đổi tên file tránh trùng
-	        String fileName = project.getTopic().replaceAll("\\s+", "_") + "_" + System.currentTimeMillis() + ".pdf";
-	        
-	        Path path = Paths.get(uploadDir + fileName);
-	        try {
-	            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-	            project.setDetail("/files/" + fileName);
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    } else {
+            try {
+                String filename = project.getTopic().replaceAll("\\s+", "_") + "_" +System.currentTimeMillis() + ".pdf";
+                String uploadPath = servletContext.getRealPath("/uploads"); // trỏ đến webapp/uploads
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                	uploadDir.mkdirs();
+                }
+
+                // Lưu file
+                File savedFile = new File(uploadPath, filename);
+                file.transferTo(savedFile);
+
+                // Lưu đường dẫn ảnh tương đối
+                project.setDetail(filename);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
 	        // Nếu không upload file mới, giữ nguyên đường dẫn file cũ
 	        project.setDetail(oldProject.getDetail());
 	    }

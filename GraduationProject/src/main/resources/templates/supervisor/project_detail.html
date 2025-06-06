@@ -20,7 +20,7 @@
 				<p>Đề tài dành cho khóa: <span th:text="*{course.idCourse}"></span></p>
 			</div>
 			<p>Chi tiết</p> 
-			<iframe th:src="@{*{detail}}" width="100%" height="600px"></iframe>
+			<iframe th:src="@{'/uploads/' + *{detail}}" width="100%" height="600px"></iframe>
 		</div>
 		
 		<div class="enrol_bottom" th:if="${researchtopic.state == 0}">
