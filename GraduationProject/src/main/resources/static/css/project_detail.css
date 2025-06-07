@@ -20,7 +20,6 @@
 
 .project_detail>p,
 .project_part>p{
-	
 	font-weight: 800;
 }
 
@@ -66,4 +65,13 @@
 	border: none;
 	background-color: var(--main-color);
 	color: white;
+}
+
+.topic-name{
+	font-family: "Noto Sans", sans-serif;
+    font-weight: 600;
+}
+.topics{
+	display: flex;
+	gap: 8px;
 }

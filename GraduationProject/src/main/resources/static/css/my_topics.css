@@ -21,10 +21,10 @@ body {
 }
 .card-container {
     display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 }
+
 .card-image{
     background-color: #e8a84b;
     border: 1px;
@@ -49,8 +49,8 @@ body {
     display: flex;
     flex-direction: column;
     margin: 16px;
+    grid-template-columns: repeat(4, 1fr);
 }
-
 .card-content h2 {
     margin-bottom: 10px;
     font-size: 20px;

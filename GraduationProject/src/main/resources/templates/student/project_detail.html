@@ -14,19 +14,19 @@
 		<h3 class="project_title">Thông tin chi tiết đề tài</h3>
 		<!--  -->
 		<div th:object="${researchtopic}">
-            <h4><strong>Tên đề tài:</strong> <span th:text="*{topic}">Tên đề tài</span></h4>
+		<div class="topics"><p class="topic-name">Tên đề tài:</p> <span th:text="*{topic}">Tên đề tài</span></div>
+            
 
             <div th:if="*{teacherCreated != null}">
-			    <h5><strong>Giảng viên hướng dẫn:</strong> 
+			    <p class= "topic-name">Giảng viên hướng dẫn:
 			        <a th:href="@{/profile/{email}(email=${researchtopic.teacherCreated.email})}" 
 			           th:text="*{teacherCreated.name}"
 			           style = "color: var(--main-color); text-decoration: underline;"
 			           >Tên giảng viên</a>
-			    </h5>
 			</div>
 			
 			<div th:if="*{teacherCreated == null}">
-			    <h5><strong>Giảng viên hướng dẫn:</strong> <span class="text-muted">Chưa có</span></h5>
+			    <p class= "topic-name">Giảng viên hướng dẫn:</p> <span class="text-muted">Chưa có</span></h5>
 			</div>
 
             <iframe th:src="@{'/uploads/' + *{detail}}" width="100%" height="600px"></iframe>
