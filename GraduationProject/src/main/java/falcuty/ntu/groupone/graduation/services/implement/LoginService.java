@@ -31,14 +31,14 @@ public class LoginService implements UserDetailsService {
             if(s.getPosition() == 0) {
             	return User.builder()
                         .username(s.getEmail())
-                        .password("{noop}" + s.getPassword()) 
+                        .password(s.getPassword()) 
                         .roles("ADMIN")
                         .build();
             }
             else {
             	return User.builder()
                         .username(s.getEmail())
-                        .password("{noop}" + s.getPassword()) 
+                        .password(s.getPassword()) 
                         .roles("SUPERVISOR")
                         .build();
 			}
@@ -49,7 +49,7 @@ public class LoginService implements UserDetailsService {
             Student s = optionalStu.get();
             return User.builder()
                     .username(s.getEmail())
-                    .password("{noop}" + s.getPassword())
+                    .password(s.getPassword())
                     .roles("STUDENT")
                     .build();
         }
