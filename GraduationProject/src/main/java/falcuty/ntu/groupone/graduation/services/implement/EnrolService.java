@@ -11,6 +11,7 @@ import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Student;
 import falcuty.ntu.groupone.graduation.repositories.IEnrolRepository;
 import falcuty.ntu.groupone.graduation.services.interf.IEnrolService;
+import jakarta.transaction.Transactional;
 
 @Service
 public class EnrolService implements IEnrolService{
@@ -56,6 +57,7 @@ public class EnrolService implements IEnrolService{
 	}
 
 	@Override
+	@Transactional
 	public void confirmEnrol(String studentId, Integer researchTopicId) {
 		Student student = studentService.findStudentById(studentId).get();
 	    ResearchTopic topic = researchTopicService.findResearchTopicById(researchTopicId);

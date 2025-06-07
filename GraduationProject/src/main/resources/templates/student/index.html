@@ -15,7 +15,6 @@
 	<div class="container-fluid">
 		
 		<!-- Giới thiệu về sinh viên -->
-		<div th:replace="layout::intro('student')"></div>
 			<div th:if="${enrol != null}" class="enrol_topic">
 				<h3 th:text="${enrol.stateEnrol} == 0 ? 'Đề tài đã đăng ký' : 'Đề tài thực hiện'"></h3>
 				<div class="card_content">
