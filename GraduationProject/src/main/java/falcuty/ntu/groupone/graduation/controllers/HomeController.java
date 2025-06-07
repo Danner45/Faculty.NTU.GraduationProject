@@ -59,12 +59,15 @@ public class HomeController {
 	public String getHome(HttpServletRequest request, ModelMap model, @AuthenticationPrincipal UserDetails userDetails) {
 		String email = userDetails.getUsername();
 		Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
+		model.addAttribute("email", email);
+		model.addAttribute("currentPath", request.getRequestURI());
 		if (supervisorOpt.isPresent()) {
 			Optional<Course> course = courseService.findCourseById(63);
 			List<ResearchTopic> researchTopics = researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), true, course.get());
 			model.addAttribute("type", "supervisor");
 			model.addAttribute("name", supervisorOpt.get().getName());
 			model.addAttribute("researchtopics",researchTopics);
+			return "redirect:/supervisors/home";
 		} else {
 			Optional<Student> studentOpt = studentService.findStudentByEmail(email);
 			if (studentOpt.isPresent()) {
@@ -73,10 +76,8 @@ public class HomeController {
 		    } else {
 		        model.addAttribute("name", "Người dùng không xác định");
 		    }
+			return "redirect:/students/home";
 		}
-		model.addAttribute("email", email);
-		model.addAttribute("currentPath", request.getRequestURI());
-		return "index";
 	}
 	
 	@GetMapping("/login")

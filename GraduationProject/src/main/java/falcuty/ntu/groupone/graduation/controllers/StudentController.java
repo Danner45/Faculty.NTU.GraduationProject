@@ -73,7 +73,7 @@ public class StudentController {
 	        if(enrol != null) {
 	        	int count = enrolService.countStudentEnrol(enrol.getResearchTopic());
 			    model.addAttribute("count", count);
-	        	model.addAttribute("enrol",enrol);
+	        	model.addAttribute("enrol", enrol);
 	        }
 	        else {
 	        	List<ResearchTopic> researchTopics = researchTopicService.findAllByStateOne(); 
