@@ -14,22 +14,20 @@
 		<div class="default_infor">
 			<img th:src="@{${user.imgUrl}}" alt="Ảnh đại diện"/>
 			<div class="infor_text" th:if="${type} == 'supervisor'">
-				<h2>Thông tin giảng viên:</h2>
-				<p>Họ và tên: <span th:text="${user.name}"></span></p>
-				<p>Email: <span th:text="${user.email}"></span></p>
-			  	<p>Chức vụ: <span th:text="${user.position == 1} ? 'Tiến Sĩ' : 'Thạc Sĩ'"></span></p>
-			  	<p>Khoa: <span th:text="${user.department.name}"></span></p>
+				<div class="info"><p class= "information">Họ và tên: </p><p><span th:text="${user.name}"></span></p></div>
+				<div class="info"><p class="information">Email:</p> <span th:text="${user.email}"></span></div>
+				<div class="info"><p class="information">Chức vụ:</p> <span th:text="${user.position == 1} ? 'Tiến Sĩ' : 'Thạc Sĩ'"></span></div>
+				<div class="info"><p class="information">Bộ môn:</p> <span th:text="${user.department.name}"></span></div>
 			</div>
 			<div class="infor_text" th:if="${type} == 'student'">
-				<h2>Thông tin sinh viên:</h2>
-				<p>Họ và tên: <span th:text="${user.name}"></span></p>
-				<p>Email: <span th:text="${user.email}"></span></p>
-			  	<p>Lớp: <span th:text="${user.myClass.idClass}"></span></p>
-			  	<p>Điểm trung bình: <span th:text="${user.avgGrade}"></span></p>
+				<div class="info"><p class="information">Họ và tên:</p><span th:text="${user.name}"></span></div>
+				<div class="info"><p class="information">Email:</p><span th:text="${user.email}"></span></div>
+				<div class="info"><p class="information">Lớp:</p><span th:text="${user.myClass.idClass}"></span></div>
+				<div class="info"><p class="information">Điểm trung bình:</p><span th:text="${user.avgGrade}"></span></div>
 			</div>
 		</div>
 		<div class="more_infor">
-			<h2 class="title">Thông tin thêm</h2>
+			<h2 class="title_info">Thông tin thêm</h2>
 			<div class="cv_container">
 				<div style="max-width: 100%; overflow: hidden;">
 					<div class="cv_content" th:utext="${user.cv}">

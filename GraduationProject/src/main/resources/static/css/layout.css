@@ -17,7 +17,10 @@ body{
 a{
 	color: var(--text-color);
 	text-decoration: none;
-	
+}
+
+.nav_custom ul li a.nav_active {
+  color: #EBAD57;
 }
 
 .nav_container{
@@ -41,7 +44,7 @@ a{
 	padding: 0 42px;
 }
 
-.nav_active{
+.nav_custom ul li a:hover {
 	color: #EBAD57;
 }
 

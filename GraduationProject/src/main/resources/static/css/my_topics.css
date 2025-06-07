@@ -1,5 +1,4 @@
 @charset "UTF-8";
-@charset "UTF-8";
 *{
     margin: 0;
     padding: 0;
@@ -7,7 +6,6 @@
 }
 body {
     margin: 0;
-    padding: 20px;
 }
 
 .container {
@@ -61,7 +59,7 @@ body {
 	font-weight: 600;
     line-height: 30px;
     display: -webkit-box;
-    -webkit-line-clamp: 2;       /* Giới hạn 2 dòng */
+    -webkit-line-clamp: 2;      
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;

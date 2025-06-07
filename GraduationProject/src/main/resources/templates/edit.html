@@ -67,23 +67,21 @@
 		    		<input type="hidden" name="imgUrl" th:value="${user.imgUrl}" />
 				</div>
 				<div class="infor_text" th:if="${type == 'supervisor'}">
-					<h2>Thông tin giảng viên:</h2>
-					<p>Họ và tên: <span th:text="${user.name}"></span></p>
-					<p>Email: <span th:text="${user.email}"></span></p>
-				  	<p>Chức vụ: <span th:text="${user.position == 1} ? 'Tiến Sĩ' : 'Thạc Sĩ'"></span></p>
-				  	<p>Khoa: <span th:text="${user.department.name}"></span></p>
+					<div class="info"><p class= "information">Họ và tên: </p><p><span th:text="${user.name}"></span></p></div>
+					<div class="info"><p class="information">Email:</p> <span th:text="${user.email}"></span></div>
+					<div class="info"><p class="information">Chức vụ:</p> <span th:text="${user.position == 1} ? 'Tiến Sĩ' : 'Thạc Sĩ'"></span></div>
+					<div class="info"><p class="information">Bộ môn:</p> <span th:text="${user.department.name}"></span></div>
 				</div>
 				<div class="infor_text" th:if="${type == 'student'}">
-					<h2>Thông tin giảng viên:</h2>
-					<p>Họ và tên: <span th:text="${user.name}"></span></p>
-					<p>Email: <span th:text="${user.email}"></span></p>
-				  	<p>Lớp: <span th:text="${user.myClass.idClass}"></span></p>
-				  	<p>Điểm trung bình: <span th:text="${user.avgGrade}"></span></p>
+					<div class="info"><p class="information">Họ và tên:</p><span th:text="${user.name}"></span></div>
+					<div class="info"><p class="information">Email:</p><span th:text="${user.email}"></span></div>
+					<div class="info"><p class="information">Lớp:</p><span th:text="${user.myClass.idClass}"></span></div>
+					<div class="info"><p class="information">Điểm trung bình:</p><span th:text="${user.avgGrade}"></span></div>
 				</div>
 			</div>
 		
 			<div class="more_infor">
-				<h2 class="title">Thêm thông tin tại đây</h2>
+				<h2 class="title_info">Thêm thông tin tại đây</h2>
 		    	<textarea id="cv" name="cv" rows="10" th:field="*{cv}"></textarea><br/>
 	        	<button type="submit">Lưu thay đổi</button>
 			</div>

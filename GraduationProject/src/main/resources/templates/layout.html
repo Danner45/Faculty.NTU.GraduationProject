@@ -8,25 +8,28 @@
 <body>
 	<div th:fragment="header(name, email, type)" class="nav_container">
 		<div class="nav_custom">
-			<div class="logo">
-				<img alt="NTU Logo" src="/image/system/Logo_DH_NhaTrang.png">
-				<span>Đại học Nha Trang</span>
-			</div>
-			<ul class="nav justify-content-end">
-			  <li class="">
-			    <a aria-current="page" th:href="${type == 'supervisor'} ? @{/supervisors/home} : @{/students/home}" th:classappend="${currentPath == '/supervisors/home'} ? 'nav_active' : ''">Trang chủ</a>
-			  </li>
-			  <li class="">
-			    <a aria-current="page" th:href="@{/supervisors/my_topics}" th:classappend="${currentPath == '/my-topic'} ? 'nav_active' : ''">Đồ án/Chuyên đề</a>
-			  </li>
-			  <li class="name_custom">
-			    <a th:text="${name}" th:href="@{/profile/{email}(email=${email})}"></a>
-			    <a th:href="@{/logout}"><img alt="" src="/image/system/logout.png"></a>
-			  </li>
-			</ul>
+		  <div class="logo">
+		    <img alt="NTU Logo" src="/image/system/Logo_DH_NhaTrang.png">
+		    <span>Đại học Nha Trang</span>
+		  </div>
+		  <ul class="nav justify-content-end">
+		    <li>
+		      <a th:href="${type == 'supervisor'} ? @{/supervisors/home} : @{/students/home}">
+		         Trang chủ
+		      </a>
+		    </li>
+		    <li>
+		      <a th:href="@{/supervisors/my_topics}">
+		         Đồ án/Chuyên đề
+		      </a>
+		    </li>
+		    <li class="name_custom">
+		      <a th:text="${name}" th:href="@{/profile/{email}(email=${email})}"></a>
+		      <a th:href="@{/logout}"><img alt="" src="/image/system/logout.png"></a>
+		    </li>
+		  </ul>
 		</div>
 	</div>
-	
 	<div th:fragment="intro(type)" class="intro row">
 		<div class="col intro_text">
 			<h2>HỆ THỐNG ĐỒ ÁN CHUYÊN ĐỀ</h2>
