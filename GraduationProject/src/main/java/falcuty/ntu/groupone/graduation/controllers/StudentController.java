@@ -134,16 +134,17 @@ public class StudentController {
 		String email = userDetails.getUsername();
 		Optional<Student> student = studentService.findStudentByEmail(email);
 		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
-		Enrol enrol = enrolService.getEnrolListByStudent(student.get());
-        if(enrol != null) {
-        	model.addAttribute("enrol",enrol);
+		Optional<Enrol> enrol = enrolService.findErolListByStudentAndProject(researchTopic, student.get());
+        if(enrol.isPresent()) {
+        	System.out.println(enrol);
+        	model.addAttribute("enrol",enrol.get());
         }
 		if(researchTopic.getState() == 1) {
 			int countStudent = enrolService.countStudentEnrol(researchTopic);
 	        model.addAttribute("count", countStudent);
 		}
 		else if(researchTopic.getState() == 2) {
-			//model.addAttribute("isBeforeDeadline", !researchTopic.getExpireDay().toLocalDate().isBefore(LocalDate.now())); 
+		 
 		}
 		model.addAttribute("type", "student");
 		model.addAttribute("email", email);
