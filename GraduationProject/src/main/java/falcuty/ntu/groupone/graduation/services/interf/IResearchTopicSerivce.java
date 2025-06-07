@@ -12,4 +12,6 @@ public interface IResearchTopicSerivce {
 	ResearchTopic findResearchTopicById(int id);
 	ResearchTopic addResearchTopic(ResearchTopic researchTopic);
 	ResearchTopic saveResearchTopic(ResearchTopic researchTopic);
+	List<ResearchTopic> getTopicsByFilters(String searchTopic, Integer filterCourse, String filterType, Integer filterStatus);
+
 }

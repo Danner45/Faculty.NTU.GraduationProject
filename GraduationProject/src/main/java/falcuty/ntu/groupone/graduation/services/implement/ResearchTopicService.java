@@ -75,4 +75,17 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 	            .collect(Collectors.toList());
 	    }
 	
+	@Override
+    public List<ResearchTopic> getTopicsByFilters(String searchTopic, Integer filterCourse, String filterType, Integer filterStatus) {
+        List<ResearchTopic> allTopics = researchTopicRepository.findAll();
+
+        return allTopics.stream()
+        		.filter(t -> t.getState() != 0)
+                .filter(t -> searchTopic == null || searchTopic.isEmpty() || t.getTopic().toLowerCase().contains(searchTopic.toLowerCase()))
+                .filter(t -> filterCourse == null || (t.getCourse() != null && t.getCourse().getIdCourse().equals(filterCourse)))
+                .filter(t -> filterType == null || filterType.isEmpty() || (t.getProjectType() != null && t.getProjectType().getName().equals(filterType)))
+                .filter(t -> filterStatus == null || t.getState() == filterStatus)
+                .collect(Collectors.toList());
+    }
+	
 }

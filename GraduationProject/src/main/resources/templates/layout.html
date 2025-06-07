@@ -17,7 +17,11 @@
 			    <a aria-current="page" th:href="${type == 'supervisor'} ? @{/supervisors/home} : (${type == 'admin'} ? @{/admin/home} : @{/students/home})" th:classappend="${currentPath == '/supervisors/home'} ? 'nav_active' : ''">Trang chủ</a>
 			  </li>
 			  <li class="">
-			    <a aria-current="page" th:href="@{/supervisors/my_topics}" th:classappend="${currentPath == '/my-topic'} ? 'nav_active' : ''">Đồ án/Chuyên đề</a>
+			    <!-- <a aria-current="page" th:href="@{/supervisors/my_topics}" th:classappend="${currentPath == '/my-topic'} ? 'nav_active' : ''">Đồ án/Chuyên đề</a> -->
+			    <a th:href="${type == 'supervisor'} ? @{/supervisors/my_topics} : @{/students/topics_all}"
+				     th:classappend="${currentPath == '/my-topic'} ? 'nav_active' : ''">
+				    Đồ án/Chuyên đề
+				  </a>				
 			  </li>
 			  <li class="name_custom">
 			    <a th:text="${name}" th:href="@{/profile/{email}(email=${email})}"></a>
