@@ -7,6 +7,10 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link th:href="@{/css/layout.css}" rel="stylesheet">
   <link th:href="@{/css/home.css}" rel="stylesheet">
+  <style>
+  
+
+  </style>
 </head>
 <body>
 	<!-- Header của sinh viên -->
@@ -61,37 +65,26 @@
 			        <div th:if="${#lists.isEmpty(researchtopics)}">
 			            <h3 style="color:var(--main-color)">GIẢNG VIÊN CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
 			        </div>
-			
-			        <!-- Nếu có đề tài, lặp qua danh sách -->
-			        <div class="card_slider_wrapper">
-			            <button id="prevBtn" class="slider_btn">&#8592;</button>
-			            
-			            <div class="card_slider">
-			                <div class="card_list" id="cardList" th:if="${!#lists.isEmpty(researchtopics)}">
-			                    <!-- Lặp qua các đề tài nghiên cứu -->
-			                    <div class="card_topic" th:each="project : ${researchtopics}">
-			                        <div class="card_content">
-			                            <img src="/image/system/topic.png" />
-			                            <p th:text="${project.topic}"></p>
-			                            <ul>
-			                                <li>Sinh viên đăng ký: <span>0</span></li>
-			                                <li>Trạng thái: 
-			                                    <span th:text="${project.state == 1 ? 'Chờ đăng ký' : 
-			                                                   (project.state == 2 ? 'Đang thực hiện' : 'Đã hoàn thành')}"></span>
-			                                </li>
-			                            </ul>
-			                            <a th:href="@{/students/project/detail/{id}(id=${project.idResearchTopic})}">
-					          			<button th:text="${project.state == 1 ? 'Đăng ký' : 'Xem chi tiết'}">
-					                    	<img th:src="@{/image/system/arrow.svg}">
-					                 	</button>
-					                 </a>
-			                        </div>
-			                    </div>
-			                </div>
-			            </div>
-			
-			            <button id="nextBtn" class="slider_btn">&#8594;</button>
-			        </div>
+			        <div class="card_grid" th:if="${!#lists.isEmpty(researchtopics)}">
+					    <div class="card_topic" th:each="project : ${researchtopics}">
+					        <div class="card_content">
+					            <img src="/image/system/topic.png" />
+					            <p th:text="${project.topic}"></p>
+					            <ul>
+					                <li>Sinh viên đăng ký: <span>0</span></li>
+					                <li>Trạng thái: 
+					                    <span th:text="${project.state == 1 ? 'Chờ đăng ký' : 
+					                                   (project.state == 2 ? 'Đang thực hiện' : 'Đã hoàn thành')}"></span>
+					                </li>
+					            </ul>
+					            <a th:href="@{/students/project/detail/{id}(id=${project.idResearchTopic})}">
+					                <button th:text="${project.state == 1 ? 'Đăng ký' : 'Xem chi tiết'}">
+					                    <img th:src="@{/image/system/arrow.svg}">
+					                </button>
+					            </a>
+					        </div>
+					    </div>
+					</div>
 			    </div>
 			</div>
 
