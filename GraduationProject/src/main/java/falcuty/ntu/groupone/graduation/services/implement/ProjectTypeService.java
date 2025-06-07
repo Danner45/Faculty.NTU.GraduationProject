@@ -21,4 +21,8 @@ public class ProjectTypeService {
 	public Optional<ProjectType> findProjectTypeById(int id) {
 		return projectTypeRepository.findById(id);
 	}
+	
+	public void save(ProjectType projectType) {
+		projectTypeRepository.save(projectType);
+	}
 }

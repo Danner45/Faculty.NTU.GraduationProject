@@ -90,22 +90,47 @@ public class HomeController {
 	public String getDetail(@PathVariable String email,
 	                          @AuthenticationPrincipal UserDetails userDetails,
 	                          ModelMap model) {
+		String ownEmail = userDetails.getUsername();
+		Optional<Supervisor> ownSupervisor = supervisorService.findSupervisorByEmail(ownEmail);
+		Optional<Student> ownStudent = studentService.findStudentByEmail(ownEmail);
 	    Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
 	    Optional<Student> studentOpt = studentService.findStudentByEmail(email);
-
+	    
+        if (ownSupervisor.isPresent()) {
+        	if(supervisorOpt.isPresent()) {
+        		boolean isOwner = userDetails != null && userDetails.getUsername().equals(supervisorOpt.get().getEmail());
+        		model.addAttribute("isOwner", isOwner);
+        	}
+        	if(ownSupervisor.get().getPosition() == 0) {
+        		model.addAttribute("ownType", "admin");
+        	}
+        	else {
+        		model.addAttribute("ownType", "supervisor");
+        	}
+        	
+        	model.addAttribute("ownUser", ownSupervisor.get());
+        	
+        }
+        else if (ownStudent.isPresent()) {
+        	if(studentOpt.isPresent()) {
+        		boolean isOwner = userDetails != null && userDetails.getUsername().equals(studentOpt.get().getEmail());
+        		model.addAttribute("isOwner", isOwner);
+        	}
+        	
+        	model.addAttribute("ownType", "student");
+        	model.addAttribute("ownUser", ownStudent.get());
+        	
+        }
 	    if (supervisorOpt.isPresent()) {
 	        Supervisor supervisor = supervisorOpt.get();
-	        boolean isOwner = userDetails != null && userDetails.getUsername().equals(supervisor.getEmail());
-	        model.addAttribute("user", supervisor);
 	        model.addAttribute("type", "supervisor");
-	        model.addAttribute("isOwner", isOwner);
+	        model.addAttribute("user", supervisor);
 	        
 	    } else if (studentOpt.isPresent()) {
 	        Student student = studentOpt.get();
-	        boolean isOwner = userDetails != null && userDetails.getUsername().equals(student.getEmail());
+	        
 	        model.addAttribute("user", student);
 	        model.addAttribute("type", "student");
-	        model.addAttribute("isOwner", isOwner);
 	    } else {
 	        throw new RuntimeException("User not found");
 	    }

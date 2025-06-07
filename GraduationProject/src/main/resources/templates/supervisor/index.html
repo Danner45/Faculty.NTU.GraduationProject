@@ -10,72 +10,54 @@
 </head>
 <body>
 	<div th:replace="layout::header(${name}, ${email}, 'supervisor')"></div>
-	<div class="container-fluid">
-		<div th:replace="layout::intro('supervisor')"></div>
+	<div class="container-fluid container_custom">	
 		<div class="this_year_topics">
 			<h3>Đề tài của tôi cho khóa <span th:text="${course.entryYear}"></span>-<span th:text="${course.graduationYear}"></span></h3>
 			<div class="topcic_list">
-				<div th:if="${#lists.isEmpty(counts)}">
-            		<h3 style="color:var(--main-color)">THẦY/CÔ CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
-        		</div>
-				<div class="card_slider_wrapper">
-					<button id="prevBtn" class="slider_btn">&#8592;</button>
-					  
-					<div class="card_slider">
-						<div class="card_list" id="cardList" 
-					         th:if="${!#lists.isEmpty(counts)}">
-					    	<div class="card_topic" 
-					           th:each="project : ${counts}">
-					    		<div class="card_content">
-					    			<img src="/image/system/topic.png"/>
-					          		<p th:text="${project.project.topic}"></p>
-					          		<ul th:if="${project.project.state == 0}">
-					            		<li>Lĩnh vực: <span th:text="${project.project.projectType.name	}"></span></li>
-					            		<li>Trạng thái: 
-					              		<span>
-					              			Đang chờ duyệt
-					              		</span>
-					            		</li>
-					          		</ul>
-					          		<ul th:if="${project.project.state == 1}">
-					            		<li>Sinh viên đăng ký: <span th:text="${project.count}"></span></li>
-					            		<li>Trạng thái: 
-					              		<span>
-					              			Chờ đăng ký
-					              		</span>
-					            		</li>
-					          		</ul>
-					          		<ul th:if="${project.project.state == 2}">
-					            		<li>Cập nhật: <span th:text="${#dates.format(project.project.lastModify, 'dd/MM/yyyy')}"></span></li>
-					            		<li>Trạng thái: 
-					              		<span>
-					              			Đang thực hiện
-					              		</span>
-					            		</li>
-					          		</ul>
-					          		<ul th:if="${project.project.state == 3}">
-					            		<li>Ngày hoàn thành: <span th:text="${#dates.format(project.project.lastModify, 'dd/MM/yyyy')}"></span></li>
-					            		<li>Trạng thái: 
-					              		<span>
-					              			Đã hoàn thành
-					              		</span>
-					            		</li>
-					          		</ul>
-					          		<a th:href="@{/supervisors/project/detail/{id}(id=${project.project.idResearchTopic})}">
-					          			<button th:text="${project.project.state == 1 ? 'Duyệt sinh viên' : 'Xem chi tiết'}">
-					                    	<img src="/image/system/arrow.svg">
-					                 	</button>
-					                 </a>
-					        	</div>
-					     	</div>
-						</div>
-					</div>
-					
-					<button id="nextBtn" class="slider_btn">&#8594;</button>
-				</div>
-
+			    <div th:if="${#lists.isEmpty(counts)}">
+			        <h3 style="color:var(--main-color)">THẦY/CÔ CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
+			    </div>
+			    <div class="container mt-3" th:if="${!#lists.isEmpty(counts)}">
+			        <div class="row ">
+			            <div class="col-md-3 card_topic" th:each="project : ${counts}">
+			                <div class="card_content">
+			                    <img src="/image/system/topic.png" class="card-img-top" alt="Topic Image">
+			                    <div>
+			                        <p th:text="${project.project.topic}"></p>
+			                        <ul th:if="${project.project.state == 0}">
+			                            <li>Lĩnh vực: <span th:text="${project.project.projectType.name}"></span></li>
+			                            <li>Trạng thái: <span>Đang chờ duyệt</span></li>
+			                        </ul>
+			
+			                        <ul th:if="${project.project.state == 1}">
+			                            <li>Sinh viên đăng ký: <span th:text="${project.count}"></span></li>
+			                            <li>Trạng thái: <span>Chờ đăng ký</span></li>
+			                        </ul>
+			
+			                        <ul th:if="${project.project.state == 2}">
+			                            <li>Cập nhật: <span th:text="${#dates.format(project.project.lastModify, 'dd/MM/yyyy')}"></span></li>
+			                            <li>Trạng thái: <span>Đang thực hiện</span></li>
+			                        </ul>
+			
+			                        <ul th:if="${project.project.state == 3}">
+			                            <li>Ngày hoàn thành: <span th:text="${#dates.format(project.project.lastModify, 'dd/MM/yyyy')}"></span></li>
+			                            <li>Trạng thái: <span>Đã hoàn thành</span></li>
+			                        </ul>
+			                    </div>
+			                    <div class="card-footer bg-transparent border-0 text-start">
+			                        <a th:href="@{/supervisors/project/detail/{id}(id=${project.project.idResearchTopic})}">
+			                            <button class="btn btn-outline-primary btn-sm" th:text="${project.project.state == 1 ? 'Duyệt sinh viên' : 'Xem chi tiết'}">
+			                                <img src="/image/system/arrow.svg" style="width: 12px; margin-left: 5px;">
+			                            </button>
+			                        </a>
+			                    </div>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
 			</div>
 		</div>
+		<a class="addBtn" th:href="@{/supervisors/project/create}">+</a>
 	</div>
 	<div th:replace="layout::footer"></div>
 	
