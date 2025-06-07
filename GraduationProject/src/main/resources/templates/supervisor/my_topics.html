@@ -11,42 +11,75 @@
 <body>
 <div th:replace="layout::header(${name}, ${email}, ${'supervisor'})"></div>
 	<div class="container">
-       <form method="get" action="/supervisors/my_topics">
+       <form method="get" th:action="@{/supervisors/my_topics}">
 		  <div class="area-filter">
 		    <div class="filter-bar">
 		      <div class="search-group">
-		        <input type="text" id="searchTopic" name="searchTopic" placeholder="Tìm kiếm theo chủ đề..." 
+		        <input type="text" id="searchTopic" name="searchTopic" placeholder="Tìm kiếm theo chủ đề..."
 		               th:value="${searchTopic}" />
 		        <span class="clear-btn" id="clearSearch">×</span>
 		      </div>
 		
 		      <select id="filterCourse" name="filterCourse" onchange="this.form.submit()">
 		        <option value="">Chọn khóa</option>
-		        <option th:each="course : ${courses}" th:value="${course.idCourse}" th:text="${course.idCourse}"
-		                th:selected="${course.idCourse == filterCourse}"></option>
+		        <option th:each="course : ${courses}"
+		                th:value="${course.idCourse}"
+		                th:text="${course.idCourse}"
+		                th:selected="${filterCourse != null and course.idCourse == filterCourse}"></option>
 		      </select>
 		
 		      <select id="filterType" name="filterType" onchange="this.form.submit()">
 		        <option value="">Chọn loại đề tài</option>
-		        <option th:each="type : ${projectTypes}" th:value="${type.name}" th:text="${type.name}"
-		                th:selected="${type.name == filterType}"></option>
+		        <option th:each="type : ${projectTypes}"
+		                th:value="${type.name}"
+		                th:text="${type.name}"
+		                th:selected="${filterType != null and type.name == filterType}"></option>
 		      </select>
 		
 		      <select id="filterStatus" name="filterStatus" onchange="this.form.submit()">
 		        <option value="">Tình trạng</option>
-		        <option value="0" th:selected="${filterStatus == 0}">Đang chờ duyệt</option>
-		        <option value="1" th:selected="${filterStatus == 1}">Chờ đăng kí</option>
-		        <option value="2" th:selected="${filterStatus == 2}">Đang thực hiện</option>
-		        <option value="3" th:selected="${filterStatus == 3}">Đã hoàn thành</option>
+		        <option value="0" th:selected="${filterStatus != null and filterStatus == 0}">Đang chờ duyệt</option>
+		        <option value="1" th:selected="${filterStatus != null and filterStatus == 1}">Chờ đăng kí</option>
+		        <option value="2" th:selected="${filterStatus != null and filterStatus == 2}">Đang thực hiện</option>
+		        <option value="3" th:selected="${filterStatus != null and filterStatus == 3}">Đã hoàn thành</option>
 		      </select>
 		    </div>
 		
 		    <div class="filter-opp">
-		      <div class="filters" id="activeFilters"></div>
-		      <button class="reset-btn" id="resetFilters" style="display: none;" type="button">Reset all filters ×</button>
+		      <!-- Hiện filter đang áp dụng -->
+		      <div class="filters" id="activeFilters">
+		        <span th:if="${searchTopic != null and searchTopic != ''}" class="filter-item">
+		          Từ khóa: [[${searchTopic}]]
+		        </span>
+		        <span th:if="${filterCourse != null}" class="filter-item">
+		          Khóa: [[${filterCourse}]]
+		        </span>
+		        <span th:if="${filterType != null and filterType != ''}" class="filter-item">
+		          Loại: [[${filterType}]]
+		        </span>
+		        <span th:if="${filterStatus != null}" class="filter-item">
+		          Tình trạng: 
+		          <span th:text="${filterStatus == 0 ? ' Đang chờ duyệt' :
+		                          filterStatus == 1 ? ' Chờ đăng kí' :
+		                          filterStatus == 2 ? ' Đang thực hiện' :
+		                          filterStatus == 3 ? ' Đã hoàn thành' : ''}"></span>
+		        </span>
+		      </div>
+		
+		      <!-- Nút reset, chỉ hiện nếu có filter -->
+		      <button id="resetFilters"
+			        class="reset-btn"
+			        type="button"
+			        th:classappend="|${(searchTopic != null and searchTopic != '') or filterCourse != null or (filterType != null and filterType != '') or filterStatus != null} ? 'show' : ''|">
+			  Reset all filters ×
+			</button>
+
+
+
 		    </div>
 		  </div>
 		</form>
+
 
                 
         <div class="title">

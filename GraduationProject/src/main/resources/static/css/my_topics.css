@@ -97,82 +97,82 @@ body {
     margin-bottom: 32px;
   }
   
-  .filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 32px;
-    align-self: stretch;
-  }
-  
-  .search-group {
-    position: relative;
-    flex: 1;
-  }
-  
-  .search-group input {
-    width: 100%;
-    padding: 10px 0px 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-  }
-  
-  .clear-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 16px;
-    color: #888;
-  }
-  
-  select {
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 14px;
-  }
-  
-  .reset-btn {
-    background: none;
-    border: none;
-    color: #555;
-    cursor: pointer;
-    font-size: 14px;
-    margin-top: 10px;
-    padding: 0;
-  }
-  .reset-btn.show {
-  	display: inline-block; 
-	}
-  
-  .reset-btn:hover {
-    color: #e60000;
-  }
-  
-  .filters {
-    margin-top: 15px;
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .filter-opp{
-    display: flex;
-    justify-content: space-between;
-  }
-  .filter-item {
-    background-color: #f0f0f0;
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .remove-filter {
-    margin-left: 6px;
-    font-weight: bold;
-    cursor: pointer;
-  }
+ .filter-bar {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   gap: 32px;
+   align-self: stretch;
+ }
+ 
+ .search-group {
+   position: relative;
+   flex: 1;
+ }
+ 
+ .search-group input {
+   width: 100%;
+   padding: 10px 0px 10px 12px;
+   border: 1px solid #ccc;
+   border-radius: 8px;
+ }
+ 
+ .clear-btn {
+   position: absolute;
+   right: 10px;
+   top: 50%;
+   transform: translateY(-50%);
+   cursor: pointer;
+   font-size: 16px;
+   color: #888;
+ }
+ 
+ select {
+   padding: 10px 12px;
+   border: 1px solid #ccc;
+   border-radius: 8px;
+   font-size: 14px;
+ }
+ 
+ .reset-btn {
+   background: none;
+   border: none;
+   color: #555;
+   cursor: pointer;
+   font-size: 14px;
+   margin-top: 10px;
+   padding: 0;
+ }
+ .reset-btn.show {
+ 	display: inline-block; 
+}
+ 
+ .reset-btn:hover {
+   color: #e60000;
+ }
+ 
+ .filters {
+   margin-top: 15px;
+   display: flex;
+   gap: 10px;
+   flex-wrap: wrap;
+ }
+ .filter-opp{
+   display: flex;
+   justify-content: space-between;
+ }
+ .filter-item {
+   background-color: #f0f0f0;
+   padding: 6px 10px;
+   border-radius: 20px;
+   font-size: 14px;
+   display: flex;
+   align-items: center;
+ }
+ 
+ .remove-filter {
+   margin-left: 6px;
+   font-weight: bold;
+   cursor: pointer;
+ }
   

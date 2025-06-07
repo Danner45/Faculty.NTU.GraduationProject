@@ -67,6 +67,7 @@ public class HomeController {
 			model.addAttribute("type", "supervisor");
 			model.addAttribute("name", supervisorOpt.get().getName());
 			model.addAttribute("researchtopics",researchTopics);
+			if(supervisorOpt.get().getPosition() == 0) return "redirect:/admin/home";
 			return "redirect:/supervisors/home";
 		} else {
 			Optional<Student> studentOpt = studentService.findStudentByEmail(email);
