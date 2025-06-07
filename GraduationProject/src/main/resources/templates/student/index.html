@@ -25,7 +25,7 @@
 				        <ul>
 				        	<li>Sinh viên đăng ký: <span th:text="${count}"></span></li>
 				            <li>Trạng thái: 
-				                <span th:text="${enrol.researchTopic.state == 1 ? 'Đang chờ duyệt' : 
+				                <span th:text="${enrol.researchTopic.state == 1 ? 'Đang chờ duyệt' : 	
 				                                (enrol.researchTopic.state == 2 ? 'Đang thực hiện' : 'Đã hoàn thành')}"
 				                      class="status_badge"></span>
 				            </li>	
@@ -33,7 +33,7 @@
 				            <li>Giáo viên hướng dẫn:<span th:text="${enrol.researchTopic.teacherCreated.position == 2 ? 'ThS.' : 'TS.'}" ></span><span th:text="${enrol.researchTopic.teacherCreated.name}"></span></li>
 				            <li class="action_buttons">
 				            	<a th:href="@{/students/project/detail/{id}(id=${enrol.researchTopic.idResearchTopic})}">
-									<button class="btn_view" th:text="${enrol.stateEnrol}">
+									<button class="btn_view">
 										Xem chi tiết
 									</button>
 								</a>

@@ -79,7 +79,7 @@
 			<div th:if="${enrol != null}">
 				<p>Hạn nộp bài: <span th:text="${#dates.format(researchtopic.expireDay, 'dd/MM/yyyy')}"></span></p>
 				<form
-					th:if="${#dates.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd') <= #dates.format(researchtopic.expireDay.toLocalDate(), 'yyyy-MM-dd')}"
+					
 					th:action="@{/students/project/upload_report}" method="post" enctype="multipart/form-data">
 					<input type="file" id="reportFile" name="reportFile" accept=".pdf,.doc,.docx" style="display:none" required onchange="this.form.submit()" />
 					<!-- Label giả làm nút -->
