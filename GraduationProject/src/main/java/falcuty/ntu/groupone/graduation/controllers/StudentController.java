@@ -2,6 +2,7 @@ package falcuty.ntu.groupone.graduation.controllers;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import falcuty.ntu.groupone.graduation.models.CountResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Course;
 import falcuty.ntu.groupone.graduation.models.Enrol;
+import falcuty.ntu.groupone.graduation.models.ProjectType;
 import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Student;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
@@ -85,6 +88,43 @@ public class StudentController {
 
 	    model.addAttribute("currentPath", request.getRequestURI());
 	    return "student/index";
+	}
+	
+	@GetMapping("/topics_all")
+	public String getAllTopicsForStudent(
+	        @RequestParam(name = "searchTopic", required = false) String searchTopic,
+	        @RequestParam(name = "filterCourse", required = false) Integer filterCourse,
+	        @RequestParam(name = "filterType", required = false) String filterType,
+	        @RequestParam(name = "filterStatus", required = false) Integer filterStatus,
+	        Model model,
+	        Principal principal) {
+
+	    String email = principal.getName(); // vẫn lấy để hiển thị tên sinh viên
+
+	    Student student = studentService.findStudentByEmail(email)
+	            .orElseThrow(() -> new RuntimeException("Không tìm thấy sinh viên với email: " + email));
+
+	    // Lấy toàn bộ đề tài (không lọc theo GV), có áp dụng filter
+	    List<ResearchTopic> topics = researchTopicService.getTopicsByFilters(
+	            searchTopic, filterCourse, filterType, filterStatus);
+
+
+	    List<Course> courses = courseService.getAllCourses();
+	    List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
+
+	    model.addAttribute("topics", topics);
+	    model.addAttribute("courses", courses);
+	    model.addAttribute("projectTypes", projectTypes);
+	    model.addAttribute("name", student.getName());
+	    model.addAttribute("email", email);
+
+	    // Giữ lại các filter đang dùng
+	    model.addAttribute("searchTopic", searchTopic);
+	    model.addAttribute("filterCourse", filterCourse);
+	    model.addAttribute("filterType", filterType);
+	    model.addAttribute("filterStatus", filterStatus);
+
+	    return "/student/topics_all";
 	}
 
 	@GetMapping("/project/detail/{id}")
