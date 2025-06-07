@@ -13,6 +13,7 @@ public interface IResearchTopicRepository extends JpaRepository<ResearchTopic, I
 	List<ResearchTopic> findByTeacherCreatedAndIsResearchAndCourse(Supervisor supervisor, boolean isResearch, Course course);
 	ResearchTopic findResearchTopicByIdResearchTopic(int id);
 	List<ResearchTopic> findByTeacherCreatedId(Integer teacherId);
+	List<ResearchTopic> findAll();
 	@Query("SELECT rt FROM ResearchTopic rt WHERE rt.state = 0")
     List<ResearchTopic> findAllByStateZero();
 	@Query("SELECT rt FROM ResearchTopic rt WHERE rt.state = 1")

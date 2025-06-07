@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import falcuty.ntu.groupone.graduation.models.CountResearchTopic;
@@ -64,5 +65,12 @@ public class AdminController {
         return "admin/project_detail";
 	}
 	
-	
+	@PostMapping("/project/accept/{id}")
+	public String handleAcceptProject(@PathVariable Integer id,
+									   ModelMap model) {
+		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		researchTopic.setState(1);
+		researchTopicService.saveResearchTopic(researchTopic);
+		return "redirect:/";
+	}
 }
