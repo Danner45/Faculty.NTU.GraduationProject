@@ -44,6 +44,7 @@ public class AdminController {
 		} else {
 		    model.addAttribute("name", "Người dùng không xác định");
 		}
+		model.addAttribute("name", supervisorOpt.get().getName());
 		model.addAttribute("email", email);
 		return "admin/index";
 	}
@@ -62,4 +63,6 @@ public class AdminController {
         model.addAttribute("researchtopic", researchTopic);
         return "admin/project_detail";
 	}
+	
+	
 }

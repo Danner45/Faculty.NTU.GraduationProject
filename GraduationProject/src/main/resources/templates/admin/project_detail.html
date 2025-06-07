@@ -9,7 +9,7 @@
  	<link th:href="@{/css/project_detail.css}" rel="stylesheet">
 </head>
 <body>
-	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
+	<div th:replace="layout::header(${name}, ${email}, 'admin')"></div>
 	<div class="container-fluid">
 		<h3 class="project_title">Thông tin chi tiết đề tài</h3>
 		<div th:object="${researchtopic}" class="project_detail">
