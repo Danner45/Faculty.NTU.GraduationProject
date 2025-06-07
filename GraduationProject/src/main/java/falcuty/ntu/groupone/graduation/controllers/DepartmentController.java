@@ -16,6 +16,4 @@ public class DepartmentController {
 	@Autowired
 	DepartmentService departmentService;
 	
-
-	
 }

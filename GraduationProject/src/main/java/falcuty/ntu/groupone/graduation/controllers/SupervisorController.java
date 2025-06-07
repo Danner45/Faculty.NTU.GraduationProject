@@ -107,14 +107,43 @@ public class SupervisorController {
 		return "supervisor/index";
 	}
 	
+//	@GetMapping("/my_topics")
+//	public String getMyTopics(Model model, Principal principal) {
+//		String email = principal.getName();
+//
+//	    Supervisor teacher = researchTopicService.findSupervisorByEmail(email);
+//	    List<ResearchTopic> topics = researchTopicService.getTopicsByTeacherId(teacher.getId());
+//
+//	    // Thêm 2 dòng này để truyền dữ liệu vào filter
+//	    List<Course> courses = courseService.getAllCourses();
+//	    List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
+//
+//	    model.addAttribute("topics", topics);
+//	    model.addAttribute("courses", courses);
+//	    model.addAttribute("projectTypes", projectTypes);
+//	    model.addAttribute("name", teacher.getName());
+//	    model.addAttribute("email", email);
+//
+//        return "/supervisor/my_topics";
+//
+//    }
 	@GetMapping("/my_topics")
-	public String getMyTopics(Model model, Principal principal) {
-		String email = principal.getName();
+	public String getMyTopics(
+	        @RequestParam(name = "searchTopic", required = false) String searchTopic,
+	        @RequestParam(name = "filterCourse", required = false) Integer filterCourse,
+	        @RequestParam(name = "filterType", required = false) String filterType,
+	        @RequestParam(name = "filterStatus", required = false) Integer filterStatus,
+	        Model model,
+	        Principal principal) {
+
+	    String email = principal.getName();
 
 	    Supervisor teacher = researchTopicService.findSupervisorByEmail(email);
-	    List<ResearchTopic> topics = researchTopicService.getTopicsByTeacherId(teacher.getId());
 
-	    // Thêm 2 dòng này để truyền dữ liệu vào filter
+	    // gọi service với các filter để lấy đề tài lọc
+	    List<ResearchTopic> topics = researchTopicService.getTopicsByTeacherIdAndFilters(
+	            teacher.getId(), searchTopic, filterCourse, filterType, filterStatus);
+
 	    List<Course> courses = courseService.getAllCourses();
 	    List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
 
@@ -124,9 +153,15 @@ public class SupervisorController {
 	    model.addAttribute("name", teacher.getName());
 	    model.addAttribute("email", email);
 
-        return "/supervisor/my_topics";
+	    // Truyền lại giá trị filter đã chọn để giữ trạng thái form
+	    model.addAttribute("searchTopic", searchTopic);
+	    model.addAttribute("filterCourse", filterCourse);
+	    model.addAttribute("filterType", filterType);
+	    model.addAttribute("filterStatus", filterStatus);
 
-    }
+	    return "/supervisor/my_topics";
+	}
+
 	
 	@GetMapping("/project/create")
     public String newProject(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {

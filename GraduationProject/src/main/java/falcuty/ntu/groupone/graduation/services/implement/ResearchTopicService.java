@@ -1,6 +1,7 @@
 package falcuty.ntu.groupone.graduation.services.implement;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -61,5 +62,17 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 		return researchTopicRepository.save(researchTopic);
 	}
 
+	public List<ResearchTopic> getTopicsByTeacherIdAndFilters(
+	        Integer teacherId, String searchTopic, Integer filterCourse, String filterType, Integer filterStatus) {
+
+		List<ResearchTopic> topics = researchTopicRepository.findByTeacherCreatedId(teacherId);
+
+	        return topics.stream()
+	            .filter(t -> searchTopic == null || searchTopic.isEmpty() || t.getTopic().toLowerCase().contains(searchTopic.toLowerCase()))
+	            .filter(t -> filterCourse == null || (t.getCourse() != null && t.getCourse().getIdCourse().equals(filterCourse)))
+	            .filter(t -> filterType == null || filterType.isEmpty() || (t.getProjectType() != null && t.getProjectType().getName().equals(filterType)))
+	            .filter(t -> filterStatus == null || t.getState() == filterStatus)
+	            .collect(Collectors.toList());
+	    }
 	
 }
