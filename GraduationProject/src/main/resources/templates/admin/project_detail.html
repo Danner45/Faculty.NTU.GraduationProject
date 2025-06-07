@@ -18,7 +18,6 @@
 		<div class="enrol_bottom" th:if="${researchtopic.state == 0}">
 			<p> </p>
 			<div class="confirm_button">
-				<a th:href="@{/supervisors/project/edit/{id}(id=${researchtopic.idResearchTopic})}"><button>Duyệt</button></a>
 				<form th:action="@{/admin/project/accept/{id}(id=${researchtopic.idResearchTopic})}" method="post">
 					<button type="button" onclick="openConfirm('cancelModal')">Duyệt</button>
 					<div id="cancelModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.4); z-index:1000;">
