@@ -60,6 +60,6 @@ public class AdminController {
 		model.addAttribute("email", email);
         model.addAttribute("name", supervisor.getName());
         model.addAttribute("researchtopic", researchTopic);
-        return "supervisor/project_detail";
+        return "admin/project_detail";
 	}
 }
