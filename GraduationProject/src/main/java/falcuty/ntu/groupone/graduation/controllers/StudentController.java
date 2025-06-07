@@ -1,5 +1,8 @@
 package falcuty.ntu.groupone.graduation.controllers;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import falcuty.ntu.groupone.graduation.models.CountResearchTopic;
@@ -26,6 +31,7 @@ import falcuty.ntu.groupone.graduation.services.implement.ProjectTypeService;
 import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
 import falcuty.ntu.groupone.graduation.services.implement.StudentService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -45,6 +51,9 @@ public class StudentController {
 	
 	@Autowired
 	private EnrolService enrolService;
+	
+	@Autowired
+	private ServletContext servletContext;
 	
 	public StudentController(StudentService studentService) {
 		this.studentService = studentService;
@@ -85,16 +94,16 @@ public class StudentController {
 		String email = userDetails.getUsername();
 		Optional<Student> student = studentService.findStudentByEmail(email);
 		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		Enrol enrol = enrolService.getEnrolListByStudent(student.get());
+        if(enrol != null) {
+        	model.addAttribute("enrol",enrol);
+        }
 		if(researchTopic.getState() == 1) {
 			int countStudent = enrolService.countStudentEnrol(researchTopic);
-	        Enrol enrol = enrolService.getEnrolListByStudent(student.get());
-	        if(enrol != null) {
-	        	model.addAttribute("enrol",enrol);
-	        }
 	        model.addAttribute("count", countStudent);
 		}
-		if(researchTopic.getState() == 2) {
-			
+		else if(researchTopic.getState() == 2) {
+			//model.addAttribute("isBeforeDeadline", !researchTopic.getExpireDay().toLocalDate().isBefore(LocalDate.now())); 
 		}
 		model.addAttribute("type", "student");
 		model.addAttribute("email", email);
@@ -127,5 +136,47 @@ public class StudentController {
 		enrolService.deleteById(id);
 		redirectAttributes.addFlashAttribute("message", "Hủy đăng ký thành công!");
 		return "redirect:/students/home";
+	}
+	
+	@PostMapping("/project/upload_report")
+	public String HandleSaveFileReport(@AuthenticationPrincipal UserDetails userDetails,
+										@RequestParam("reportFile") MultipartFile file) {
+		String email = userDetails.getUsername();
+		Optional<Student> student = studentService.findStudentByEmail(email);
+		Enrol enrol = enrolService.getEnrolListByStudent(student.get());
+		Integer idProject = enrol.getResearchTopic().getIdResearchTopic();
+		if (!file.isEmpty()) {
+		    try {
+		        // Lấy tên gốc của file và phần mở rộng
+		        String originalFilename = file.getOriginalFilename();
+		        String extension = "";
+
+		        if (originalFilename != null && originalFilename.contains(".")) {
+		            extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+		        }
+
+		        // Tạo tên file mới
+		        String filename = student.get().getName().replaceAll("\\s+", "_") + "_" + System.currentTimeMillis() + extension;
+
+		        // Thư mục lưu file
+		        String uploadPath = servletContext.getRealPath("/uploads");
+		        File uploadDir = new File(uploadPath);
+		        if (!uploadDir.exists()) {
+		            uploadDir.mkdirs();
+		        }
+
+		        // Lưu file
+		        File savedFile = new File(uploadPath, filename);
+		        file.transferTo(savedFile);
+
+		        // Lưu đường dẫn hoặc tên file
+		        enrol.setReport(filename);
+
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
+		enrolService.saveEnrol(enrol);
+		return "redirect:/students/project/detail/" + idProject;
 	}
 }

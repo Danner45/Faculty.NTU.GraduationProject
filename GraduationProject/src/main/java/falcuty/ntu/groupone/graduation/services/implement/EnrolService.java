@@ -83,4 +83,8 @@ public class EnrolService implements IEnrolService{
 		enrolRepository.deleteById(id);
 	}
 	
+	public Enrol findByStateAndProject(int state, ResearchTopic researchTopic) {
+		return enrolRepository.findByStateEnrolAndResearchTopic(state, researchTopic);
+	}
+	
 }

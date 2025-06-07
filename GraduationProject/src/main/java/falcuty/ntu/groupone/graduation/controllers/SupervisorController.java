@@ -183,6 +183,10 @@ public class SupervisorController {
 	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
 		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
 		int countStudent = enrolService.countStudentEnrol(researchTopic);
+		Enrol enrol = enrolService.findByStateAndProject(1, researchTopic);
+		if(enrol != null) {
+			model.addAttribute("enrol", enrol);
+		}
 		model.addAttribute("type", "supervisor");
 		model.addAttribute("email", email);
         model.addAttribute("name", supervisor.getName());

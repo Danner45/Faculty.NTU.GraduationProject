@@ -13,7 +13,7 @@
 	<div class="container-fluid">
 		<h3 class="project_title">Thông tin chi tiết đề tài</h3>
 		<div th:object="${researchtopic}" class="project_detail">
-			<iframe th:src="@{*{detail}}" width="100%" height="600px"></iframe>
+			<iframe th:src="@{'/uploads/' + *{detail}}" width="100%" height="600px"></iframe>
 		</div>
 		
 		<div class="enrol_bottom" th:if="${researchtopic.state == 0}">
@@ -69,6 +69,25 @@
 				   </button>
 				</a>
 			</div> -->
+			<div th:if="${enrol == null}">
+				<p>Đề tài này đang được thực hiện</p>
+			</div>
+			<div th:if="${enrol != null}">
+				<p>Báo cáo: <span th:if="${enrol.report != null}"><a th:href="@{'/uploads/' + ${enrol.report}}" target="_blank" th:text="${enrol.report}" style="color:var(--main-color); font-weight: 600; font-style:italic"></a></span></p>
+				<p>Thời gian nộp mới nhất: <span th:text="${enrol.dateModified}"></span></p>
+			</div>
+			<div th:if="${enrol != null}">
+				<p>Hạn nộp bài: <span th:text="${#dates.format(researchtopic.expireDay, 'dd/MM/yyyy')}"></span></p>
+				<form
+					th:if="${#dates.format(T(java.time.LocalDate).now(), 'yyyy-MM-dd') <= #dates.format(researchtopic.expireDay.toLocalDate(), 'yyyy-MM-dd')}"
+					th:action="@{/students/project/upload_report}" method="post" enctype="multipart/form-data">
+					<input type="file" id="reportFile" name="reportFile" accept=".pdf,.doc,.docx" style="display:none" required onchange="this.form.submit()" />
+					<!-- Label giả làm nút -->
+					<label for="reportFile" style="cursor: pointer; background: var(--main-color);color: white; border: none;padding: 12px 24px;border-radius: 25px;font-weight: 600;">
+						Nộp báo cáo
+					</label>
+				</form>
+			</div>
 		</div>
 		<div class="enrol_bottom" th:if="${researchtopic.state == 3}">
 			<div>
@@ -78,10 +97,6 @@
 				<p>Nhận xét: </p>
 				<div th:utext="${researchtopic.review}"></div>
 			</div>
-		</div>
-		<div>
-			<p>Đề tài tham khảo</p>
-			
 		</div>
 	</div>
 	<div th:replace="layout::footer"></div>
