@@ -101,7 +101,13 @@ public class HomeController {
         		boolean isOwner = userDetails != null && userDetails.getUsername().equals(supervisorOpt.get().getEmail());
         		model.addAttribute("isOwner", isOwner);
         	}
-        	model.addAttribute("ownType", "supervisor");
+        	if(ownSupervisor.get().getPosition() == 0) {
+        		model.addAttribute("ownType", "admin");
+        	}
+        	else {
+        		model.addAttribute("ownType", "supervisor");
+        	}
+        	
         	model.addAttribute("ownUser", ownSupervisor.get());
         	
         }
