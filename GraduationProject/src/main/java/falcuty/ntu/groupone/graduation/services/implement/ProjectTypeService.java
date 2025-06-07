@@ -13,7 +13,7 @@ import falcuty.ntu.groupone.graduation.repositories.IProjectTypeRepository;
 public class ProjectTypeService {
 	@Autowired
     private IProjectTypeRepository projectTypeRepository;
-	
+
 	public List<ProjectType> getAllProjectTypes() {
         return projectTypeRepository.findAll();
     }
