@@ -12,9 +12,29 @@
 	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
 	<div class="container-fluid">
 		<h3 class="project_title">Thông tin chi tiết đề tài</h3>
-		<div th:object="${researchtopic}" class="project_detail">
+		<!--  -->
+		<div th:object="${researchtopic}">
+            <h4><strong>Tên đề tài:</strong> <span th:text="*{topic}">Tên đề tài</span></h4>
+
+            <div th:if="*{teacherCreated != null}">
+			    <h5><strong>Giảng viên hướng dẫn:</strong> 
+			        <a th:href="@{/profile/{email}(email=${researchtopic.teacherCreated.email})}" 
+			           th:text="*{teacherCreated.name}"
+			           style = "color: var(--main-color); text-decoration: underline;"
+			           >Tên giảng viên</a>
+			    </h5>
+			</div>
+			
+			<div th:if="*{teacherCreated == null}">
+			    <h5><strong>Giảng viên hướng dẫn:</strong> <span class="text-muted">Chưa có</span></h5>
+			</div>
+
+            <iframe th:src="@{'/uploads/' + *{detail}}" width="100%" height="600px"></iframe>
+        </div>
+		<!--  -->
+		<!-- <div th:object="${researchtopic}" class="project_detail">
 			<iframe th:src="@{'/uploads/' + *{detail}}" width="100%" height="600px"></iframe>
-		</div>
+		</div> -->
 		
 		<div class="enrol_bottom" th:if="${researchtopic.state == 0}">
 			<p> </p>
@@ -109,7 +129,6 @@
     document.getElementById(id).style.display = "none";
   }
 </script>
-
 	
 </body>
 </html>

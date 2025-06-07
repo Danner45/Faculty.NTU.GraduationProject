@@ -134,6 +134,11 @@ public class StudentController {
 		String email = userDetails.getUsername();
 		Optional<Student> student = studentService.findStudentByEmail(email);
 		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		if (researchTopic == null || researchTopic.getState() == 0) {
+	        // Nếu đề tài không tồn tại hoặc chưa duyệt thì redirect hoặc lỗi
+	        return "redirect:/students/project"; // hoặc return "error/404"
+	    }
+
 		Optional<Enrol> enrol = enrolService.findErolListByStudentAndProject(researchTopic, student.get());
         if(enrol.isPresent()) {
         	System.out.println(enrol);
