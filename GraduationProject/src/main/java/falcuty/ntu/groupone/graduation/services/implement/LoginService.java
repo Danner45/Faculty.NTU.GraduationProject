@@ -28,11 +28,20 @@ public class LoginService implements UserDetailsService {
         Optional<Supervisor> optionalSup = supervisorRepository.findSupervisorByEmail(email);
         if (optionalSup.isPresent()) {
             Supervisor s = optionalSup.get();
-            return User.builder()
-                    .username(s.getEmail())
-                    .password("{noop}" + s.getPassword()) 
-                    .roles("SUPERVISOR")
-                    .build();
+            if(s.getPosition() == 0) {
+            	return User.builder()
+                        .username(s.getEmail())
+                        .password("{noop}" + s.getPassword()) 
+                        .roles("ADMIN")
+                        .build();
+            }
+            else {
+            	return User.builder()
+                        .username(s.getEmail())
+                        .password("{noop}" + s.getPassword()) 
+                        .roles("SUPERVISOR")
+                        .build();
+			}
         }
 
         Optional<Student> optionalStu = studentRepository.findStudentByEmail(email);
