@@ -12,6 +12,7 @@ import falcuty.ntu.groupone.graduation.models.Supervisor;
 public interface IResearchTopicRepository extends JpaRepository<ResearchTopic, Integer>{
 	List<ResearchTopic> findByTeacherCreatedAndIsResearchAndCourse(Supervisor supervisor, boolean isResearch, Course course);
 	ResearchTopic findResearchTopicByIdResearchTopic(int id);
+	List<ResearchTopic> findByTeacherCreatedId(Integer teacherId);
 	@Query("SELECT rt FROM ResearchTopic rt WHERE rt.state = 0")
     List<ResearchTopic> findAllByStateZero();
 	@Query("SELECT rt FROM ResearchTopic rt WHERE rt.state = 1")

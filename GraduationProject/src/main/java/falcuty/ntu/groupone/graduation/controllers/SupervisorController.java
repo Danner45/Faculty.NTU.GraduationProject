@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.security.Principal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import ch.qos.logback.core.model.Model;
 import falcuty.ntu.groupone.graduation.models.CountResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Course;
 import falcuty.ntu.groupone.graduation.models.Enrol;
@@ -105,6 +106,27 @@ public class SupervisorController {
 		model.addAttribute("currentPath", request.getRequestURI());
 		return "supervisor/index";
 	}
+	
+	@GetMapping("/my_topics")
+	public String getMyTopics(Model model, Principal principal) {
+		String email = principal.getName();
+
+	    Supervisor teacher = researchTopicService.findSupervisorByEmail(email);
+	    List<ResearchTopic> topics = researchTopicService.getTopicsByTeacherId(teacher.getId());
+
+	    // Thêm 2 dòng này để truyền dữ liệu vào filter
+	    List<Course> courses = courseService.getAllCourses();
+	    List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
+
+	    model.addAttribute("topics", topics);
+	    model.addAttribute("courses", courses);
+	    model.addAttribute("projectTypes", projectTypes);
+	    model.addAttribute("name", teacher.getName());
+	    model.addAttribute("email", email);
+
+        return "/supervisor/my_topics";
+
+    }
 	
 	@GetMapping("/project/create")
     public String newProject(@AuthenticationPrincipal UserDetails userDetails, ModelMap model) {

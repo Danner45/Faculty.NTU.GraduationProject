@@ -14,6 +14,10 @@ public class CourseService {
 	
 	@Autowired
 	private ICourseRepository courseRepository;
+
+    public List<Course> getAllCourses() {
+        return courseRepository.findAll();
+    }
 	
 	public List<Course> getLast4Courses() {
         return courseRepository.findTop4ByOrderByIdCourseDesc();
