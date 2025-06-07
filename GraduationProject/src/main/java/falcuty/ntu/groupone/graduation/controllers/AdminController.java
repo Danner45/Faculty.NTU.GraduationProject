@@ -11,10 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import falcuty.ntu.groupone.graduation.models.CountResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Course;
+import falcuty.ntu.groupone.graduation.models.Enrol;
 import falcuty.ntu.groupone.graduation.models.ResearchTopic;
 import falcuty.ntu.groupone.graduation.models.Supervisor;
 import falcuty.ntu.groupone.graduation.services.implement.CourseService;
@@ -37,19 +39,27 @@ public class AdminController {
 		String email = userDetails.getUsername();
 		Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
 		if (supervisorOpt.isPresent()) {
-			int currentYear = LocalDate.now().getYear();
-			Course course = courseService.findCourseByGraduationYear(currentYear);
-			List<ResearchTopic> researchTopics = researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), true, course);
-			researchTopics.addAll(researchTopicService.findAllTeacherResearchTopic(supervisorOpt.get(), false, course));
-			List<CountResearchTopic> countResearchTopics = new ArrayList<>();
-			System.out.println(countResearchTopics.size());
-			model.addAttribute("name", supervisorOpt.get().getName());
-			model.addAttribute("counts", countResearchTopics);
-			model.addAttribute("course", course);
+			List<ResearchTopic> researchTopics = researchTopicService.findAllByStateZero();
+			model.addAttribute("projects",researchTopics);
 		} else {
 		    model.addAttribute("name", "Người dùng không xác định");
 		}
 		model.addAttribute("email", email);
 		return "admin/index";
+	}
+	
+	@GetMapping("/project/detail/{id}")
+	public String getDetailProject(@PathVariable Integer id,
+									@AuthenticationPrincipal UserDetails userDetails,
+			 						ModelMap model) {
+		String email = userDetails.getUsername();
+		Supervisor supervisor = supervisorService.findSupervisorByEmail(email)
+	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
+		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
+		model.addAttribute("type", "supervisor");
+		model.addAttribute("email", email);
+        model.addAttribute("name", supervisor.getName());
+        model.addAttribute("researchtopic", researchTopic);
+        return "supervisor/project_detail";
 	}
 }
