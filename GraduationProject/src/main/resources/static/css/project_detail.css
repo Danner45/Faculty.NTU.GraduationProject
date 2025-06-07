@@ -6,6 +6,7 @@
 	font-weight: 600;
 	font-size: 2rem;
 	margin: 24px 87px;
+	text-align: center;
 }
 
 .project_detail{
@@ -13,9 +14,18 @@
 	font-size: 20px;
 }
 
+.project_detail iframe{
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(10px);
+	border-radius: 20px;
+	padding: 20px;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .project_detail>p,
 .project_part>p{
-	display: flex;
+	
 	font-weight: 800;
 }
 

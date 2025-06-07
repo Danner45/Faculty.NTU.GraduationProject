@@ -11,7 +11,7 @@
 <body>
 	<div th:replace="layout::header(${name}, ${email}, 'supervisor')"></div>
 	<div class="container-fluid">
-		<div th:replace="layout::intro(type)"></div>
+		<div th:replace="layout::intro('supervisor')"></div>
 		<div class="this_year_topics">
 			<h3>Đề tài của tôi cho khóa <span th:text="${course.entryYear}"></span>-<span th:text="${course.graduationYear}"></span></h3>
 			<div class="topcic_list">

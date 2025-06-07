@@ -34,10 +34,7 @@ public class ResearchTopic {
 
     @Column(name = "topic", nullable = false)
     private String topic;
-
-    @Column(name = "description", nullable = false)
-    private String description;
-
+    
     @Column(name = "detail", columnDefinition = "LONGTEXT", nullable = false)
     private String detail;
 
@@ -46,12 +43,6 @@ public class ResearchTopic {
 
     @Column(name = "state", nullable = false)
     private Integer state;
-
-    @Column(name = "grade", nullable = true)
-    private Double grade;
-
-    @Column(name = "review", nullable = true)
-    private String review;
     
     @Column(name = "is_research", nullable = false)
     private Boolean isResearch;
@@ -62,6 +53,12 @@ public class ResearchTopic {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "expire_day", nullable = true)
     private Date expireDay;
+    
+    @Column(name = "review", nullable = true)
+    private String review;
+    
+    @Column(name = "grade", nullable = true)
+    private Double grade;
    
     public ResearchTopic() {
     }
@@ -76,12 +73,9 @@ public class ResearchTopic {
         this.projectType = projectType;
         this.course = course;
         this.topic = topic;
-        this.description = description;
         this.detail = detail;
         this.maxJoin = maxJoin;
         this.state = state;
-        this.grade = grade;
-        this.review = review;
         this.isResearch = isResearch;
         this.lastModify = lastModify;
         this.expireDay = expireDay;
@@ -137,14 +131,6 @@ public class ResearchTopic {
         this.topic = topic;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getDetail() {
         return detail;
     }
@@ -167,22 +153,6 @@ public class ResearchTopic {
 
     public void setState(int state) {
         this.state = state;
-    }
-
-    public Double getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Double grade) {
-        this.grade = grade;
-    }
-
-    public String getReview() {
-        return review;
-    }
-
-    public void setReview(String review) {
-        this.review = review;
     }
 
 	public Boolean getIsResearch() {
@@ -208,6 +178,22 @@ public class ResearchTopic {
 	public void setLastModify(Date lastModify) {
 		this.lastModify = lastModify;
 	}
-    
 
+	public String getReview() {
+		return review;
+	}
+
+	public void setReview(String review) {
+		this.review = review;
+	}
+
+	public Double getGrade() {
+		return grade;
+	}
+
+	public void setGrade(Double grade) {
+		this.grade = grade;
+	}
+    
+	
 }

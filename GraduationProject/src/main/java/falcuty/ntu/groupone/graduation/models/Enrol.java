@@ -1,5 +1,9 @@
 package falcuty.ntu.groupone.graduation.models;
 
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -21,7 +25,13 @@ public class Enrol {
 
     @Column(name = "state_enrol", nullable = false)
     private Integer stateEnrol;
+    
+    @Column(name = "report", nullable = true)
+    private String report;
 
+    @Column(name = "date_modified", nullable = true)
+    private Timestamp dateModified;
+    
     // Constructors
     public Enrol() {}
 
@@ -63,4 +73,27 @@ public class Enrol {
     public void setStateEnrol(Integer stateEnrol) {
         this.stateEnrol = stateEnrol;
     }
+
+	public String getReport() {
+		return report;
+	}
+
+	public void setReport(String report) {
+		this.report = report;
+	}
+	
+	
+	public Timestamp getDateModified() {
+		return dateModified;
+	}
+
+	public void setDateModified(Timestamp dateModified) {
+		this.dateModified = dateModified;
+	}
+
+    @PreUpdate
+    protected void onUpdate() {
+    	dateModified = Timestamp.valueOf(LocalDateTime.now());
+    }
+    
 }

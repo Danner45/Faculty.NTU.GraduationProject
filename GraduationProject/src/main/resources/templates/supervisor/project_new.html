@@ -8,136 +8,81 @@
   	<link th:href="@{/css/layout.css}" rel="stylesheet">
   	<link th:href="@{/css/add_project.css}" rel="stylesheet">
   	<script src="/js/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
-  	<script>
-	  tinymce.init({
-	    selector: 'textarea#description',
-	    width: 1280,
-	    height: 300,
-	    plugins: [
-	      // Core editing features
-	      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-	      // Your account includes a free trial of TinyMCE premium features
-	      // Try the most popular premium features until May 20, 2025:
-	      'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
-	    ],
-	    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | image',
-	    images_upload_url: '/upload-image',
-	    automatic_uploads: true,
-	    mergetags_list: [
-	      { value: 'First.Name', title: 'First Name' },
-	      { value: 'Email', title: 'Email' },
-	    ],
-	    automatic_uploads: true,
-	    images_upload_handler: function (blobInfo, success, failure) {
-	      const formData = new FormData();
-	      formData.append('file', blobInfo.blob(), blobInfo.filename());
-	
-	      fetch('/upload-image', {
-	        method: 'POST',
-	        body: formData
-	      })
-	      .then(response => response.json())
-	      .then(result => {
-	        success(result.location); // URL trả về sẽ được nhúng vào nội dung
-	      })
-	      .catch(() => {
-	        failure('Upload failed');
-	      });
-	    }
-	  });
-	  
-	  tinymce.init({
-		    selector: 'textarea#detail',
-		    width: 1280,
-		    height: 500,
-		    plugins: [
-		      // Core editing features
-		      'anchor', 'autolink', 'charmap', 'codesample', 'emoticons', 'image', 'link', 'lists', 'media', 'searchreplace', 'table', 'visualblocks', 'wordcount',
-		      // Your account includes a free trial of TinyMCE premium features
-		      // Try the most popular premium features until May 20, 2025:
-		      'checklist', 'mediaembed', 'casechange', 'formatpainter', 'pageembed', 'a11ychecker', 'tinymcespellchecker', 'permanentpen', 'powerpaste', 'advtable', 'advcode', 'editimage', 'advtemplate', 'ai', 'mentions', 'tinycomments', 'tableofcontents', 'footnotes', 'mergetags', 'autocorrect', 'typography', 'inlinecss', 'markdown','importword', 'exportword', 'exportpdf'
-		    ],
-		    toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat | image',
-		    images_upload_url: '/upload-image',
-		    automatic_uploads: true,
-		    mergetags_list: [
-		      { value: 'First.Name', title: 'First Name' },
-		      { value: 'Email', title: 'Email' },
-		    ],
-		    automatic_uploads: true,
-		    images_upload_handler: function (blobInfo, success, failure) {
-		      const formData = new FormData();
-		      formData.append('file', blobInfo.blob(), blobInfo.filename());
-		
-		      fetch('/upload-image', {
-		        method: 'POST',
-		        body: formData
-		      })
-		      .then(response => response.json())
-		      .then(result => {
-		        success(result.location); // URL trả về sẽ được nhúng vào nội dung
-		      })
-		      .catch(() => {
-		        failure('Upload failed');
-		      });
-		    }
-		  });
-	</script>
 </head>
 <body>
 	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
 	
 	<div class="container-fluid">
 		<form action="/supervisors/project/add" method="post" th:object="${project}" enctype="multipart/form-data" class="add_project">
-			<h3>Tạo đề tài mới cho sinh viên</h3>
-			<div class="input_field">
-				<label>Tên đề tài</label>
-				<input type="text" name="topic">
-			</div>
-			<div class="row">
-				<div class="input_field col">
-					<label>Lĩnh vực</label>
-					<select name="projectType" id="projectType">
-					    <option value="">-- Chọn lĩnh vực đồ án --</option>
-					    <option th:each="type : ${projectTypes}"
-					            th:value="${type.idType}"
-					            th:text="${type.name}">
-					    </option>
-					</select>
-				</div>
-				<div class="input_field col">
-					<label>Loại đề tài</label>
-					<select name="isResearch" id="isResearch">
-					    <option value="">-- Chọn loại đề tài --</option>
-					    <option value=1>Đồ án</option>
-					    <option value=1>Chuyên đề</option>
-					</select>
-				</div>
-				<div class="input_field col">
-					<label>Đề tài cho khóa</label>
-					<input type="text" name="course" id="course" th:value="${course.idCourse}" disabled>
-				</div>
-				<div class="input_field col">
-					<label>Hạn đề tài</label>
-					<input type="date" name="expireDay">
-				</div>
-			</div>
-			<div class="input_field">
-				<label>Mô tả</label>
-				<textarea id="description" name="description" rows="10" th:field="*{description}">Viết mô tả ngắn cho đề tài</textarea>
-			</div>
-			<div class="input_field">
-				<label>Chi tiết đề tài</label>
-				<textarea id="detail" name="detail" rows="10" th:field="*{detail}"></textarea>
-			</div>
-			<div style="display: flex; justify-content: end">
-				<button type="submit">Tạo đề tài</button>	
-			</div>
-			
+		    <h3>Tạo đề tài mới cho sinh viên</h3>
+		
+		    <div class="input_field">
+		        <label>Tên đề tài</label>
+		        <input type="text" th:field="*{topic}" />
+		    </div>
+		
+		    <div class="row">
+		        <div class="input_field col">
+		            <label>Lĩnh vực</label>
+		            <select th:field="*{projectType}">
+		                <option value="">-- Chọn lĩnh vực đồ án --</option>
+		                <option th:each="type : ${projectTypes}"
+		                        th:value="${type.idType}"
+		                        th:text="${type.name}">
+		                </option>
+		            </select>
+		        </div>
+		
+		        <div class="input_field col">
+		            <label>Loại đề tài</label>
+		            <select th:field="*{isResearch}">
+		                <option value="">-- Chọn loại đề tài --</option>
+		                <option th:value="true">Đồ án</option>
+		                <option th:value="false">Chuyên đề</option>
+		            </select>
+		        </div>
+		
+		        <div class="input_field col">
+		            <label>Đề tài cho khóa</label>
+		            <input type="text" th:value="${course.idCourse}" disabled />
+		            <input type="hidden" th:field="*{course}" th:value="${course}" />
+		        </div>
+		
+		        <div class="input_field col">
+		            <label>Hạn đề tài</label>
+		            <input type="date" th:field="*{expireDay}" />
+		        </div>
+		    </div>
+		
+		    <div class="input_field">
+		        <label for="detailFile">Tải file chi tiết đề tài (PDF)</label>
+		        <input type="file" id="detailFile" name="detailFile" accept="application/pdf" onchange="previewPDF(this, 'detailPreview')" required />
+		        <iframe id="detailPreview" width="100%" height="600px" style="display: none; border: 1px solid #ccc;"></iframe>
+
+		    </div>
+		
+		    <div style="display: flex; justify-content: end">
+		        <button type="submit">Tạo đề tài</button>    
+		    </div>
 		</form>
+
 		
 	</div>
 	
 	<div th:replace="layout::footer"></div>
+	<script>
+	function previewPDF(input, previewId) {
+	    const file = input.files[0];
+	    const preview = document.getElementById(previewId);
+	    if (file && file.type === "application/pdf") {
+	      const fileURL = URL.createObjectURL(file);
+	      preview.src = fileURL;
+	      preview.style.display = "block";
+	    } else {
+	      preview.src = "";
+	      preview.style.display = "none";
+	    }
+	}
+	</script>
 </body>
 </html>

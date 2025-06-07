@@ -1,5 +1,6 @@
 package falcuty.ntu.groupone.graduation.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -45,6 +47,7 @@ import falcuty.ntu.groupone.graduation.services.implement.ProjectTypeService;
 import falcuty.ntu.groupone.graduation.services.implement.ResearchTopicService;
 import falcuty.ntu.groupone.graduation.services.implement.StudentService;
 import falcuty.ntu.groupone.graduation.services.implement.SupervisorService;
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
@@ -68,6 +71,8 @@ public class SupervisorController {
 	@Autowired
 	private StudentService studentService;
 	
+	@Autowired
+	private ServletContext servletContext;
 	
 	public SupervisorController(SupervisorService supervisorService) {
 		this.supervisorService = supervisorService;
@@ -120,25 +125,54 @@ public class SupervisorController {
     }
 	
 	@PostMapping("/project/add")
-    public String handleCreateProject(@ModelAttribute ResearchTopic project,
-                                      @RequestParam("projectType") Integer typeId,
-                                      @RequestParam("isResearch") Integer isResearch,
-                                      @DateTimeFormat(pattern = "yyyy-MM-dd") @RequestParam("expireDay") Date expireDay,
-                                      @AuthenticationPrincipal UserDetails userDetails) throws ParseException {
-		Optional<Supervisor> supervisor = supervisorService.findSupervisorByEmail(userDetails.getUsername());
-        Optional<ProjectType> type = projectTypeService.findProjectTypeById(typeId);
-        int currentYear = LocalDate.now().getYear();
-        Course course = courseService.findCourseByGraduationYear(currentYear);
-        project.setProjectType(type.get());
-        project.setCourse(course);
-        project.setIsResearch(isResearch == 1);
-        project.setTeacherCreated(supervisor.get());
-        project.setState(0);
-        project.setMaxJoin(1);
-        project.setExpireDay(expireDay);
-        researchTopicService.addResearchTopic(project);
-        return "redirect:/supervisors/home";
-    }
+	public String handleCreateProject(@ModelAttribute ResearchTopic project,
+	                                  @RequestParam("detailFile") MultipartFile file,
+	                                  @AuthenticationPrincipal UserDetails userDetails) {
+
+	    Supervisor supervisor = supervisorService.findSupervisorByEmail(userDetails.getUsername())
+	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên"));
+
+	    Course course = courseService.findCourseByGraduationYear(LocalDate.now().getYear());
+
+		/*
+		 * if (!file.isEmpty()) { String uploadPath =
+		 * servletContext.getRealPath("/uploads"); // trỏ đến webapp/uploads File
+		 * uploadDir = new File(uploadPath); if (!uploadDir.exists()) {
+		 * uploadDir.mkdirs(); }
+		 * 
+		 * String fileName = project.getTopic().replaceAll("\\s+", "_") + "_" +
+		 * System.currentTimeMillis() + ".pdf"; project.setDetail(fileName); } else {
+		 * System.out.println("Không nhận được file"); }
+		 */
+	    if (!file.isEmpty()) {
+            try {
+                String filename = project.getTopic().replaceAll("\\s+", "_") + "_" +System.currentTimeMillis() + ".pdf";
+                String uploadPath = servletContext.getRealPath("/uploads"); // trỏ đến webapp/uploads
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                	uploadDir.mkdirs();
+                }
+
+                // Lưu file
+                File savedFile = new File(uploadPath, filename);
+                file.transferTo(savedFile);
+
+                // Lưu đường dẫn ảnh tương đối
+                project.setDetail(filename);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+	    project.setCourse(course);
+	    project.setTeacherCreated(supervisor);
+	    project.setState(0);
+	    project.setMaxJoin(1);
+
+	    researchTopicService.addResearchTopic(project);
+
+	    return "redirect:/supervisors/home";
+	}
 	
 	@GetMapping("/project/detail/{id}")
 	public String getDetailProject(@PathVariable Integer id,
@@ -149,6 +183,10 @@ public class SupervisorController {
 	            .orElseThrow(() -> new RuntimeException("Không tìm thấy giảng viên với email: " + email));
 		ResearchTopic researchTopic = researchTopicService.findResearchTopicById(id);
 		int countStudent = enrolService.countStudentEnrol(researchTopic);
+		Enrol enrol = enrolService.findByStateAndProject(1, researchTopic);
+		if(enrol != null) {
+			model.addAttribute("enrol", enrol);
+		}
 		model.addAttribute("type", "supervisor");
 		model.addAttribute("email", email);
         model.addAttribute("name", supervisor.getName());
@@ -181,7 +219,78 @@ public class SupervisorController {
 		enrolService.confirmEnrol(studentId, topicId);
         return "redirect:/supervisors/project/detail/" + topicId;
     }
+
+	@GetMapping("/project/edit/{id}")
+	public String showEditProject(@PathVariable Integer id,
+	                              @AuthenticationPrincipal UserDetails userDetails,
+	                              ModelMap model) {
+	    ResearchTopic topic = researchTopicService.findResearchTopicById(id);
+
+	    List<ProjectType> projectTypes = projectTypeService.getAllProjectTypes();
+	    int currentYear = LocalDate.now().getYear();
+        Course course = courseService.findCourseByGraduationYear(currentYear);
+	    model.addAttribute("project", topic);
+	    model.addAttribute("projectTypes", projectTypes);
+	    model.addAttribute("course", course);
+	    return "supervisor/project_edit"; // trỏ đến file HTML form chỉnh sửa
+	}
 	
-//	@GetMapping("/project/mark/{id}")
-//	public
+	@PostMapping("/project/edit/{id}")
+	public String handleEditProject(@PathVariable Integer id,
+	                                @ModelAttribute ResearchTopic project,
+	                                @RequestParam("detailFile") MultipartFile file,
+	                                @AuthenticationPrincipal UserDetails userDetails) {
+
+	    ResearchTopic oldProject = researchTopicService.findResearchTopicById(id);
+	    if (oldProject == null) {
+	        throw new RuntimeException("Không tìm thấy đề tài");
+	    }
+
+	    // Giữ lại các trường không sửa từ form
+	    project.setIdResearchTopic(id); // đảm bảo update đúng ID
+	    project.setCourse(oldProject.getCourse());
+	    project.setTeacherCreated(oldProject.getTeacherCreated());
+	    project.setState(oldProject.getState());
+	    project.setMaxJoin(oldProject.getMaxJoin());
+
+	    // Xử lý file
+	    if (!file.isEmpty()) {
+            try {
+                String filename = project.getTopic().replaceAll("\\s+", "_") + "_" +System.currentTimeMillis() + ".pdf";
+                String uploadPath = servletContext.getRealPath("/uploads"); // trỏ đến webapp/uploads
+                File uploadDir = new File(uploadPath);
+                if (!uploadDir.exists()) {
+                	uploadDir.mkdirs();
+                }
+
+                // Lưu file
+                File savedFile = new File(uploadPath, filename);
+                file.transferTo(savedFile);
+
+                // Lưu đường dẫn ảnh tương đối
+                project.setDetail(filename);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+	        // Nếu không upload file mới, giữ nguyên đường dẫn file cũ
+	        project.setDetail(oldProject.getDetail());
+	    }
+
+	    researchTopicService.saveResearchTopic(project);
+	    return "redirect:/supervisors/home";
+	}
+
+	
+	@GetMapping("/project/all")
+	public String getMethodName(ModelMap model, @AuthenticationPrincipal UserDetails userDetails, HttpServletRequest request) {
+		String email = userDetails.getUsername();
+		Optional<Supervisor> supervisorOpt = supervisorService.findSupervisorByEmail(email);
+		model.addAttribute("name", supervisorOpt.get().getName());
+		model.addAttribute("email", email);
+		model.addAttribute("currentPath", request.getRequestURI());
+		return "supervisor/project_list";
+	}
+	
 }

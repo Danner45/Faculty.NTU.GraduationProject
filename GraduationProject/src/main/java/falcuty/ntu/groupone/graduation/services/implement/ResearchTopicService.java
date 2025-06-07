@@ -20,6 +20,9 @@ public class ResearchTopicService implements IResearchTopicSerivce{
 	public List<ResearchTopic> findAllByStateZero() {
         return researchTopicRepository.findAllByStateZero();
     }
+	public List<ResearchTopic> findAllByStateOne() {
+        return researchTopicRepository.findAllByStateOne();
+    }
 	@Override
 	public List<ResearchTopic> findAllResearchOrTopicForCourse(Course course, boolean isResearch) {
 		return null;

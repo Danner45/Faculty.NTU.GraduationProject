@@ -30,7 +30,7 @@ public class EnrolService implements IEnrolService{
 	}
 
 	@Override
-	public List<Enrol> getEnrolListByStudent(Student student) {
+	public Enrol getEnrolListByStudent(Student student) {
 		return enrolRepository.findByStudent(student);
 	}
 
@@ -64,8 +64,8 @@ public class EnrolService implements IEnrolService{
 	        .orElseThrow(() -> new RuntimeException("Enrol not found"));
 
 	    enrol.setStateEnrol(1);
-	    topic.setState(1);
-	    
+	    topic.setState(2);
+	    researchTopicService.saveResearchTopic(topic);
 	    
 	    enrolRepository.save(enrol);
 
@@ -75,6 +75,16 @@ public class EnrolService implements IEnrolService{
 		
 	}
 	
+	public void saveEnrol(Enrol enrol) {
+		enrolRepository.save(enrol);
+	}
 	
+	public void deleteById(Integer id) {
+		enrolRepository.deleteById(id);
+	}
+	
+	public Enrol findByStateAndProject(int state, ResearchTopic researchTopic) {
+		return enrolRepository.findByStateEnrolAndResearchTopic(state, researchTopic);
+	}
 	
 }
