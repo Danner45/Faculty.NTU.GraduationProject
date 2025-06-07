@@ -87,7 +87,7 @@
 		        <div class="card-content">
 		            <h2 th:text="${topic.topic}">Tên đề tài</h2>
 		            <p th:text="'Tình trạng: ' + ${topic.state == 0 ? 'Đang chờ duyệt' : topic.state == 1 ? 'Chờ đăng kí' : topic.state == 2 ? 'Đang thực hiện' : 'Đã hoàn thành'}"></p>
-		            <p th:text="'Cập nhật: ' + ${topic.lastModify}"></p> 
+		            <p th:text="'Cập nhật: ' + ${#dates.format(topic.lastModify, 'dd/MM/yyyy')}"></p> 
 		            <!-- <p th:text="'Cập nhật: ' + ${#dates.format(topic.course.updatedAt, 'dd/MM/yyyy')}"></p>  --> <!-- Giả sử Course có updatedAt -->
 		            <a th:href="@{/students/project/detail/{id}(id=${topic.idResearchTopic})}" class="detail-button">Xem chi tiết <img src="/image/system/arrow.svg"></a>
 		        </div>
