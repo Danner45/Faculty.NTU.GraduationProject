@@ -350,4 +350,12 @@ public class SupervisorController {
 		return "supervisor/project_list";
 	}
 	
+	
+	@PostMapping("/add_type")
+	public String addType(@RequestParam("name") String name) {
+		ProjectType projectType = new ProjectType();
+		projectType.setName(name);
+		projectTypeService.save(projectType);
+		return "redirect:/supervisors/project/create"; 
+	}
 }

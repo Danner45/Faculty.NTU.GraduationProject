@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div th:replace="layout::header(${name}, ${email}, 'supervisor')"></div>
-	<div class="container-fluid">
+	<div class="container-fluid container_custom">	
 		<div class="this_year_topics">
 			<h3>Đề tài của tôi cho khóa <span th:text="${course.entryYear}"></span>-<span th:text="${course.graduationYear}"></span></h3>
 			<div class="topcic_list">
@@ -18,7 +18,7 @@
 			        <h3 style="color:var(--main-color)">THẦY/CÔ CHƯA TẠO ĐỀ TÀI NÀO CHO KHÓA NÀY</h3>
 			    </div>
 			    <div class="container mt-3" th:if="${!#lists.isEmpty(counts)}">
-			        <div class="row">
+			        <div class="row ">
 			            <div class="col-md-3 card_topic" th:each="project : ${counts}">
 			                <div class="card_content">
 			                    <img src="/image/system/topic.png" class="card-img-top" alt="Topic Image">
@@ -44,7 +44,7 @@
 			                            <li>Trạng thái: <span>Đã hoàn thành</span></li>
 			                        </ul>
 			                    </div>
-			                    <div class="card-footer bg-transparent border-0 text-end">
+			                    <div class="card-footer bg-transparent border-0 text-start">
 			                        <a th:href="@{/supervisors/project/detail/{id}(id=${project.project.idResearchTopic})}">
 			                            <button class="btn btn-outline-primary btn-sm" th:text="${project.project.state == 1 ? 'Duyệt sinh viên' : 'Xem chi tiết'}">
 			                                <img src="/image/system/arrow.svg" style="width: 12px; margin-left: 5px;">
@@ -57,6 +57,7 @@
 			    </div>
 			</div>
 		</div>
+		<a class="addBtn" th:href="@{/supervisors/project/create}">+</a>
 	</div>
 	<div th:replace="layout::footer"></div>
 	

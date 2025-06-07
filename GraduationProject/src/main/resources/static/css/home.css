@@ -1,6 +1,8 @@
 @charset "UTF-8";
 
-
+.container_custom{
+	position: relative;
+}
 
 .this_year_topics,
 .enrol_topic{
@@ -23,7 +25,7 @@
 	border-radius: var(--border);
 	border: rgba(0, 0, 0, 0.4) solid black;
 	position: relative;
-	margin: 16px 0;
+	margin: 8px 6px;
 	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -73,9 +75,29 @@
   	flex-shrink: 0;
 }
 
+.addBtn{
+	width: 70px;
+	height: 70px;
+	position: fixed;
+	border-radius: 50%;
+	background-color: var(--main-color);
+	color: white;
+	padding: 24px;
+	font-size: 2rem;
+	line-height: 0;
+	display: inline-flex;
+  	align-items: center;
+  	justify-content: center;
+	right: 87px;
+	bottom: 16px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+	transition: all 0.3s ease;
+}
 
-
-
+.addBtn:hover{
+	width: 80px;
+	height:80px;
+}
 
 
 .enrol_topic .card_content{
