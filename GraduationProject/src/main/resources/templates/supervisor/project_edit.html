@@ -92,12 +92,12 @@
 			<h3>Sửa đề tài</h3>
 			<div class="input_field">
 				<label>Tên đề tài</label>
-				<input type="text" name="topic" th:field="*{topic}">
+				<input class="topic_input" type="text" name="topic" th:field="*{topic}">
 			</div>
 			<div class="row">
 				<div class="input_field col">
 					<label>Lĩnh vực</label>
-					<select name="projectType" id="projectType" th:field="*{projectType}">
+					<select class="topic_input" name="projectType" id="projectType" th:field="*{projectType}">
 					    <option value="">-- Chọn lĩnh vực đồ án --</option>
 					    <option th:each="type : ${projectTypes}"
 					            th:value="${type.idType}"

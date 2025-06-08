@@ -18,7 +18,7 @@
 		
 		    <div class="input_field">
 		        <label>Tên đề tài</label>
-		        <input type="text" th:field="*{topic}" />
+		        <input class="topic_input" type="text" th:field="*{topic}" />
 		    </div>
 		
 		    <div class="row">
@@ -28,7 +28,7 @@
 		        		<button type="button" class="addTypeBtn">+</button>
 		        		
 		        	</div>
-		            <select th:field="*{projectType}">
+		            <select class="topic_input_dropdown" th:field="*{projectType}">
 		                <option value="">-- Chọn lĩnh vực đồ án --</option>
 		                <option th:each="type : ${projectTypes}"
 		                        th:value="${type.idType}"
@@ -39,7 +39,7 @@
 		
 		        <div class="input_field col">
 		            <label>Loại đề tài</label>
-		            <select th:field="*{isResearch}">
+		            <select class="topic_input_dropdown" th:field="*{isResearch}">
 		                <option value="">-- Chọn loại đề tài --</option>
 		                <option th:value="true">Đồ án</option>
 		                <option th:value="false">Chuyên đề</option>
@@ -48,20 +48,20 @@
 		
 		        <div class="input_field col">
 		            <label>Đề tài cho khóa</label>
-		            <input type="text" th:value="${course.idCourse}" disabled />
-		            <input type="hidden" th:field="*{course}" th:value="${course}" />
+		            <input class="topic_input" type="text" th:value="${course.idCourse}" disabled />
+		            <input class="topic_input" type="hidden" th:field="*{course}" th:value="${course}" />
 		        </div>
 		
 		        <div class="input_field col">
 		            <label>Hạn đề tài</label>
-		            <input type="date" th:field="*{expireDay}" />
+		            <input class="topic_input" type="date" th:field="*{expireDay}" />
 		        </div>
 		    </div>
 		
 		    <div class="input_field">
 		        <label for="detailFile">Tải file chi tiết đề tài (PDF)</label>
 		        <input type="file" id="detailFile" name="detailFile" accept="application/pdf" onchange="previewPDF(this, 'detailPreview')" required />
-		        <iframe id="detailPreview" width="100%" height="600px" style="display: none; border: 1px solid #ccc;"></iframe>
+		        <iframe class="topic_input" id="detailPreview" width="100%" height="600px" style="display: none; border: 1px solid #ccc; border-radius:25px;"></iframe>
 
 		    </div>
 		
@@ -69,21 +69,19 @@
 		        <button type="submit">Tạo đề tài</button>    
 		    </div>
 		</form>
+		<div class="popup" id="typeDialog" style="display:none;">
+		  <div class="dialog">
+		    <form th:action="@{/supervisors/add_type}" method="post" class="dialog-content">
+		      <p class="text_add">Thêm lĩnh vực</p>
+		      <input type="text" name="name" placeholder="Tên lĩnh vực" required />
+		      <div class="dialog-actions">
+		        <button type="submit" class="btn">Lưu</button>
+		        <button type="button" onclick="closeDialog()" class="btn_secondary">Hủy</button>
+		      </div>
+		    </form>
+		  </div>
+		</div>
 
-		<div id="typeDialog" style="display:none; position: fixed; top: 30%; left: 50%; transform: translate(-50%, -50%);
-					                            background: white; border: 1px solid #ccc; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
-					    <div id="typeDialog" class="dialog">
-						    <form th:action="@{/supervisors/add_type}" method="post" class="dialog-content">
-						        <h5>Thêm lĩnh vực</h5>
-						        <input type="text" name="name" placeholder="Tên lĩnh vực" required />
-						        <div class="dialog-actions">
-						            <button type="submit" class="btn btn-primary btn-sm">Lưu</button>
-						            <button type="button" onclick="closeDialog()" class="btn btn-secondary btn-sm">Hủy</button>
-						        </div>
-						    </form>
-						</div>
-					</div>
-	</div>
 	
 	<div th:replace="layout::footer"></div>
 	<script>
