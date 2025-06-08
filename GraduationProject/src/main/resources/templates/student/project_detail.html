@@ -93,7 +93,7 @@
 				<p>Đề tài này đang được thực hiện</p>
 			</div>
 			<div th:if="${enrol != null}">
-				<p>Báo cáo: <span th:if="${enrol.report != null}"><a th:href="@{'/uploads/' + ${enrol.report}}" target="_blank" th:text="${enrol.report}" style="color:var(--main-color); font-weight: 600; font-style:italic"></a></span></p>
+				<p class="topic-name">Báo cáo: <span th:if="${enrol.report != null}"><a th:href="@{'/uploads/' + ${enrol.report}}" target="_blank" th:text="${enrol.report}" style="color:var(--main-color); font-weight: 600; font-style:italic"></a></span></p>
 				<p>Thời gian nộp mới nhất: <span th:text="${enrol.dateModified}"></span></p>
 			</div>
 			<div th:if="${enrol != null}">
