@@ -123,10 +123,19 @@ button{
 	border-radius: 25px;
 }
 
+button:hover{
+	transform: translateY(-2px);
+}
+
 button.btn-secondary {
-  background-color: white;
-  color: #6c757d;
+  background-color:white;
+  color: #AF2C2C;
   margin-left: 10px;
+  border: 1px solid #AF2C2C;
+}
+
+button.btn-secondary:hover {
+  transform: translateY(-2px);
 }
 
 .infor_student{
