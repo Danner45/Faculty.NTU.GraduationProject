@@ -14,13 +14,14 @@
 		<h3 class="project_title">Thông tin chi tiết đề tài</h3>
 		<!--  -->
 		<div th:object="${researchtopic}">
-		<div class="topics"><p class="topic-name" style="margin:0">Tên đề tài:</p> <span th:text="*{topic}">Tên đề tài</span></div>
+		<div class="topics"><p class="topic-name" style="margin:0">Tên đề tài:</p> <span th:text="*{topic}">Tên đề tài</span> </div>
             <div th:if="*{teacherCreated != null}">
-			    <p class= "topic-name">Giảng viên hướng dẫn:
+			    <div class="topics"><p class= "topic-name">Giảng viên hướng dẫn:
 			        <a th:href="@{/profile/{email}(email=${researchtopic.teacherCreated.email})}" 
 			           th:text="*{teacherCreated.name}"
 			           style = "color: var(--main-color); text-decoration: underline;"
 			           >Tên giảng viên</a>
+			    </div>
 			</div>
 			
 			<div th:if="*{teacherCreated == null}">
@@ -123,8 +124,8 @@
 				<p>Đề tài này đang được thực hiện</p>
 			</div>
 			<div th:if="${enrol != null}">
-				<p class="topic-name">Báo cáo: <span th:if="${enrol.report != null}"><a th:href="@{'/uploads/' + ${enrol.report}}" target="_blank" th:text="${enrol.report}" style="color:var(--main-color); font-weight: 600; font-style:italic"></a></span></p>
-				<p>Thời gian nộp mới nhất: <span th:text="${enrol.dateModified}"></span></p>
+				<div class= "topics"><p class="topic-name">Báo cáo: <span th:if="${enrol.report != null}"><a th:href="@{'/uploads/' + ${enrol.report}}" target="_blank" th:text="${enrol.report}" style="color:var(--main-color); font-weight: 600; font-style:italic"></a></span></p></div>
+				<div class="topics"><p class="topic-name">Thời gian nộp mới nhất:</p> <span th:text="${enrol.dateModified}"></span></div>
 			</div>
 			<div th:if="${enrol != null}">
 				<p>Hạn nộp bài: <span th:text="${#dates.format(researchtopic.expireDay, 'dd/MM/yyyy')}"></span></p>

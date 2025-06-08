@@ -41,12 +41,31 @@
 
 .enrol_bottom .confirm_button button{
 	padding: 8px 24px;
-	border-radius: 12px;
+	border-radius: 25px;
 	border: none;
 	background-color: var(--main-color);
+	cursor: pointer;
+    transition: all 0.3s ease;
 	color: white;
+	font-weight: 600;
+}
+.enrol_bottom .confirm_button .btn-secondary{
+	padding: 8px 24px;
+	border: 2px solid var(--main-color);
+	border-radius: 25px;
+	background-color: white;
+	cursor: pointer;
+    transition: all 0.3s ease;
+	color: var(--main-color);;
+	font-weight: 600;
 }
 
+.enrol_bottom .confirm_button .btn-secondary:hover{
+	transform: translateY(-2px);
+}
+.enrol_bottom .confirm_button button:hover{
+	transform: translateY(-2px);
+}
 .enrol_bottom .confirm_button a:first-child button{
 	background-color: white;
 	color: var(--main-color);	
@@ -66,6 +85,7 @@
 	font-family: "Noto Sans", sans-serif;
     font-weight: 600;
     align-items: center;
+    margin: 0;
 }
 
 .topics{
@@ -87,11 +107,6 @@ button.btn[type="submit"] {
   color: white;
 }
 
-button.btn-secondary {
-  background: #6c757d;
-  color: white;
-}
-
 .confirm{
 	font-family: "Noto Sans", sans-serif;
     font-weight: 600;
@@ -102,8 +117,15 @@ button.btn-secondary {
 button{
 	font-family: "Noto Sans", sans-serif;
     font-size:16px;
+    border-radius: 25px;
 }
 
 .more_infor button{
 	border-radius: 25px;
+}
+
+button.btn-secondary {
+  background-color: white;
+  color: #6c757d;
+  margin-left: 10px;
 }

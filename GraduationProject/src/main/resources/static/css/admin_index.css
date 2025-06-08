@@ -9,6 +9,12 @@
 	--black-color: #000000;
 	--border: 20px;
 }
+
+.topic_class{
+	display:flex;
+	justify-content: center;
+}
+
 .topic_class h2{
 	font-family: "Noto Sans", sans-serif;
 	color: #AF2C2C;
