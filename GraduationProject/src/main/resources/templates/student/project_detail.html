@@ -45,7 +45,7 @@
 		
 		<div class="enrol_bottom" th:if="${researchtopic.state == 1}">
 			<p>Số lượng sinh viên đã đăng ký: <span th:text="${count}"></span></p>
-			<div th:if="${isNotPresent && enrol == null}">
+			<div th:if="${!isPresent && enrol == null}">
 				<form th:action="@{/students/enrol/{id}(id=${researchtopic.idResearchTopic})}" method="post">
 				  <button type="button" onclick="openConfirm('enrolModal')">Đăng ký</button>
 				  

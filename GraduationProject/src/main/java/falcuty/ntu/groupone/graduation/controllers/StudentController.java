@@ -148,7 +148,7 @@ public class StudentController {
     		model.addAttribute("enrol",enrol.get());
         }
         else {
-        	model.addAttribute("isNotPresent", true);
+        	model.addAttribute("isPresent", true);
         }
 		if(researchTopic.getState() == 1) {
 			int countStudent = enrolService.countStudentEnrol(researchTopic);
