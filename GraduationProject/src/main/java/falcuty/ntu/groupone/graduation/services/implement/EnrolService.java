@@ -89,4 +89,17 @@ public class EnrolService implements IEnrolService{
 		return enrolRepository.findByStateEnrolAndResearchTopic(state, researchTopic);
 	}
 	
+	@Override
+    public boolean existsOtherEnrolByStudent(String studentId, Integer currentTopicId) {
+        List<Enrol> enrols = enrolRepository.findByStudent_Id(studentId);
+        for (Enrol e : enrols) {
+            ResearchTopic topic = e.getResearchTopic();
+            if (topic != null && topic.getIdResearchTopic() != null
+                    && !topic.getIdResearchTopic().equals(currentTopicId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+	
 }
