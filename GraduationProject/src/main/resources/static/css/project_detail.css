@@ -34,7 +34,7 @@
 }
 
 .enrol_bottom{
-	margin:24px 87px;
+	padding-top: 16px;
 	font-size: 20px;
 	display: flex;
 	justify-content: space-between;	
