@@ -14,7 +14,7 @@
 		<h3 class="project_title">Thông tin chi tiết đề tài</h3>
 		<!--  -->
 		<div th:object="${researchtopic}">
-		<div class="topics"><p class="topic-name">Tên đề tài:</p> <span th:text="*{topic}">Tên đề tài</span></div>
+		<div class="topics"><p class="topic-name" style="margin:0">Tên đề tài:</p> <span th:text="*{topic}">Tên đề tài</span></div>
             <div th:if="*{teacherCreated != null}">
 			    <p class= "topic-name">Giảng viên hướng dẫn:
 			        <a th:href="@{/profile/{email}(email=${researchtopic.teacherCreated.email})}" 

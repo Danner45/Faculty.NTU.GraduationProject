@@ -66,13 +66,13 @@
 	font-family: "Noto Sans", sans-serif;
     font-weight: 600;
     align-items: center;
-    margin: 0;
 }
 
 .topics{
 	display: flex;
 	gap: 8px;
 	align-items: center;
+	padding-bottom: 8px;
 }
 
 button.btn{
@@ -92,15 +92,6 @@ button.btn-secondary {
   color: white;
 }
 
-button.btn:hover {
-  opacity: 0.9;
-  transform: scale(1.02);
-}
-
-button.btn-secondary:hover {
-  background: #5a6268;
-}
-
 .confirm{
 	font-family: "Noto Sans", sans-serif;
     font-weight: 600;
@@ -111,4 +102,8 @@ button.btn-secondary:hover {
 button{
 	font-family: "Noto Sans", sans-serif;
     font-size:16px;
+}
+
+.more_infor button{
+	border-radius: 25px;
 }
