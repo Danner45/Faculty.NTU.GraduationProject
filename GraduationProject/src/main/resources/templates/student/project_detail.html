@@ -36,13 +36,6 @@
 			<iframe th:src="@{'/uploads/' + *{detail}}" width="100%" height="600px"></iframe>
 		</div> -->
 		
-		<div class="enrol_bottom" th:if="${researchtopic.state == 0}">
-			<p> </p>
-			<div class="confirm_button">
-				<a th:href="@{/supervisors/project/edit/{id}(id=${researchtopic.idResearchTopic})}"><button>Sửa đề tài</button></a>
-			</div>
-		</div>
-		
 		<div class="enrol_bottom" th:if="${researchtopic.state == 1}">
 			<p>Số lượng sinh viên đã đăng ký: <span th:text="${count}"></span></p>
 			<div th:if="${!isPresent && enrol == null}">
