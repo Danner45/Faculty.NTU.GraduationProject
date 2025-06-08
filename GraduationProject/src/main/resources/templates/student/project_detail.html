@@ -14,9 +14,7 @@
 		<h3 class="project_title">Thông tin chi tiết đề tài</h3>
 		<!--  -->
 		<div th:object="${researchtopic}">
-		<div class="topics"><p class="topic-name">Tên đề tài:</p> <span th:text="*{topic}">Tên đề tài</span></div>
-            
-
+		<div class="topics"><p class="topic-name" style="margin:0">Tên đề tài:</p> <span th:text="*{topic}">Tên đề tài</span></div>
             <div th:if="*{teacherCreated != null}">
 			    <p class= "topic-name">Giảng viên hướng dẫn:
 			        <a th:href="@{/profile/{email}(email=${researchtopic.teacherCreated.email})}" 
@@ -37,6 +35,38 @@
 		</div> -->
 		
 		<div class="enrol_bottom" th:if="${researchtopic.state == 1}">
+			<div class="topics"><p class="topic-name" style="margin:0">Số lượng sinh viên đã đăng ký: </p><span th:text="${count}"></span></div>
+			<div th:if="${isNotPresent && enrol == null}">
+				<form th:action="@{/students/enrol/{id}(id=${researchtopic.idResearchTopic})}" method="post">
+				  <button type="button" onclick="openConfirm('enrolModal')">Đăng ký</button>
+				  
+				  <div id="enrolModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.4); z-index:1000;">
+				    <div style="background-color:#fff; padding:20px; margin:15% auto; border-radius:8px; width:400px; text-align:center;">
+				      <p class="confirm">Xác nhận đăng ký?</p>
+				      <p>Sau khi đăng ký sẽ không thể đăng ký thêm</p>
+				      <div style="margin-top: 20px;">
+				        <button type="submit" class="btn" style="background:var(--main-color); color: white">Đăng ký</button>
+				        <button type="button" onclick="closeConfirm('enrolModal')" class="btn btn-secondary" style="margin-left: 10px;">Hủy</button>
+				      </div>
+				    </div>
+				  </div>
+				</form>
+			</div>
+			<div th:if="${isPresent}">
+				<form th:action="@{/students/cancel_enrol/{id}(id=${enrol.idEnrol})}" method="post">
+				  <button type="button" onclick="openConfirm('cancelModal')">Hủy đăng ký</button>
+				
+				  <div id="cancelModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.4); z-index:1000;">
+				    <div style="background-color:#fff; padding:20px; margin:15% auto; border-radius:8px; width:400px; text-align:center;">
+				      <p><strong>Xác nhận hủy đăng ký?</strong></p>
+				      <div style="margin-top: 20px;">
+				        <button type="submit" class="btn" style="background:var(--main-color); color: white">Hủy đăng ký</button>
+				        <button type="button" onclick="closeConfirm('cancelModal')" class="btn btn-secondary" style="margin-left: 10px;">Hủy</button>
+				      </div>
+				    </div>
+				  </div>
+				</form>
+			</div>
 		    <p>Số lượng sinh viên đã đăng ký: <span th:text="${count}"></span></p>
 		
 		    <div th:if="${!isPresent and !hasOtherEnrol}">
