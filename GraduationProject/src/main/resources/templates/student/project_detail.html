@@ -39,7 +39,7 @@
 		<div class="enrol_bottom" th:if="${researchtopic.state == 1}">
 		    <p>Số lượng sinh viên đã đăng ký: <span th:text="${count}"></span></p>
 		
-		    <div th:if="${!isPresent}">
+		    <div th:if="${!isPresent and !hasOtherEnrol}">
 		        <!-- Form đăng ký -->
 		        <form th:action="@{/students/enrol/{id}(id=${researchtopic.idResearchTopic})}" method="post">
 		            <button type="button" onclick="openConfirm('enrolModal')">Đăng ký</button>
@@ -72,6 +72,9 @@
 		                </div>
 		            </div>
 		        </form>
+		    </div>
+		    <div th:if="${hasOtherEnrol}">
+		        <p style="color: red; font-weight: 600;">Bạn đã đăng ký một đề tài khác, không thể đăng ký thêm.</p>
 		    </div>
 		</div>
 		

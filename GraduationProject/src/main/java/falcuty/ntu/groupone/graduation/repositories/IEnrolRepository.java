@@ -17,4 +17,6 @@ public interface IEnrolRepository extends JpaRepository<Enrol, Integer>{
 	void deleteByStudentAndStateEnrol(Student student, Integer state);
 	Optional<Enrol> findByStudentAndResearchTopic(Student student, ResearchTopic researchTopic);
 	int countByResearchTopic(ResearchTopic researchTopic);
+	List<Enrol> findByStudent_Id(String studentId);
+
 }

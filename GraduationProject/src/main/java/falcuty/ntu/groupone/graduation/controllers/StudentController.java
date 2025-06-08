@@ -157,6 +157,9 @@ public class StudentController {
 		else if(researchTopic.getState() == 2) {
 		 
 		}
+		boolean hasOtherEnrol = enrolService
+			    .existsOtherEnrolByStudent(student.get().getId(), researchTopic.getIdResearchTopic());
+		model.addAttribute("hasOtherEnrol", hasOtherEnrol);
 		model.addAttribute("type", "student");
 		model.addAttribute("email", email);
         model.addAttribute("name", student.get().getName());

@@ -83,7 +83,7 @@ public class ResearchTopic {
 
     // Getters & Setters
 
-    public int getIdResearchTopic() {
+    public Integer getIdResearchTopic() {
         return idResearchTopic;
     }
 
