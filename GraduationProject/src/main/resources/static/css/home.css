@@ -6,7 +6,7 @@
 
 .this_year_topics,
 .enrol_topic{
-	padding: 24px 87px;
+	padding: 40px 87px;
 	flex-direction: column;	
 	gap: 24px;
 }
@@ -205,3 +205,4 @@
     color: white;
     transform: translateY(-2px);
 }
+

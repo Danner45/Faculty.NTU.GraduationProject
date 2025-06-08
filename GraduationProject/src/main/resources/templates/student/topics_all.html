@@ -10,8 +10,8 @@
 </head>
 <body>
 <div th:replace="layout::header(${name}, ${email}, ${'student'})"></div>
-	
-	<div class="container">
+	<div>
+	<div class="content_topic">
        <form method="get" th:action="@{/students/topics_all}">
 		  <div class="area-filter">
 		    <div class="filter-bar">
@@ -79,7 +79,7 @@
 		</form>
                 
         <div class="title">
-            <h1>Đề tài tham khảo</h1>
+            <h3>Đề tài tham khảo</h3>
         </div>
         <div class="card-container">
             <div th:each="topic : ${topics}" class="card">
@@ -93,6 +93,7 @@
 		        </div>
 	   	 	</div>
         </div>
+    </div>
     </div>
     
     <div th:replace="layout::footer"></div>
