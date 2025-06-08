@@ -36,8 +36,8 @@
 		</div> -->
 		
 		<div class="enrol_bottom" th:if="${researchtopic.state == 1}">
-			<div class="topics"><p class="topic-name" style="margin:0">Số lượng sinh viên đã đăng ký: </p><span th:text="${count}"></span></div>
-			<!-- <div th:if="${isNotPresent && enrol == null}"> -->
+			<!-- <div class="topics"><p class="topic-name" style="margin:0">Số lượng sinh viên đã đăng ký: </p><span th:text="${count}"></span></div>
+			<div th:if="${isNotPresent && enrol == null}">
 			<div th:if="${!isPresent and enrol == null}">
 				<form th:action="@{/students/enrol/{id}(id=${researchtopic.idResearchTopic})}" method="post">
 				  <button type="button" onclick="openConfirm('enrolModal')">Đăng ký</button>
@@ -68,7 +68,7 @@
 				    </div>
 				  </div>
 				</form>
-			</div>
+			</div> -->
 		    <p>Số lượng sinh viên đã đăng ký: <span th:text="${count}"></span></p>
 		
 		    <div th:if="${!isPresent and !hasOtherEnrol}">
