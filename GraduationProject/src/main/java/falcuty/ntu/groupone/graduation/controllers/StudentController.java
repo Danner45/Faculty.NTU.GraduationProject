@@ -141,8 +141,14 @@ public class StudentController {
 
 		Optional<Enrol> enrol = enrolService.findErolListByStudentAndProject(researchTopic, student.get());
         if(enrol.isPresent()) {
-        	System.out.println(enrol);
-        	model.addAttribute("enrol",enrol.get());
+        	if(enrol.get().getResearchTopic() == researchTopic) {
+	        	System.out.println(enrol);
+	        	model.addAttribute("isPresent", true);
+        	}
+    		model.addAttribute("enrol",enrol.get());
+        }
+        else {
+        	model.addAttribute("isNotPresent", true);
         }
 		if(researchTopic.getState() == 1) {
 			int countStudent = enrolService.countStudentEnrol(researchTopic);
