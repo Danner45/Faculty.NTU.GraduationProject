@@ -18,6 +18,16 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    
+}
+
+.title h1{
+	color: var(--sub-text-color);
+    font-family: Geologica;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%;
 }
 .card-container {
     display: grid;
@@ -26,7 +36,6 @@ body {
 }
 
 .card-image{
-    background-color: #e8a84b;
     border: 1px;
     border-radius: 20px;
     width: 100%;
