@@ -35,13 +35,8 @@
 
 .enrol_bottom{
 	padding-top: 16px;
-	font-size: 20px;
 	display: flex;
 	justify-content: space-between;	
-}
-
-.enrol_bottom p{
-	margin: 0;
 }
 
 .enrol_bottom .confirm_button button{
@@ -70,8 +65,50 @@
 .topic-name{
 	font-family: "Noto Sans", sans-serif;
     font-weight: 600;
+    align-items: center;
+    margin: 0;
 }
+
 .topics{
 	display: flex;
 	gap: 8px;
+	align-items: center;
+}
+
+button.btn{
+	padding: 10px 20px;
+	border: none;
+	border-radius: 20px;
+	font-family: "Noto Sans", sans-serif;
+}
+
+button.btn[type="submit"] {
+  background: var(--main-color);
+  color: white;
+}
+
+button.btn-secondary {
+  background: #6c757d;
+  color: white;
+}
+
+button.btn:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+button.btn-secondary:hover {
+  background: #5a6268;
+}
+
+.confirm{
+	font-family: "Noto Sans", sans-serif;
+    font-weight: 600;
+    font-size:20px;
+    margin-bottom: 8px ;
+}
+
+button{
+	font-family: "Noto Sans", sans-serif;
+    font-size:16px;
 }
