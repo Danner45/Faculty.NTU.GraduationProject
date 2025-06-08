@@ -8,13 +8,12 @@
 	color: var(--main-color);
 	font-weight: 600;
 	font-size: 2rem;
-	margin: 24px 87px;
+	margin: 40px 87px;
 	text-align: center;
 }
 
 .project_detail{
 	margin: 24px 87px;
-	font-size: 20px;
 }
 
 
@@ -34,9 +33,9 @@
 }
 
 .enrol_bottom{
-	padding-top: 16px;
 	display: flex;
 	justify-content: space-between;	
+	padding: 0px 87px 24px 87px;
 }
 
 .enrol_bottom .confirm_button button{
@@ -83,7 +82,7 @@
 
 .topic-name{
 	font-family: "Noto Sans", sans-serif;
-    font-weight: 600;
+    font-weight: bold;
     align-items: center;
     margin: 0;
 }
@@ -128,4 +127,18 @@ button.btn-secondary {
   background-color: white;
   color: #6c757d;
   margin-left: 10px;
+}
+
+.infor_student{
+	display: grid;
+	justify-content: center;
+}
+
+.date{
+	margin: 0;
+	padding-bottom: 8px;
+}
+
+iframe{
+	padding-top: 8px;
 }

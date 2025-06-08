@@ -10,16 +10,16 @@
 </head>
 <body>
 	<div th:replace="layout::header(${name}, ${email}, ${type})"></div>
-	<div class="container-fluid">
+	<div>
 		<h3 class="project_title">Chi tiết đề tài</h3>
 		<div th:object="${researchtopic}" class="project_detail">
-			<p>Tên đề tài: <span th:text="*{topic}" style="text-transform: uppercase;"></span></h3>
+			<div class="topics"><p class="topic-name">Tên đề tài: </p><span th:text="*{topic}" style="text-transform: uppercase;"></span></div>
 			<div class="project_part">
-				<p>Lĩnh vực: <span th:text="*{projectType.name}"></span></p>
-				<p>Loại đề tài: <span th:text="*{isResearch} ==	false ? 'Chuyên đề' : 'Đề tài'"></span>
-				<p>Đề tài dành cho khóa: <span th:text="*{course.idCourse}"></span></p>
+				<div class="topics"><p class="topic-name">Lĩnh vực: </p><span th:text="*{projectType.name}"></span></p></div>
+				<div class="topics"><p class="topic-name">Loại đề tài: </p><span th:text="*{isResearch} ==	false ? 'Chuyên đề' : 'Đề tài'"></span></div>
+				<div class="topics"><p class="topic-name">Đề tài dành cho khóa:</p><span th:text="*{course.idCourse}"></span></p></div>
 			</div>
-			<p>Chi tiết</p> 
+			<p class="topic-name">Chi tiết</p> 
 			<iframe th:src="@{'/uploads/' + *{detail}}" width="100%" height="600px"></iframe>
 		</div>
 		
@@ -38,12 +38,12 @@
 		</div>
 		
 		<div class="enrol_bottom" th:if="${researchtopic.state == 2}">
-			<div>
+			<div class="infor_student">
 				<p>Báo cáo của sinh viên: <span th:if="${enrol.report != null}"><a th:href="@{'/uploads/' + ${enrol.report}}" target="_blank" th:text="${enrol.report}" style="color:var(--main-color); font-weight: 600; font-style:italic"></a></span></p>
 				<p>Thời gian nộp gần nhất: <span th:text="${enrol.dateModified}"></span> </p>
 			</div>
 			<div style="display: flex; flex-direction: column; align-items:end;">
-				<p style="color:#BDBBBB">Ngày chấm bài: <span th:text="${#dates.format(researchtopic.expireDay, 'dd/MM/yyyy')}"></span></p>
+				<p style="color:#BDBBBB" class="date">Ngày chấm bài: <span th:text="${#dates.format(researchtopic.expireDay, 'dd/MM/yyyy')}"></span></p>
 				<a th:href="${#dates.createNow().after(researchtopic.expireDay)} ? @{/supervisors/project/mark/{id}(id=${researchtopic.idResearchTopic})} : null">
 				   <button th:disabled="${!#dates.createNow().before(researchtopic.expireDay)}"
 				           th:style="${!#dates.createNow().before(researchtopic.expireDay)} ? 'opacity:0.6;' : ''">
