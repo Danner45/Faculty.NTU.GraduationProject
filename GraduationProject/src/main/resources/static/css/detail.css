@@ -132,7 +132,6 @@ strong {
 	color: var(--white-color);
 	border: none;
 	border-radius: 25px;
-	transform: translateY(-2px);
 }
 
 .info{
